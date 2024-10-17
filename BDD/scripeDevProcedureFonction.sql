@@ -1,4 +1,4 @@
-use fulbank;
+use Fulbank;
 
 delimiter $$ 
 create procedure soft_delete_operation(in idOpp int)
