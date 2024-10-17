@@ -5,17 +5,53 @@ namespace fulbank
 {
     public partial class Connexion : Form
     {
+        //private Methode methode = new Methode();
         private TextBox txtIdentifiant;  // Déclarer au niveau de la classe pour un accès global
         private TextBox txtMotDePasse;   // Déclarer au niveau de la classe pour un accès global
+        private Label lblSousTitre;
+        private Label lblFulBank;
+        private RoundedPanel panelFul;
+        private Panel panelChamps;
+        private Label lblMotDePasse;
+        private Label lblIdentifiant;
+        // Boutons
+        public RoundedButton btnHaut;
+        public RoundedButton btnBas;
+        public RoundedButton btnGauche;
+        public RoundedButton btnDroite;
+        public RoundedButton btnMaison;
+        public RoundedButton btnRetour;
+        public RoundedButton btnValider;
+        public RoundedButton btnFermer;
 
         public Connexion()
         {
             InitializeComponent();
             Initializeform1();
+            Methode.CreateDirectionalButtons(
+                this,
+                BtnHaut_Click,    // Gestionnaire d'événement pour le bouton Haut
+                BtnBas_Click,     // Gestionnaire d'événement pour le bouton Bas
+                BtnGauche_Click,  // Gestionnaire d'événement pour le bouton Gauche
+                BtnDroite_Click,  // Gestionnaire d'événement pour le bouton Droite
+                BtnValider_Click, // Gestionnaire d'événement pour le bouton Valider
+                BtnRetour_Click,  // Gestionnaire d'événement pour le bouton Retour
+                BtnMaison_Click,  // Gestionnaire d'événement pour le bouton Maison
+                BtnFermer_Click   // Gestionnaire d'événement pour le bouton Fermer
+            );
+
+            // Ajouter l'événement Resize pour ajuster les contrôles lors du redimensionnement de la fenêtre
+            this.Resize += new EventHandler(Connexion_Resize);
+        }
+
+        // Événement appelé lors du redimensionnement de la fenêtre
+        private void Connexion_Resize(object sender, EventArgs e)
+        {
+            AdjustLayout(); // Appelle une méthode pour ajuster les éléments
         }
 
         // Action du bouton Valider 
-        private void BtnValider1_Click(object sender, EventArgs e)
+        private void BtnValider_Click(object sender, EventArgs e)
         {
             MenuBase form2 = new MenuBase();
             form2.Show();
@@ -23,210 +59,81 @@ namespace fulbank
         }
 
         // Action du bouton Fermer 
-        private void BtnFermer1_Click(object sender, EventArgs e)
+        private void BtnFermer_Click(object sender, EventArgs e)
         {
             Application.Exit();
         }
-        private void Form1_Load(object sender, EventArgs e)
+
+        private void BtnRetour_Click(object sender, EventArgs e)
         {
 
         }
 
-        private void label1_Click(object sender, EventArgs e)
+        private void BtnMaison_Click(object sender, EventArgs e)
         {
 
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-
-        }
+        private void Connexion_Load(object sender, EventArgs e) { }
 
         private void Initializeform1()
         {
-            // Définir le formulaire en plein écran
             this.WindowState = FormWindowState.Maximized; // Maximise le formulaire
             this.FormBorderStyle = FormBorderStyle.None; // Supprime la bordure du formulaire
-
-            // Configuration générale du formulaire 
             this.Text = "FulBank";
             this.BackColor = Color.FromArgb(128, 194, 236);
-            this.Size = new Size(1024, 768);  // Taille énorme 
 
-            // Panel contenant les champs Identifiant et Mot de passe 
-            Panel panelChamps = new Panel();
+            // Panel contenant les champs Identifiant et Mot de passe
+            panelChamps = new Panel();
             panelChamps.BackColor = Color.FromArgb(34, 67, 153);
-            panelChamps.Size = new Size(1710, 750);  // Agrandir le panel 
-            panelChamps.Location = new Point((this.ClientSize.Width - panelChamps.Width) / 2, -325);  // Centré 
-            panelChamps.Anchor = AnchorStyles.None;  // Garder le panel centré 
             this.Controls.Add(panelChamps);
 
-            // Label Identifiant 
-            Label lblIdentifiant = new Label();
+            // Label Identifiant
+            lblIdentifiant = new Label();
             lblIdentifiant.Text = "Identifiant :";
             lblIdentifiant.ForeColor = Color.FromArgb(128, 194, 236);
-            lblIdentifiant.Location = new Point(10, 150);
-            lblIdentifiant.Font = new Font("Arial", 55);  // Taille énorme 
             lblIdentifiant.AutoSize = true;
             panelChamps.Controls.Add(lblIdentifiant);
 
-            // TextBox Identifiant 
+            // TextBox Identifiant
             txtIdentifiant = new TextBox();
-            txtIdentifiant.Size = new Size(1000, 400);  // Taille énorme 
-            txtIdentifiant.Location = new Point(600, 150);
-            txtIdentifiant.Font = new Font("Arial", 55);  // Texte énorme 
+            txtIdentifiant.UseSystemPasswordChar = false; // Pas pour mot de passe
             panelChamps.Controls.Add(txtIdentifiant);
 
-            // Label Mot de passe 
-            Label lblMotDePasse = new Label();
+            // Label Mot de passe
+            lblMotDePasse = new Label();
             lblMotDePasse.Text = "Mot de passe :";
             lblMotDePasse.ForeColor = Color.FromArgb(128, 194, 236);
-            lblMotDePasse.Location = new Point(10, 500);
-            lblMotDePasse.Font = new Font("Arial", 55);  // Taille énorme 
             lblMotDePasse.AutoSize = true;
             panelChamps.Controls.Add(lblMotDePasse);
 
-            // TextBox Mot de passe 
+            // TextBox Mot de passe
             txtMotDePasse = new TextBox();
-            txtMotDePasse.Size = new Size(1000, 400);  // Taille énorme 
-            txtMotDePasse.Location = new Point(600, 500);
-            txtMotDePasse.Font = new Font("Arial", 55);  // Texte énorme 
             txtMotDePasse.UseSystemPasswordChar = true;
             panelChamps.Controls.Add(txtMotDePasse);
 
-            // Panel contenant les champs FulBank
-            RoundedPanel panelFul = new RoundedPanel();
+            // Panel FulBank
+            panelFul = new RoundedPanel();
             panelFul.BackColor = Color.FromArgb(34, 67, 153);
-            panelFul.Size = new Size(1000, 350);  // Agrandir le panel 
-            panelFul.Location = new Point((this.ClientSize.Width - panelFul.Width) / 2, 605);  // Centré 
-            panelFul.Anchor = AnchorStyles.None;  // Garder le panel centré 
-            panelFul.BorderRadius = 90;
+            panelFul.BorderRadius = 50;
             this.Controls.Add(panelFul);
 
-            // Label FulBank 
-            Label lblFulBank = new Label();
+            // Label FulBank
+            lblFulBank = new Label();
             lblFulBank.Text = "FulBank";
-            lblFulBank.Font = new Font("Arial", 120, FontStyle.Bold);  // Texte énorme 
+            lblFulBank.Font = new Font("Arial", 90, FontStyle.Bold);
             lblFulBank.ForeColor = Color.FromArgb(207, 162, 0);
-            lblFulBank.Location = new Point(150, 75);  // Centré 
-            lblFulBank.AutoSize = true;
             panelFul.Controls.Add(lblFulBank);
 
-            // Label Sous-titre 
-            Label lblSousTitre = new Label();
+            // Label Sous-titre
+            lblSousTitre = new Label();
             lblSousTitre.Text = "Bank et Crypto";
-            lblSousTitre.Font = new Font("Arial", 50, FontStyle.Italic);  // Texte énorme 
+            lblSousTitre.Font = new Font("Arial", 35, FontStyle.Italic);
             lblSousTitre.ForeColor = Color.FromArgb(207, 162, 0);
-            lblSousTitre.Location = new Point(500, 250);  // Centré 
-            lblSousTitre.AutoSize = true;
             panelFul.Controls.Add(lblSousTitre);
 
-            // Création des boutons (haut, bas, gauche, droite) 
-            CreateDirectionalButtons();
-
-            // Bouton Valider ✔ 
-            RoundedButton btnValider = new RoundedButton();
-            btnValider.Text = "✔";
-            btnValider.ForeColor = Color.FromArgb(128, 194, 236);
-            btnValider.Size = new Size(300, 300);  // Taille énorme 
-            btnValider.Location = new Point(2200, 10);  // Position ajustée pour être à droite
-            btnValider.BackColor = Color.FromArgb(34, 67, 153);
-            btnValider.Font = new Font("Arial", 120, FontStyle.Bold);  // Texte énorme 
-            btnValider.BorderRadius = 90;  // Rayon des coins 
-            btnValider.Click += BtnValider1_Click;
-            this.Controls.Add(btnValider);
-
-            // Bouton Retour ↩ 
-            RoundedButton btnRetour = new RoundedButton();
-            btnRetour.Text = "↩";
-            btnRetour.ForeColor = Color.FromArgb(128, 194, 236);
-            btnRetour.Size = new Size(300, 300);  // Taille énorme 
-            btnRetour.Location = new Point(2200, 360);  // Position ajustée 
-            btnRetour.BackColor = Color.FromArgb(34, 67, 153);
-            btnRetour.Font = new Font("Arial", 120, FontStyle.Bold);  // Texte énorme
-            btnRetour.BorderRadius = 90;
-            this.Controls.Add(btnRetour);
-
-            // Bouton Maison 🏠 
-            RoundedButton btnMaison = new RoundedButton();
-            btnMaison.Text = "🏠";
-            btnMaison.ForeColor = Color.FromArgb(128, 194, 236);
-            btnMaison.Size = new Size(300, 300);  // Taille énorme 
-            btnMaison.Location = new Point(2200, 710);  // Position ajustée 
-            btnMaison.BackColor = Color.FromArgb(99, 99, 101);
-            btnMaison.Font = new Font("Arial", 120, FontStyle.Bold);  // Texte énorme 
-            btnMaison.BorderRadius = 90;
-            btnMaison.Enabled = false;
-            this.Controls.Add(btnMaison);
-
-            // Bouton Fermer X 
-            RoundedButton btnFermer = new RoundedButton();
-            btnFermer.Text = "X";
-            btnFermer.ForeColor = Color.FromArgb(128, 194, 236);
-            btnFermer.Size = new Size(300, 300);  // Taille énorme 
-            btnFermer.Location = new Point(2200, 1060); // Position ajustée 
-            btnFermer.BackColor = Color.FromArgb(34, 67, 153);
-            btnFermer.Font = new Font("Arial", 120, FontStyle.Bold);  // Texte énorme 
-            btnFermer.BorderRadius = 90;
-            btnFermer.Click += BtnFermer1_Click;
-            this.Controls.Add(btnFermer);
-        }
-
-        // Création des boutons directionnels 
-        private void CreateDirectionalButtons()
-        {
-            // Bouton Flèche Haut ↑ 
-            RoundedButton btnHaut = new RoundedButton();
-            btnHaut.Text = "↑";
-            btnHaut.ForeColor = Color.FromArgb(128, 194, 236);
-            btnHaut.Size = new Size(300, 300);  // Taille énorme 
-            btnHaut.Location = new Point(60, 10);
-            btnHaut.BackColor = Color.FromArgb(34, 67, 153);
-            btnHaut.Font = new Font("Arial", 120, FontStyle.Bold);  // Texte énorme 
-            btnHaut.BorderRadius = 90;
-            btnHaut.Click += BtnHaut_Click;
-            this.Controls.Add(btnHaut);
-
-            // Bouton Flèche Bas ↓ 
-            RoundedButton btnBas = new RoundedButton();
-            btnBas.Text = "↓";
-            btnBas.ForeColor = Color.FromArgb(128, 194, 236);
-            btnBas.Size = new Size(300, 300);  // Taille énorme 
-            btnBas.Location = new Point(60, 1060);
-            btnBas.BackColor = Color.FromArgb(34, 67, 153);
-            btnBas.Font = new Font("Arial", 120, FontStyle.Bold);  // Texte énorme 
-            btnBas.BorderRadius = 90;
-            btnBas.Click += BtnBas_Click;
-            this.Controls.Add(btnBas);
-
-            // Bouton Flèche Gauche ← 
-            RoundedButton btnGauche = new RoundedButton();
-            btnGauche.Text = "←";
-            btnGauche.ForeColor = Color.FromArgb(128, 194, 236);
-            btnGauche.Size = new Size(300, 300);  // Taille énorme 
-            btnGauche.Location = new Point(60, 360);
-            btnGauche.BackColor = Color.FromArgb(34, 67, 153);
-            btnGauche.Font = new Font("Arial", 120, FontStyle.Bold);  // Texte énorme 
-            btnGauche.BorderRadius = 90;
-            btnGauche.Click += BtnGauche_Click;
-            this.Controls.Add(btnGauche);
-
-            // Bouton Flèche Droite → 
-            RoundedButton btnDroite = new RoundedButton();
-            btnDroite.Text = "→";
-            btnDroite.ForeColor = Color.FromArgb(128, 194, 236);
-            btnDroite.Size = new Size(300, 300);  // Taille énorme 
-            btnDroite.Location = new Point(60, 710);
-            btnDroite.BackColor = Color.FromArgb(34, 67, 153);
-            btnDroite.Font = new Font("Arial", 120, FontStyle.Bold);  // Texte énorme
-            btnDroite.BorderRadius = 90;
-            btnDroite.Click += BtnDroite_Click;
-            this.Controls.Add(btnDroite);
-        }
-
-        private void Connexion_Load(object sender, EventArgs e)
-        {
-
+            // Ajuster la mise en page pour la première fois
+            AdjustLayout();
         }
 
         private void BtnGauche_Click(object sender, EventArgs e)
@@ -245,12 +152,12 @@ namespace fulbank
 
         private void BtnDroite_Click(object sender, EventArgs e)
         {
-            if (txtIdentifiant.Text.Length > 0 && txtIdentifiant.SelectionStart > 0)
+            if (txtIdentifiant.Text.Length > 0 && txtIdentifiant.SelectionStart < txtIdentifiant.Text.Length)
             {
                 txtIdentifiant.SelectionStart++; // Déplacement à droite dans txtIdentifiant
                 txtIdentifiant.Focus();
             }
-            else if (txtMotDePasse.Text.Length > 0 && txtMotDePasse.SelectionStart > 0)
+            else if (txtMotDePasse.Text.Length > 0 && txtMotDePasse.SelectionStart < txtMotDePasse.Text.Length)
             {
                 txtMotDePasse.SelectionStart++; // Déplacement à droite dans txtMotDePasse
                 txtMotDePasse.Focus();
@@ -279,6 +186,35 @@ namespace fulbank
             {
                 txtMotDePasse.Focus(); // Reste concentré sur le champ Mot de passe
             }
+        }
+
+        private void AdjustLayout()
+        {
+            // Ajuster la taille et la position du panel des champs
+            panelChamps.Size = new Size(this.ClientSize.Width * 3 / 4, this.ClientSize.Height / 2);
+            panelChamps.Location = new Point((this.ClientSize.Width - panelChamps.Width) / 2);
+
+            // Ajuster la taille et la position des labels et textbox dans le panelChamps
+            int margin = this.ClientSize.Height / 50;
+            lblIdentifiant.Location = new Point(margin, margin);
+            txtIdentifiant.Size = new Size(panelChamps.Width - 2 * margin, panelChamps.Height / 4);
+            txtIdentifiant.Location = new Point(margin, lblIdentifiant.Bottom + margin);
+
+            lblMotDePasse.Location = new Point(margin, txtIdentifiant.Bottom + margin);
+            txtMotDePasse.Size = new Size(panelChamps.Width - 2 * margin, panelChamps.Height / 4);
+            txtMotDePasse.Location = new Point(margin, lblMotDePasse.Bottom + margin);
+
+            // Ajuster la taille et la position du panel FulBank
+            panelFul.Size = new Size(this.ClientSize.Width * 2 / 4, this.ClientSize.Height / 4);
+            panelFul.Location = new Point((this.ClientSize.Width - panelFul.Width) / 2,
+                                          panelChamps.Bottom + margin); // Position en dessous du panelChamps
+
+            // Ajuster la taille et la position des labels dans le panelFul
+            lblFulBank.Size = new Size(panelFul.Width, panelFul.Height / 2);
+            lblFulBank.Location = new Point((panelFul.Width - lblFulBank.Width) / 2, margin);
+
+            lblSousTitre.Size = new Size(panelFul.Width, panelFul.Height / 2);
+            lblSousTitre.Location = new Point((panelFul.Width - lblSousTitre.Width) / 2, lblFulBank.Bottom + margin);
         }
     }
 }
