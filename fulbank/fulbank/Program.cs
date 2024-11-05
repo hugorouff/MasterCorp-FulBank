@@ -179,8 +179,6 @@ namespace fulbank
                     ForeColor = foreColor,
                     BackColor = backgroundColor,
                     BorderRadius = 90,
-                    Size = new Size(form.ClientSize.Width / 6, form.ClientSize.Height / 8), // Taille augmentée
-                    Font = new Font(SystemFonts.DefaultFont.FontFamily, Math.Max(18, form.ClientSize.Height / 25)) // Taille de police augmentée
                 };
                 button.Click += clickEvent;
                 return button;
@@ -211,39 +209,50 @@ namespace fulbank
             // Méthode pour ajuster la disposition des boutons
             void AdjustButtonLayout()
             {
-                int buttonHeight = form.ClientSize.Height / 5; // Hauteur augmentée pour les boutons directionnels
-                int buttonWidth = form.ClientSize.Width / 8; // Largeur augmentée pour les boutons directionnels
-                int leftMargin = 0;
+                // Calcul des dimensions pour adapter les boutons directionnels
+                int buttonHeight = form.ClientSize.Height / 5;
+                int buttonWidth = form.ClientSize.Width / 8;
                 int topMargin = 40;
 
-                // Positionner les boutons directionnels
+                // Ajustement de la taille de la police des boutons directionnels
+                float fontSize = Math.Max(14, buttonHeight / 4);
+
+                // Configurer les boutons directionnels
                 btnHaut.Size = new Size(buttonWidth, buttonHeight);
-                btnHaut.Location = new Point(leftMargin, topMargin);
+                btnHaut.Location = new Point(0, topMargin);
+                btnHaut.Font = new Font(btnHaut.Font.FontFamily, fontSize);
 
                 btnGauche.Size = new Size(buttonWidth, buttonHeight);
-                btnGauche.Location = new Point(leftMargin, btnHaut.Bottom + topMargin);
+                btnGauche.Location = new Point(0, btnHaut.Bottom + topMargin);
+                btnGauche.Font = new Font(btnGauche.Font.FontFamily, fontSize);
 
                 btnBas.Size = new Size(buttonWidth, buttonHeight);
-                btnBas.Location = new Point(leftMargin, btnGauche.Bottom + topMargin);
+                btnBas.Location = new Point(0, btnGauche.Bottom + topMargin);
+                btnBas.Font = new Font(btnBas.Font.FontFamily, fontSize);
 
                 btnDroite.Size = new Size(buttonWidth, buttonHeight);
-                btnDroite.Location = new Point(leftMargin, btnBas.Bottom + topMargin);
+                btnDroite.Location = new Point(0, btnBas.Bottom + topMargin);
+                btnDroite.Font = new Font(btnDroite.Font.FontFamily, fontSize);
 
-                // Ajuster les boutons de contrôle
-                int controlButtonWidth = form.ClientSize.Width / 8; // largeur des boutons de contrôle augmentée
-                int controlButtonHeight = form.ClientSize.Height / 5; // hauteur des boutons de contrôle augmentée
+                // Configurer les boutons de contrôle
+                int controlButtonWidth = form.ClientSize.Width / 8;
+                int controlButtonHeight = form.ClientSize.Height / 5;
 
                 btnValider.Size = new Size(controlButtonWidth, controlButtonHeight);
-                btnValider.Location = new Point(form.ClientSize.Width - controlButtonWidth - leftMargin, topMargin);
+                btnValider.Location = new Point(form.ClientSize.Width - controlButtonWidth, topMargin);
+                btnValider.Font = new Font(btnValider.Font.FontFamily, fontSize);
 
                 btnRetour.Size = new Size(controlButtonWidth, controlButtonHeight);
-                btnRetour.Location = new Point(form.ClientSize.Width - controlButtonWidth - leftMargin, btnValider.Bottom + topMargin);
+                btnRetour.Location = new Point(form.ClientSize.Width - controlButtonWidth, btnValider.Bottom + topMargin);
+                btnRetour.Font = new Font(btnRetour.Font.FontFamily, fontSize);
 
                 btnMaison.Size = new Size(controlButtonWidth, controlButtonHeight);
-                btnMaison.Location = new Point(form.ClientSize.Width - controlButtonWidth - leftMargin, btnRetour.Bottom + topMargin);
+                btnMaison.Location = new Point(form.ClientSize.Width - controlButtonWidth, btnRetour.Bottom + topMargin);
+                btnMaison.Font = new Font(btnMaison.Font.FontFamily, fontSize);
 
                 btnFermer.Size = new Size(controlButtonWidth, controlButtonHeight);
-                btnFermer.Location = new Point(form.ClientSize.Width - controlButtonWidth - leftMargin, btnMaison.Bottom + topMargin);
+                btnFermer.Location = new Point(form.ClientSize.Width - controlButtonWidth, btnMaison.Bottom + topMargin);
+                btnFermer.Font = new Font(btnFermer.Font.FontFamily, fontSize);
             }
 
             // Initialiser la disposition des boutons
