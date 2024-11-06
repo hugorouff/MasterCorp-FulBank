@@ -30,7 +30,7 @@ CREATE TABLE Utilisateur(
    nom VARCHAR(50),
    prenom VARCHAR(50),
    courielle VARCHAR(50),
-   numeroTelephone VARCHAR(50),
+   numeroTelephone VARCHAR(15),
    typeProfile INT,
    PRIMARY KEY(id),
    FOREIGN KEY(typeProfile) REFERENCES `Profiles`(id)
@@ -40,8 +40,8 @@ CREATE TABLE CompteBanquaire(
    numeroDeCompte INT,
    solde DECIMAL(12,2),
    coTitulaire INT,
-   `type` INT NOT NULL,
    titulaire INT NOT NULL,
+   `type` INT NOT NULL,
    monaie INT NOT NULL,
    PRIMARY KEY(numeroDeCompte),
    FOREIGN KEY(coTitulaire) REFERENCES Utilisateur(id),
@@ -154,4 +154,18 @@ begin
 			end if;
 		end if;
 	commit; 
-    end$$
+    end $$
+    
+create function checkConnexion(mdp varchar(255), usr int) returns bool
+begin
+	declare mdp_check varchar(255) ;
+	select binary motDePasse into mdp_check from Utilisateur where id = usr;
+
+	if mdp_check = binary mdp 
+	then
+		return True;
+	else
+		return false;
+	end if;
+end $$
+

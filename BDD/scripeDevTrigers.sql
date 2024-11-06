@@ -59,4 +59,19 @@ create procedure setTrue(in anid int)
     where Opperation.id = anid;	
  end$$
  */
+ 
+ delimiter $$ 
+drop function checkConnexion$$
+create function checkConnexion(mdp varchar(255), usr int) returns bool
+begin
+declare mdp_check varchar(255) ;
+select binary motDePasse into mdp_check from Utilisateur where id = usr;
+
+if mdp_check = binary mdp 
+then
+return True;
+else
+return false;
+end if;
+end $$
 delimiter ;

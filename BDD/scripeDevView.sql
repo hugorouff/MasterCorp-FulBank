@@ -1,9 +1,8 @@
 use fulbank;
-
+/*
 show tables;
 
 explain Opperation;
-
 
 drop view opperations_utilisateur;
 create view opperations_utilisateur as 
@@ -24,8 +23,24 @@ create view comptes_utilisateur as
 select numeroDeCompte, label, solde,M.nom
 from CompteBanquaire as CB inner join Monnaie as M on M.id = CB.monaie 
 inner join TypeCompte as TC on TC.id = CB.`type`;
+#*/
+
+delimiter $$
+show tables;
+select * from  CompteBanquaire ;
+select * from  Utilisateur;
+select * from  comptes_utilisateur;
+
+explain Utilisateur;
+explain CompteBanquaire;
+$$
+delimiter ;
 
 
-drop view test;
-create view test as
-select * from Opperation;
+
+create view compte_nom_utilisateur as
+select T.nom as "nom_titulaire", T.prenom as "prenom titulaire",CT.nom as "nom_co_titulaire", CT.prenom as "prenom_co_titulaire" , CB.numeroDeCompte, TC.label, CB.solde, M.nom as "nom_monnaie"
+from CompteBanquaire as CB inner join Utilisateur as T on CB.titulaire = T.id;
+
+
+select * from comptes_utilisateur
