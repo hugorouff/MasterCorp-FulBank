@@ -1,4 +1,5 @@
 ﻿using System.Drawing.Drawing2D;
+using System.Security.Cryptography;
 
 namespace fulbank
 {
@@ -104,8 +105,8 @@ namespace fulbank
             panelFul.Location = new Point(260, 0);  // Centré 
             form.Controls.Add(panelFul);
 
-            // Label FulBank 
-            Label lblFulBank = new Label();
+             // Label FulBank 
+             Label lblFulBank = new Label();
             lblFulBank.Text = "FulBank";
             lblFulBank.Font = new Font("Arial", 90, FontStyle.Bold);  // Texte énorme 
             lblFulBank.ForeColor = Color.FromArgb(207, 162, 0);
@@ -118,10 +119,40 @@ namespace fulbank
             lblSousTitre.Text = "Bank et Crypto";
             lblSousTitre.Font = new Font("Arial", 35, FontStyle.Italic);  // Texte énorme 
             lblSousTitre.ForeColor = Color.FromArgb(207, 162, 0);
-            lblSousTitre.Size = new Size(430, 1000);
+            lblSousTitre.Size = new Size(440, 1000);
             lblSousTitre.Paint += new PaintEventHandler(lblSousTitre_Paint);
             panelFul.Controls.Add(lblSousTitre);
+
+            // Ajuster la mise en page pour la première fois
+            AdjustLayout();
         }
+
+        public static void AdjustLayout(Form form, Panel panelFul, Label lblFulBank, Label lblSousTitre)
+        {
+            // Taille et position de panelChamps
+            panelFul.Size = new Size(form.ClientSize.Width * 3 / 4, form.ClientSize.Height / 2);
+            panelFul.Location = new Point((form.ClientSize.Width - panelFul.Width) / 2);
+
+            int margin = form.ClientSize.Height / 50;
+
+            // Taille et position de panelFul
+            panelFul.Size = new Size(this.ClientSize.Width * 2 / 4, this.ClientSize.Height / 4);
+            panelFul.Location = new Point((this.ClientSize.Width - panelFul.Width) / 2, panelChamps.Bottom + margin * 4);
+
+            // Ajustement dynamique de la taille de police
+            float baseFontSize = this.ClientSize.Height / 40f;
+            lblFulBank.Font = new Font("Arial", baseFontSize * 4, FontStyle.Bold);
+            lblSousTitre.Font = new Font("Arial", baseFontSize * 2, FontStyle.Italic);
+
+            // Centrage dynamique de lblFulBank dans panelFul
+            lblFulBank.AutoSize = true; // Activer AutoSize pour obtenir la largeur réelle
+            lblFulBank.Location = new Point((panelFul.Width - lblFulBank.Width) / 2, margin / 20);
+
+            // Aligner lblSousTitre à gauche avec un décalage fixe
+            lblSousTitre.AutoSize = true; // Activer AutoSize pour obtenir la largeur réelle
+            lblSousTitre.Location = new Point(margin * 20, lblFulBank.Bottom + margin / 20);
+        }
+
         // Méthode Paint pour le label "FulBank"
         public static void lblFulBank_Paint(object sender, PaintEventArgs e)
         {
@@ -226,13 +257,13 @@ namespace fulbank
                 btnGauche.Location = new Point(0, btnHaut.Bottom + topMargin);
                 btnGauche.Font = new Font(btnGauche.Font.FontFamily, fontSize);
 
-                btnBas.Size = new Size(buttonWidth, buttonHeight);
-                btnBas.Location = new Point(0, btnGauche.Bottom + topMargin);
-                btnBas.Font = new Font(btnBas.Font.FontFamily, fontSize);
-
                 btnDroite.Size = new Size(buttonWidth, buttonHeight);
-                btnDroite.Location = new Point(0, btnBas.Bottom + topMargin);
+                btnDroite.Location = new Point(0, btnGauche.Bottom + topMargin);
                 btnDroite.Font = new Font(btnDroite.Font.FontFamily, fontSize);
+
+                btnBas.Size = new Size(buttonWidth, buttonHeight);
+                btnBas.Location = new Point(0, btnDroite.Bottom + topMargin);
+                btnBas.Font = new Font(btnBas.Font.FontFamily, fontSize);
 
                 // Configurer les boutons de contrôle
                 int controlButtonWidth = form.ClientSize.Width / 8;
