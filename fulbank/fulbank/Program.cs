@@ -1,5 +1,4 @@
 ﻿using System.Drawing.Drawing2D;
-using System.Security.Cryptography;
 
 namespace fulbank
 {
@@ -105,8 +104,8 @@ namespace fulbank
             panelFul.Location = new Point(260, 0);  // Centré 
             form.Controls.Add(panelFul);
 
-             // Label FulBank 
-             Label lblFulBank = new Label();
+            // Label FulBank 
+            Label lblFulBank = new Label();
             lblFulBank.Text = "FulBank";
             lblFulBank.Font = new Font("Arial", 90, FontStyle.Bold);  // Texte énorme 
             lblFulBank.ForeColor = Color.FromArgb(207, 162, 0);
@@ -124,7 +123,7 @@ namespace fulbank
             panelFul.Controls.Add(lblSousTitre);
 
             // Ajuster la mise en page pour la première fois
-            AdjustLayout();
+            //AdjustLayout(form, panelFul, lblFulBank, lblSousTitre);
         }
 
         public static void AdjustLayout(Form form, Panel panelFul, Label lblFulBank, Label lblSousTitre)
@@ -136,11 +135,11 @@ namespace fulbank
             int margin = form.ClientSize.Height / 50;
 
             // Taille et position de panelFul
-            panelFul.Size = new Size(this.ClientSize.Width * 2 / 4, this.ClientSize.Height / 4);
-            panelFul.Location = new Point((this.ClientSize.Width - panelFul.Width) / 2, panelChamps.Bottom + margin * 4);
+            panelFul.Size = new Size(form.ClientSize.Width * 2 / 4, form.ClientSize.Height / 4);
+            panelFul.Location = new Point((form.ClientSize.Width - panelFul.Width) / 2, panelFul.Bottom + margin * 4);
 
             // Ajustement dynamique de la taille de police
-            float baseFontSize = this.ClientSize.Height / 40f;
+            float baseFontSize = form.ClientSize.Height / 40f;
             lblFulBank.Font = new Font("Arial", baseFontSize * 4, FontStyle.Bold);
             lblSousTitre.Font = new Font("Arial", baseFontSize * 2, FontStyle.Italic);
 
@@ -257,13 +256,13 @@ namespace fulbank
                 btnGauche.Location = new Point(0, btnHaut.Bottom + topMargin);
                 btnGauche.Font = new Font(btnGauche.Font.FontFamily, fontSize);
 
-                btnDroite.Size = new Size(buttonWidth, buttonHeight);
-                btnDroite.Location = new Point(0, btnGauche.Bottom + topMargin);
-                btnDroite.Font = new Font(btnDroite.Font.FontFamily, fontSize);
-
                 btnBas.Size = new Size(buttonWidth, buttonHeight);
-                btnBas.Location = new Point(0, btnDroite.Bottom + topMargin);
+                btnBas.Location = new Point(0, btnGauche.Bottom + topMargin);
                 btnBas.Font = new Font(btnBas.Font.FontFamily, fontSize);
+
+                btnDroite.Size = new Size(buttonWidth, buttonHeight);
+                btnDroite.Location = new Point(0, btnBas.Bottom + topMargin);
+                btnDroite.Font = new Font(btnDroite.Font.FontFamily, fontSize);
 
                 // Configurer les boutons de contrôle
                 int controlButtonWidth = form.ClientSize.Width / 8;

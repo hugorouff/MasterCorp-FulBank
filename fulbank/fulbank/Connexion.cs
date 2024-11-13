@@ -1,8 +1,10 @@
-﻿using System.Drawing.Drawing2D;
+﻿using MySqlConnector;
+using System.Drawing.Drawing2D;
 using System.Media;
 
 namespace fulbank
 {
+    
     public partial class Connexion : Form
     {
         //private Methode methode = new Methode();
@@ -23,6 +25,8 @@ namespace fulbank
         public RoundedButton btnRetour;
         public RoundedButton btnValider;
         public RoundedButton btnFermer;
+
+        private MySqlConnection BDD = ConnexionBDD.Connexion();
 
         public Connexion()
         {
@@ -56,6 +60,25 @@ namespace fulbank
             MenuBase form2 = new MenuBase();
             form2.Show();
             this.Hide();
+            /*string id = this.txtIdentifiant.Text;
+            string mdp = this.txtMotDePasse.Text;
+            MySqlCommand cmd = new MySqlCommand("Select checkConnexion(@mdp_ , @id_ );", BDD);
+            
+            cmd.Parameters.Add(new MySqlParameter("id_", id));
+            cmd.Parameters.Add(new MySqlParameter("mdp_", mdp));
+
+            BDD.Open();
+            MySqlDataReader data = cmd.ExecuteReader();
+
+            data.Read();
+            if (data.GetBoolean(0))
+            {
+                Utilisateur.NewInstance(int.Parse(id));
+                MenuBase form2 = new MenuBase();
+                form2.Show();
+                this.Hide();
+            }
+            BDD.Close();*/
         }
 
         // Action du bouton Fermer 
