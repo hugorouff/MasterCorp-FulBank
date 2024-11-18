@@ -1,72 +1,293 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using MySqlConnector;
 
 namespace fulbank
 {
     public partial class MenuRetraiDepotEchange : Form
     {
-        // Déclaration des panels comme champs de la classe
-        private RoundedPanel panelDepot;
-        private RoundedPanel panelRetrait;
-        private RoundedPanel panelEchange;
+        private RoundedPanel panelChoixCompte;
+        private List<Account> accounts; // Liste des comptes
+        private int selectedAccountIndex = 0; // Index du compte sélectionné
+        private Label accountDetailsLabel; // Label pour afficher les détails du compte
         private int selectedPanelIndex = 0; // Index to track the currently selected panel
-        private string selectedAction;  // Nouveau champ pour stocker l'action sélectionnée
+
         // Liste des panels et un index pour suivre le panel actif
         private RoundedPanel[] panels;
         private int currentPanelIndex = 0;
+
         public MenuRetraiDepotEchange(string action)
         {
             InitializeComponent();
-            Initializeform3();
-            selectedAction = action;  // Stocke l'action sélectionnée
-            UpdatePanelSelection();
-            UpdatePanelVisibility();  // Appelle la méthode pour afficher la section correcte
-            Methode.CreateDirectionalButtons(
-            this,
-            BtnHaut_Click,    // Gestionnaire d'événement pour le bouton Haut
-            BtnBas_Click,     // Gestionnaire d'événement pour le bouton Bas
-            BtnGauche_Click,  // Gestionnaire d'événement pour le bouton Gauche
-            BtnDroite_Click,  // Gestionnaire d'événement pour le bouton Droite
-            BtnValider_Click, // Gestionnaire d'événement pour le bouton Valider
-            BtnRetour_Click,  // Gestionnaire d'événement pour le bouton Retour
-            BtnMaison_Click,  // Gestionnaire d'événement pour le bouton Maison
-            BtnFermer_Click   // Gestionnaire d'événement pour le bouton Fermer
-            );
+
+            try
+            {
+                var utilisateur = Utilisateur.getInstance(); // Vérification de l'utilisateur
+                Initializeform3();
+                LoadAccountsFromDatabase(); // Charger les comptes depuis la base de données
+                DisplayAccountDetails(); // Afficher les détails du compte sélectionné
+            }
+            catch (InvalidOperationException ex)
+            {
+                MessageBox.Show(ex.Message, "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                // Retourner à l'écran de connexion
+                Connexion formConnexion = new Connexion();
+                formConnexion.Show();
+                this.Close();
+            }
         }
 
-        private void UpdatePanelVisibility()
+        private void Initializeform3()
         {
-            panelDepot.Visible = selectedAction == "Depot";
-            panelRetrait.Visible = selectedAction == "Retrait";
-            panelEchange.Visible = selectedAction == "Echange";
-            UpdatePanelSelection();
+            this.WindowState = FormWindowState.Maximized;
+            this.FormBorderStyle = FormBorderStyle.None;
+            this.BackColor = Color.FromArgb(128, 194, 236);
+            this.Text = "FulBank";
+
+            Methode.Fulbank(this);
+
+            // Initialisation du panneau de choix de compte
+            panelChoixCompte = new RoundedPanel { BackColor = Color.FromArgb(34, 67, 153), BorderRadius = 90 };
+
+            this.Controls.AddRange(new Control[] { panelChoixCompte });
+
+            // Initialisation des labels et leur centrage dans les panneaux
+            InitPanelLabel(panelChoixCompte, "Choix de Compte");
+
+            panels = new RoundedPanel[] { panelChoixCompte };
+
+            // Appel de la méthode de création des boutons et de l'ajustement
+            Methode.CreateDirectionalButtons(this, BtnHaut_Click, BtnBas_Click, BtnGauche_Click, BtnDroite_Click, BtnValider_Click, BtnRetour_Click, BtnMaison_Click, BtnFermer_Click);
+
+            // Initialiser la disposition des panneaux
+            AdjustPanelLayout();
+
+            // Ajouter un événement pour redimensionner les panneaux automatiquement
+            this.Resize += (s, e) => AdjustPanelLayout();
+
+            // Ajout d'un label pour les détails du compte
+            accountDetailsLabel = new Label
+            {
+                Font = new Font("Arial", 30, FontStyle.Bold),
+                ForeColor = Color.FromArgb(128, 194, 236),
+                AutoSize = true
+            };
+            panelChoixCompte.Controls.Add(accountDetailsLabel);
+            Methode.CenterControlInParent(accountDetailsLabel);
+            this.Controls.Add(panelChoixCompte);
         }
 
-        private void MenuRetraiDepotEchange_Load(object sender, EventArgs e)
+        // Méthode pour ajuster la disposition des panneaux
+        private void AdjustPanelLayout()
         {
+            // Largeur et hauteur des panneaux basées sur les dimensions des boutons
+            int panelWidth = this.ClientSize.Width * 53 / 90;
+            int buttonHeight = this.ClientSize.Height / 5;
+            int panelHeight = buttonHeight; // Même hauteur que les boutons de contrôle
 
+            // Largeur des boutons de contrôle (Valider, Retour, Maison, Fermer)
+            int buttonWidth = this.ClientSize.Width / 8;
+            int buttonSpacing = this.ClientSize.Height / 20; // Même espacement que pour les boutons
+
+            // Position horizontale des panneaux juste à côté des boutons de contrôle
+            int panelX = this.ClientSize.Width - buttonWidth - panelWidth - buttonSpacing;
+
+            // Calculer la marge supérieure pour centrer les panneaux verticalement
+            int topMargin = (this.ClientSize.Height - (panelHeight * panels.Length + buttonSpacing * (panels.Length - 1))) / 2;
+
+            // Ajustement des panneaux sur l'écran
+            for (int i = 0; i < panels.Length; i++)
+            {
+                RoundedPanel panel = panels[i];
+
+                // Définir la taille et la position des panneaux
+                panel.Size = new Size(panelWidth, panelHeight);
+                panel.Location = new Point(panelX * 105 / 100, topMargin + i * (panelHeight + buttonSpacing));
+
+                // Centrer le contenu (label) dans le panneau
+                if (panel.Controls.Count > 0 && panel.Controls[0] is Label lbl)
+                {
+                    Methode.CenterControlInParent(lbl);
+                }
+            }
         }
 
+        // Méthode pour initialiser un label dans un panel
+        private void InitPanelLabel(RoundedPanel panel, string text)
+        {
+            Label label = new Label
+            {
+                Text = text,
+                Font = new Font("Arial", 90, FontStyle.Bold),
+                ForeColor = Color.FromArgb(128, 194, 236),
+                AutoSize = true
+            };
+            panel.Controls.Add(label);
+            Methode.CenterControlInParent(label);
+        }
+
+        private void LoadAccountsFromDatabase()
+        {
+            accounts = new List<Account>();
+            try
+            {
+                var utilisateur = Utilisateur.getInstance(); // Récupérer l'utilisateur actuel
+
+                using (var connection = ConnexionBDD.Connexion())
+                {
+                    connection.Open();
+                    string query = @"
+                SELECT 
+                    CompteBancaire.numeroDeCompte AS id,
+                    CompteBancaire.solde AS balance,
+                    Monnaie.nom AS currencyName,
+                    TypeCompte.label AS accountType
+                FROM 
+                    CompteBancaire
+                INNER JOIN Monnaie ON CompteBancaire.monnaie = Monnaie.id
+                INNER JOIN TypeCompte ON CompteBancaire.type = TypeCompte.id
+                WHERE 
+                    CompteBancaire.titulaire = @userId";
+
+                    using (var command = new MySqlCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@userId", utilisateur.getId);
+
+                        using (var reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                accounts.Add(new Account
+                                {
+                                    Id = reader.GetInt32("id"),
+                                    Name = reader.GetString("accountType"),
+                                    Balance = reader.GetDecimal("balance"),
+                                    Currency = reader.GetString("currencyName")
+                                });
+                            }
+                        }
+                    }
+                }
+            }
+            catch (InvalidOperationException ex)
+            {
+                MessageBox.Show($"Erreur : {ex.Message}");
+            }
+            catch (MySqlException ex)
+            {
+                MessageBox.Show($"Erreur lors du chargement des comptes : {ex.Message}");
+            }
+        }
+
+        // Afficher les détails du compte sélectionné
+        private void DisplayAccountDetails()
+        {
+            if (accounts != null && accounts.Count > 0)
+            {
+                var account = accounts[selectedAccountIndex];
+                accountDetailsLabel.Text = $"Compte : {account.Name}\nSolde : {account.Balance:C}";
+                Methode.CenterControlInParent(accountDetailsLabel);
+            }
+            else
+            {
+                accountDetailsLabel.Text = "Aucun compte disponible";
+                Methode.CenterControlInParent(accountDetailsLabel);
+            }
+        }
+
+        private void DisplayAccountsInPanel()
+        {
+            // Nettoyer le contenu existant
+            panelChoixCompte.Controls.Clear();
+
+            // Vérifier s'il y a des comptes à afficher
+            if (accounts != null && accounts.Count > 0)
+            {
+                int buttonHeight = 80; // Hauteur des boutons
+                int spacing = 10; // Espacement entre les boutons
+                int yOffset = 20; // Décalage initial
+
+                // Ajouter un bouton pour chaque compte
+                for (int i = 0; i < accounts.Count; i++)
+                {
+                    var account = accounts[i];
+
+                    Button accountButton = new Button
+                    {
+                        Text = $"{account.Name}\nSolde : {account.Balance:C} {account.Currency}",
+                        Font = new Font("Arial", 14, FontStyle.Bold),
+                        ForeColor = Color.White,
+                        BackColor = Color.FromArgb(34, 67, 153),
+                        Size = new Size(panelChoixCompte.Width - 40, buttonHeight),
+                        Location = new Point(20, yOffset),
+                        Tag = i, // Stocker l'index pour l'identification
+                        FlatStyle = FlatStyle.Flat
+                    };
+
+                    accountButton.FlatAppearance.BorderSize = 0;
+
+                    // Ajouter un événement pour sélectionner un compte lors du clic
+                    accountButton.Click += (s, e) =>
+                    {
+                        selectedAccountIndex = (int)((Button)s).Tag; // Récupérer l'index à partir du Tag
+                        DisplayAccountDetails(); // Mettre à jour les détails
+                    };
+
+                    panelChoixCompte.Controls.Add(accountButton);
+                    yOffset += buttonHeight + spacing; // Ajuster la position pour le bouton suivant
+                }
+            }
+            else
+            {
+                Label noAccountsLabel = new Label
+                {
+                    Text = "Aucun compte disponible",
+                    Font = new Font("Arial", 20, FontStyle.Bold),
+                    ForeColor = Color.White,
+                    AutoSize = true
+                };
+                panelChoixCompte.Controls.Add(noAccountsLabel);
+                Methode.CenterControlInParent(noAccountsLabel);
+            }
+        }
+
+        // Navigation vers le compte précédent
+        private void BtnHaut_Click(object sender, EventArgs e)
+        {
+            if (accounts != null && accounts.Count > 0)
+            {
+                selectedAccountIndex = (selectedAccountIndex - 1 + accounts.Count) % accounts.Count;
+                DisplayAccountDetails();
+            }
+        }
+
+        // Navigation vers le compte suivant
+        private void BtnBas_Click(object sender, EventArgs e)
+        {
+            if (accounts != null && accounts.Count > 0)
+            {
+                selectedAccountIndex = (selectedAccountIndex + 1) % accounts.Count;
+                DisplayAccountDetails();
+            }
+        }
+
+        // Valider la sélection du compte
         private void BtnValider_Click(object sender, EventArgs e)
         {
-            MenuFinalTransaction form2 = new MenuFinalTransaction();
-            form2.Show();
-            this.Hide();
+            if (accounts != null && accounts.Count > 0)
+            {
+                var selectedAccount = accounts[selectedAccountIndex];
+                MessageBox.Show($"Compte sélectionné : {selectedAccount.Name}", "Validation");
+                // Passez à l'étape suivante avec le compte sélectionné
+            }
         }
 
-        private void BtnFermer_Click(object sender, EventArgs e)
-        {
-            Connexion form2 = new();
-            form2.Show();
-            this.Close();
-        }
+        private void BtnGauche_Click(object sender, EventArgs e) { }
+
+        private void BtnDroite_Click(object sender, EventArgs e) { }
 
         private void BtnRetour_Click(object sender, EventArgs e)
         {
@@ -82,91 +303,20 @@ namespace fulbank
             this.Close();
         }
 
-        private void BtnGauche_Click(object sender, EventArgs e) { }
-
-        private void BtnDroite_Click(object sender, EventArgs e) { }
-
-        private void BtnBas_Click(object sender, EventArgs e)
+        private void BtnFermer_Click(object sender, EventArgs e)
         {
-            // Change the selected panel index downwards
-            if (selectedPanelIndex < panels.Length - 1)
-            {
-                selectedPanelIndex++;
-            }
-            UpdatePanelSelection();
+            Connexion form2 = new();
+            form2.Show();
+            this.Close();
         }
+    }
 
-        private void BtnHaut_Click(object sender, EventArgs e)
-        {
-            // Empêcher selectedPanelIndex de descendre en dessous de 0
-            if (selectedPanelIndex > 0)
-            {
-                selectedPanelIndex--;
-            }
-            UpdatePanelSelection();
-        }
-
-
-        // Method to update the visual state of the panels based on selection
-        private void UpdatePanelSelection()
-        {
-            // Deselect all panels
-            foreach (var panel in panels)
-            {
-                panel.BackColor = Color.FromArgb(34, 67, 153); // Default color
-            }
-
-            // Highlight the selected panel
-            panels[selectedPanelIndex].BackColor = Color.FromArgb(50, 100, 200); // Highlight color
-        }
-
-        private void Initializeform3()
-        {
-            // Définir le formulaire en plein écran
-            this.WindowState = FormWindowState.Maximized; // Maximise le formulaire
-            this.Size = new Size(1920, 1080);  // Taille ajustée pour un écran 1920x1080
-            this.FormBorderStyle = FormBorderStyle.None; // Supprime la bordure du formulaire
-            // Configuration générale du formulaire 
-            this.Text = "FulBank";
-            this.BackColor = Color.FromArgb(128, 194, 236);
-            // Appelle la méthode pour afficher le panel de fulbank
-            Methode.Fulbank(this);
-
-            CreatePanels();
-        }
-
-        private void CreatePanels()
-        {
-            panelDepot = CreateRoundedPanel("Choix du Compte", new Point(100, -310));
-            panelRetrait = CreateRoundedPanel("Choix du Compte", new Point(100, -310));
-            panelEchange = CreateRoundedPanel("Choix du Compte", new Point(100, -310));
-
-            panels = new RoundedPanel[] { panelDepot, panelRetrait, panelEchange };
-        }
-
-        private RoundedPanel CreateRoundedPanel(string labelText, Point location)
-        {
-            var panel = new RoundedPanel
-            {
-                BackColor = Color.FromArgb(34, 67, 153),
-                Size = new Size(1090, 225),
-                Location = location,
-                Anchor = AnchorStyles.None,
-                BorderRadius = 90,
-                Visible = false // Initially not visible
-            };
-            var label = new Label
-            {
-                Text = labelText,
-                Font = new Font("Arial", 90, FontStyle.Bold),
-                ForeColor = Color.FromArgb(128, 194, 236),
-                AutoSize = true
-            };
-            panel.Controls.Add(label);
-            Methode.CenterControlInParent(label);
-            this.Controls.Add(panel);
-
-            return panel;
-        }
+    // Classe pour représenter un compte bancaire
+    public class Account
+    {
+        public int Id { get; set; }
+        public string Name { get; set; } // Type de compte (e.g., "Courant", "Épargne")
+        public decimal Balance { get; set; }
+        public string Currency { get; set; } // Nom de la monnaie
     }
 }

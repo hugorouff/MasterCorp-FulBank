@@ -16,15 +16,10 @@ namespace fulbank
         private Panel panelChamps;
         private Label lblMotDePasse;
         private Label lblIdentifiant;
-        // Boutons
-        public RoundedButton btnHaut;
-        public RoundedButton btnBas;
-        public RoundedButton btnGauche;
-        public RoundedButton btnDroite;
-        public RoundedButton btnMaison;
-        public RoundedButton btnRetour;
-        public RoundedButton btnValider;
-        public RoundedButton btnFermer;
+        private int nombreTentatives = 0;   // Nombre de tentatives échouées
+        private DateTime? dernierEchec = null; // Temps du dernier échec
+        private const int maxTentatives = 5;  // Nombre maximum de tentatives
+        private const int delaiBlocageMinutes = 2;  // Durée du blocage en minutes
 
         private MySqlConnection BDD = ConnexionBDD.Connexion();
 
@@ -57,28 +52,67 @@ namespace fulbank
         // Action du bouton Valider 
         private void BtnValider_Click(object sender, EventArgs e)
         {
-            MenuBase form2 = new MenuBase();
-            form2.Show();
-            this.Hide();
-            /*string id = this.txtIdentifiant.Text;
+            // Vérification du temps de blocage
+            if (dernierEchec.HasValue && (DateTime.Now - dernierEchec.Value).TotalMinutes < delaiBlocageMinutes)
+            {
+                // Si moins de 30 minutes se sont écoulées depuis le dernier échec
+                MessageBox.Show("Vous avez dépassé le nombre de tentatives. Essayez à nouveau dans 30 minutes.");
+                return;
+            }
+
+            string id = this.txtIdentifiant.Text;
             string mdp = this.txtMotDePasse.Text;
-            MySqlCommand cmd = new MySqlCommand("Select checkConnexion(@mdp_ , @id_ );", BDD);
-            
+
+            // Vérification si les champs sont vides
+            if (string.IsNullOrEmpty(id) || string.IsNullOrEmpty(mdp))
+            {
+                MessageBox.Show("L'identifiant ou le mot de passe ne peut être vide.");
+                return;
+            }
+
+            MySqlCommand cmd = new MySqlCommand("SELECT checkConnexion(@mdp_, @id_);", BDD);
             cmd.Parameters.Add(new MySqlParameter("id_", id));
             cmd.Parameters.Add(new MySqlParameter("mdp_", mdp));
 
-            BDD.Open();
-            MySqlDataReader data = cmd.ExecuteReader();
-
-            data.Read();
-            if (data.GetBoolean(0))
+            try
             {
-                Utilisateur.NewInstance(int.Parse(id));
-                MenuBase form2 = new MenuBase();
-                form2.Show();
-                this.Hide();
+                BDD.Open();
+                MySqlDataReader data = cmd.ExecuteReader();
+
+                // Vérification du résultat retourné
+                if (data.Read() && data.GetInt32(0) == 1)  // Si la fonction retourne 1 (connexion réussie)
+                {
+                    // Connexion réussie
+                    Utilisateur.NewInstance(int.Parse(id));
+                    MenuBase form2 = new MenuBase();
+                    form2.Show();
+                    this.Hide();
+
+                    // Réinitialiser les tentatives après une connexion réussie
+                    nombreTentatives = 0;
+                }
+                else
+                {
+                    // Connexion échouée
+                    MessageBox.Show("Identifiant ou mot de passe incorrect.");
+                    nombreTentatives++;
+
+                    // Si le nombre de tentatives est atteint
+                    if (nombreTentatives >= maxTentatives)
+                    {
+                        dernierEchec = DateTime.Now;
+                        MessageBox.Show("Vous avez atteint le nombre maximum de tentatives. Vous êtes temporairement banni pour 30 minutes.");
+                    }
+                }
             }
-            BDD.Close();*/
+            catch (Exception ex)
+            {
+                MessageBox.Show("Erreur lors de la connexion : " + ex.Message);
+            }
+            finally
+            {
+                BDD.Close();
+            }
         }
 
         // Action du bouton Fermer 
@@ -214,7 +248,7 @@ namespace fulbank
         private void AdjustLayout()
         {
             // Taille et position de panelChamps
-            panelChamps.Size = new Size(this.ClientSize.Width * 3 / 4, this.ClientSize.Height / 2);
+            panelChamps.Size = new Size(this.ClientSize.Width * 72 / 100, this.ClientSize.Height / 2);
             panelChamps.Location = new Point((this.ClientSize.Width - panelChamps.Width) / 2);
 
             int margin = this.ClientSize.Height / 50;

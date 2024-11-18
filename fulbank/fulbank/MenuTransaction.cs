@@ -134,90 +134,87 @@ namespace fulbank
 
         private void Initializeform3()
         {
-            // Définir le formulaire en plein écran
-            this.WindowState = FormWindowState.Maximized; // Maximise le formulaire
-            this.Size = new Size(1920, 1080);  // Taille ajustée pour un écran 1920x1080
-            this.FormBorderStyle = FormBorderStyle.None; // Supprime la bordure du formulaire
-            // Configuration générale du formulaire 
-            this.Text = "FulBank";
+            this.WindowState = FormWindowState.Maximized;
+            this.FormBorderStyle = FormBorderStyle.None;
             this.BackColor = Color.FromArgb(128, 194, 236);
-            // Appelle la méthode pour afficher le panel de fulbank
+            this.Text = "FulBank";
+
             Methode.Fulbank(this);
 
-            // Panel contenant les champs Compte
-            RoundedPanel panelDepot = new RoundedPanel();
-            panelDepot.BackColor = Color.FromArgb(34, 67, 153);
-            panelDepot.Size = new Size(1090, 225);  // Agrandir le panel 
-            panelDepot.Location = new Point(560, -25);  // Centré 
-            panelDepot.Anchor = AnchorStyles.None;  // Garder le panel centré 
-            panelDepot.BorderRadius = 90;
-            this.Controls.Add(panelDepot);
+            // Initialisation des panneaux avec taille par défaut
+            panelDepot = new RoundedPanel { BackColor = Color.FromArgb(34, 67, 153), BorderRadius = 90 };
+            panelRetrait = new RoundedPanel { BackColor = Color.FromArgb(34, 67, 153), BorderRadius = 90 };
+            panelEchange = new RoundedPanel { BackColor = Color.FromArgb(34, 67, 153), BorderRadius = 90 };
+            panelAutres = new RoundedPanel { BackColor = Color.FromArgb(34, 67, 153), BorderRadius = 90 };
 
-            // Label Compte 
-            Label lblDepot = new Label();
-            lblDepot.Text = "Dépôt";
-            lblDepot.Font = new Font("Arial", 90, FontStyle.Bold);  // Texte énorme 
-            lblDepot.ForeColor = Color.FromArgb(128, 194, 236);
-            lblDepot.AutoSize = true;
-            panelDepot.Controls.Add(lblDepot);
-            Methode.CenterControlInParent(lblDepot);
+            // Ajout des panneaux au formulaire
+            this.Controls.AddRange(new Control[] { panelDepot, panelRetrait, panelEchange, panelAutres });
 
-            // Panel contenant les champs Crypto
-            RoundedPanel panelRetrait = new RoundedPanel();
-            panelRetrait.BackColor = Color.FromArgb(34, 67, 153);
-            panelRetrait.Size = new Size(1090, 225);  // Agrandir le panel 
-            panelRetrait.Location = new Point(560, (this.ClientSize.Height - 520) / 2 + 5);  // Centré 
-            panelRetrait.Anchor = AnchorStyles.None;  // Garder le panel centré 
-            panelRetrait.BorderRadius = 90;
-            this.Controls.Add(panelRetrait);
-
-            // Label Nom Crypto 
-            Label lblRetrait = new Label();
-            lblRetrait.Text = "Retrait";
-            lblRetrait.Font = new Font("Arial", 90, FontStyle.Bold);  // Texte énorme 
-            lblRetrait.ForeColor = Color.FromArgb(128, 194, 236);
-            lblRetrait.AutoSize = true;
-            panelRetrait.Controls.Add(lblRetrait);
-            Methode.CenterControlInParent(lblRetrait);
-
-            // Panel contenant les champs Transaction
-            RoundedPanel panelEchange = new RoundedPanel();
-            panelEchange.BackColor = Color.FromArgb(34, 67, 153);
-            panelEchange.Size = new Size(1090, 225);  // Agrandir le panel 
-            panelEchange.Location = new Point(560, (this.ClientSize.Height - 260) / 2 + 155);  // Centré 
-            panelEchange.Anchor = AnchorStyles.None;  // Garder le panel centré 
-            panelEchange.BorderRadius = 90;
-            this.Controls.Add(panelEchange);
-
-            // Label Nom Transaction 
-            Label lblEchange = new Label();
-            lblEchange.Text = "Échange";
-            lblEchange.Font = new Font("Arial", 90, FontStyle.Bold);  // Texte énorme 
-            lblEchange.ForeColor = Color.FromArgb(128, 194, 236);
-            lblEchange.AutoSize = true;
-            panelEchange.Controls.Add(lblEchange);
-            Methode.CenterControlInParent(lblEchange);
-
-
-            // Panel contenant les champs Autres
-            RoundedPanel panelAutres = new RoundedPanel();
-            panelAutres.BackColor = Color.FromArgb(34, 67, 153);
-            panelAutres.Size = new Size(1090, 225);  // Agrandir le panel 
-            panelAutres.Location = new Point(560, this.ClientSize.Height - 203);  // Centré 
-            panelAutres.Anchor = AnchorStyles.None;  // Garder le panel centré 
-            panelAutres.BorderRadius = 90;
-            this.Controls.Add(panelAutres);
-
-            // Label Nom Autres 
-            Label lblAutres = new Label();
-            lblAutres.Text = "Autres";
-            lblAutres.Font = new Font("Arial", 90, FontStyle.Bold);  // Texte énorme 
-            lblAutres.ForeColor = Color.FromArgb(128, 194, 236);
-            lblAutres.AutoSize = true;
-            panelAutres.Controls.Add(lblAutres);
-            Methode.CenterControlInParent(lblAutres);
+            // Initialisation des labels et leur centrage dans les panneaux
+            InitPanelLabel(panelDepot, "Dépôt");
+            InitPanelLabel(panelRetrait, "Retrait");
+            InitPanelLabel(panelEchange, "Échange");
+            InitPanelLabel(panelAutres, "Autres");
 
             panels = new RoundedPanel[] { panelDepot, panelRetrait, panelEchange, panelAutres };
+
+            // Appel de la méthode de création des boutons et de l'ajustement
+            Methode.CreateDirectionalButtons(this, BtnHaut_Click, BtnBas_Click, BtnGauche_Click, BtnDroite_Click, BtnValider_Click, BtnRetour_Click, BtnMaison_Click, BtnFermer_Click);
+
+            // Initialiser la disposition des panneaux
+            AdjustPanelLayout();
+
+            // Ajouter un événement pour redimensionner les panneaux automatiquement
+            this.Resize += (s, e) => AdjustPanelLayout();
+        }
+
+        // Méthode pour ajuster la disposition des panneaux
+        private void AdjustPanelLayout()
+        {
+            // Largeur et hauteur des panneaux basées sur les dimensions des boutons
+            int panelWidth = this.ClientSize.Width * 53 / 90;
+            int buttonHeight = this.ClientSize.Height / 5;
+            int panelHeight = buttonHeight; // Même hauteur que les boutons de contrôle
+
+            // Largeur des boutons de contrôle (Valider, Retour, Maison, Fermer)
+            int buttonWidth = this.ClientSize.Width / 8;
+            int buttonSpacing = this.ClientSize.Height / 20; // Même espacement que pour les boutons
+
+            // Position horizontale des panneaux juste à côté des boutons de contrôle
+            int panelX = this.ClientSize.Width - buttonWidth - panelWidth - buttonSpacing;
+
+            // Calculer la marge supérieure pour centrer les panneaux verticalement
+            int topMargin = (this.ClientSize.Height - (panelHeight * panels.Length + buttonSpacing * (panels.Length - 1))) / 2;
+
+            // Ajustement des panneaux sur l'écran
+            for (int i = 0; i < panels.Length; i++)
+            {
+                RoundedPanel panel = panels[i];
+
+                // Définir la taille et la position des panneaux
+                panel.Size = new Size(panelWidth, panelHeight);
+                panel.Location = new Point(panelX * 105 / 100, topMargin + i * (panelHeight + buttonSpacing));
+
+                // Centrer le contenu (label) dans le panneau
+                if (panel.Controls.Count > 0 && panel.Controls[0] is Label lbl)
+                {
+                    Methode.CenterControlInParent(lbl);
+                }
+            }
+        }
+
+        // Méthode pour initialiser un label dans un panel
+        private void InitPanelLabel(RoundedPanel panel, string text)
+        {
+            Label label = new Label
+            {
+                Text = text,
+                Font = new Font("Arial", 90, FontStyle.Bold),
+                ForeColor = Color.FromArgb(128, 194, 236),
+                AutoSize = true
+            };
+            panel.Controls.Add(label);
+            Methode.CenterControlInParent(label);
         }
     }
 }

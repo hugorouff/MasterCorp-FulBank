@@ -162,25 +162,31 @@ namespace fulbank
         // Méthode pour ajuster la disposition des panneaux
         private void AdjustPanelLayout()
         {
-            int panelWidth = (int)(this.ClientSize.Width * 0.55); // Largeur du panel = 55% de la largeur de l'écran
-            int panelHeight = (int)(this.ClientSize.Height * 0.15); // Hauteur du panel = 15% de la hauteur de l'écran
-            int panelSpacing = (int)(this.ClientSize.Height * 0.02); // Espace entre les panels
+            // Largeur et hauteur des panneaux basées sur les dimensions des boutons
+            int panelWidth = this.ClientSize.Width * 53 / 90;
+            int buttonHeight = this.ClientSize.Height / 5;
+            int panelHeight = buttonHeight; // Même hauteur que les boutons de contrôle
 
-            // Ajustement des dimensions des panneaux
-            panelCompte.Size = new Size(panelWidth, panelHeight);
-            panelCoursCrypto.Size = new Size(panelWidth, panelHeight);
-            panelTransaction.Size = new Size(panelWidth, panelHeight);
-            panelAutres.Size = new Size(panelWidth, panelHeight);
+            // Largeur des boutons de contrôle (Valider, Retour, Maison, Fermer)
+            int buttonWidth = this.ClientSize.Width / 8;
+            int buttonSpacing = this.ClientSize.Height / 20; // Même espacement que pour les boutons
 
-            // Centrer les panneaux verticalement
-            panelCompte.Location = new Point((this.ClientSize.Width - panelWidth) / 2, panelSpacing);
-            panelCoursCrypto.Location = new Point((this.ClientSize.Width - panelWidth) / 2, panelCompte.Bottom + panelSpacing);
-            panelTransaction.Location = new Point((this.ClientSize.Width - panelWidth) / 2, panelCoursCrypto.Bottom + panelSpacing);
-            panelAutres.Location = new Point((this.ClientSize.Width - panelWidth) / 2, panelTransaction.Bottom + panelSpacing);
+            // Position horizontale des panneaux juste à côté des boutons de contrôle
+            int panelX = this.ClientSize.Width - buttonWidth - panelWidth - buttonSpacing;
 
-            // Réajuster les labels à l'intérieur de chaque panel
-            foreach (var panel in panels)
+            // Calculer la marge supérieure pour centrer les panneaux verticalement
+            int topMargin = (this.ClientSize.Height - (panelHeight * panels.Length + buttonSpacing * (panels.Length - 1))) / 2;
+
+            // Ajustement des panneaux sur l'écran
+            for (int i = 0; i < panels.Length; i++)
             {
+                RoundedPanel panel = panels[i];
+
+                // Définir la taille et la position des panneaux
+                panel.Size = new Size(panelWidth, panelHeight);
+                panel.Location = new Point(panelX * 105 / 100, topMargin + i * (panelHeight + buttonSpacing));
+
+                // Centrer le contenu (label) dans le panneau
                 if (panel.Controls.Count > 0 && panel.Controls[0] is Label lbl)
                 {
                     Methode.CenterControlInParent(lbl);
