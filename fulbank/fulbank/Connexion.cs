@@ -75,7 +75,7 @@ namespace fulbank
                 form2.Show();
                 this.Hide();
             }
-            BDD.Close();
+             BDD.Close();
         }
 
         // Action du bouton Fermer 

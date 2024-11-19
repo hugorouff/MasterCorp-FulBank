@@ -18,15 +18,23 @@ left join CompteBanquaire as CBS on O.compteCible = CBS.numeroDeCompte
 left join Utilisateur as UP on CBP.titulaire = UP.id
 left join Utilisateur as US on CBS.titulaire = US.id
 where suprimee is false;
-#*/
+
 drop view comptes_utilisateur;
 create view comptes_utilisateur as
-select numeroDeCompte as numeroCompte , titulaire as titulaire, coTitulaire as coTitulaire, label as typeCompte, solde as solde,M.nom as monnaie
+select numeroDeCompte as numeroCompte , titulaire as titulaire, coTitulaire as coTitulaire, label as typeCompte, solde as solde,M.sigle as monnaie
 from CompteBanquaire as CB inner join Monnaie as M on M.id = CB.monaie 
 inner join TypeCompte as TC on TC.id = CB.`type`
 left join Utilisateur as UT on UT.id = CB.titulaire
 left join Utilisateur as UCT on UCT.id = CB.coTitulaire;
 #*/
+create view historique_compte as
+select CBSO.numeroDeCompte as compteSource, CBDE.numeroDeCompte as compteDest, dateOperation as dateOperation,OPP.montant, MON.sigle as monnaie
+from Opperation AS OPP 
+inner join Monnaie as MON on OPP.monaie = MON.id
+left join CompteBanquaire as CBSO on CBSO.numeroDeCompte = OPP.compte
+left join CompteBanquaire as CBDE on CBDE.numeroDeCompte = OPP.compteCible
+where suprimee = false
+order by dateOperation;
 
 delimiter $$
 show tables;
@@ -38,6 +46,8 @@ explain Utilisateur;
 explain CompteBanquaire;
 $$
 delimiter ;
+
+
 
 
 

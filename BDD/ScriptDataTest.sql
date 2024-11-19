@@ -26,13 +26,13 @@ values ("1 rue champole"),
 ("8 route des étilleux"),
 ("969 avenu des près");
 
-insert into Monnaie(nom)
-values ("euro"),
-("dollar"),
-("Bitcoin"),
-("doublon"),
-("eternium"),
-("Ferendium(inexistant)");
+insert into Monnaie(nom,sigle)
+values ("euro","€"),
+("dollar","$"),
+("Bitcoin","BTC"),
+("doublon","DBL"),
+("eternium","ETH"),
+("Ferendium(inexistant)","FER");
 
 insert into Profiles(labelle)
 values ("utilisateur"),

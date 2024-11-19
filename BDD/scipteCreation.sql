@@ -9,6 +9,7 @@ CREATE TABLE DAB(
 CREATE TABLE Monnaie(
    id INT auto_increment,
    nom VARCHAR(50),
+   sigle varchar(3),
    PRIMARY KEY(id)
 );
 
