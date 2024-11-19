@@ -37,7 +37,6 @@
             ClientSize = new Size(800, 450);
             Name = "CoursCrypto";
             Text = "CoursCrypto";
-            Load += CoursCrypto_Load;
             ResumeLayout(false);
         }
 

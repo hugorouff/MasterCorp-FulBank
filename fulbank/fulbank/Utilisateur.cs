@@ -27,15 +27,20 @@ namespace fulbank
             this.monnaies = new List<string>();
         }
 
-        public int getId() { return id; }
-        public static Utilisateur getInstance()
-        {
-            return Utilisateur.utilActuel;
-        }
+        public int getId()  { return id; }
 
-        public static void NewInstance(int idUtil)
+        public static void NewInstance(int idUtil) 
         {
             Utilisateur.utilActuel = new Utilisateur(idUtil);
+        }
+
+        public static Utilisateur getInstance()
+        {
+            if (utilActuel == null)
+            {
+                throw new InvalidOperationException("L'utilisateur n'a pas été initialisé. Appelez Utilisateur.NewInstance() avant d'utiliser cette méthode.");
+            }
+            return utilActuel;
         }
 
         public static Utilisateur getUser()

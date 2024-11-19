@@ -49,7 +49,7 @@ namespace fulbank
             Size textSize = TextRenderer.MeasureText(this.Text, this.Font);
 
             // Calculer les positions pour centrer le texte
-            int textX = ((this.Width - textSize.Width) / 2) + 5;
+            int textX = ((this.Width - textSize.Width) / 2) +5;
             int textY = ((this.Height - textSize.Height) / 2) - 5;
 
             // Dessiner le texte
@@ -98,59 +98,62 @@ namespace fulbank
         public static void Fulbank(Form form)
         {
             // Panel contenant les champs FulBank
-            Panel panelFul = new Panel();
-            panelFul.BackColor = Color.FromArgb(34, 67, 153);
-            panelFul.Size = new Size(300, 1080);  // Agrandir le panel 
-            panelFul.Location = new Point(260, 0);  // Centré 
+            Panel panelFul = new Panel
+            {
+                BackColor = Color.FromArgb(34, 67, 153)
+            };
             form.Controls.Add(panelFul);
 
-            // Label FulBank 
-            Label lblFulBank = new Label();
-            lblFulBank.Text = "FulBank";
-            lblFulBank.Font = new Font("Arial", 90, FontStyle.Bold);  // Texte énorme 
-            lblFulBank.ForeColor = Color.FromArgb(207, 162, 0);
-            lblFulBank.Size = new Size(225, 1500);
+            // Label FulBank
+            Label lblFulBank = new Label
+            {
+                Text = "FulBank",
+                ForeColor = Color.FromArgb(207, 162, 0),
+                AutoSize = false
+            };
             lblFulBank.Paint += new PaintEventHandler(lblFulBank_Paint);
             panelFul.Controls.Add(lblFulBank);
 
-            // Label Sous-titre 
-            Label lblSousTitre = new Label();
-            lblSousTitre.Text = "Bank et Crypto";
-            lblSousTitre.Font = new Font("Arial", 35, FontStyle.Italic);  // Texte énorme 
-            lblSousTitre.ForeColor = Color.FromArgb(207, 162, 0);
-            lblSousTitre.Size = new Size(440, 1000);
+            // Label Sous-titre
+            Label lblSousTitre = new Label
+            {
+                Text = "Bank et Crypto",
+                ForeColor = Color.FromArgb(207, 162, 0),
+                AutoSize = false
+            };
             lblSousTitre.Paint += new PaintEventHandler(lblSousTitre_Paint);
             panelFul.Controls.Add(lblSousTitre);
 
-            // Ajuster la mise en page pour la première fois
-            //AdjustLayout(form, panelFul, lblFulBank, lblSousTitre);
+            // Redimensionnement dynamique
+            form.Resize += (s, e) => AdjustLayout(form, panelFul, lblFulBank, lblSousTitre);
         }
 
         public static void AdjustLayout(Form form, Panel panelFul, Label lblFulBank, Label lblSousTitre)
         {
-            // Taille et position de panelChamps
-            panelFul.Size = new Size(form.ClientSize.Width * 3 / 4, form.ClientSize.Height / 2);
-            panelFul.Location = new Point((form.ClientSize.Width - panelFul.Width) / 2);
+            // Calculer la largeur des boutons directionnels
+            int buttonWidth = form.ClientSize.Width / 8;
+            int spacing = 15;
 
-            int margin = form.ClientSize.Height / 50;
+            // Positionner le panel juste à droite des boutons directionnels
+            panelFul.Size = new Size(form.ClientSize.Width / 8, form.ClientSize.Height);
+            panelFul.Location = new Point(buttonWidth + spacing * 2, 0);
 
-            // Taille et position de panelFul
-            panelFul.Size = new Size(form.ClientSize.Width * 2 / 4, form.ClientSize.Height / 4);
-            panelFul.Location = new Point((form.ClientSize.Width - panelFul.Width) / 2, panelFul.Bottom + margin * 4);
+            int margin = form.ClientSize.Height / 20;
 
-            // Ajustement dynamique de la taille de police
+            // Calculer la taille de la police en fonction de la hauteur de la fenêtre
             float baseFontSize = form.ClientSize.Height / 40f;
-            lblFulBank.Font = new Font("Arial", baseFontSize * 4, FontStyle.Bold);
-            lblSousTitre.Font = new Font("Arial", baseFontSize * 2, FontStyle.Italic);
 
-            // Centrage dynamique de lblFulBank dans panelFul
-            lblFulBank.AutoSize = true; // Activer AutoSize pour obtenir la largeur réelle
-            lblFulBank.Location = new Point((panelFul.Width - lblFulBank.Width) / 2, margin / 20);
+            // Taille et police du label FulBank
+            lblFulBank.Font = new Font("Arial", baseFontSize * 5 / 2, FontStyle.Bold); // Taille dynamique
+            lblFulBank.Size = new Size(panelFul.Width - margin * 2, panelFul.Height / 3);
+            lblFulBank.Location = new Point((panelFul.Width - lblFulBank.Width) / 3, margin * 13);
 
-            // Aligner lblSousTitre à gauche avec un décalage fixe
-            lblSousTitre.AutoSize = true; // Activer AutoSize pour obtenir la largeur réelle
-            lblSousTitre.Location = new Point(margin * 20, lblFulBank.Bottom + margin / 20);
+            // Taille et police du label SousTitre
+            lblSousTitre.Font = new Font("Arial", baseFontSize, FontStyle.Italic); // Taille dynamique
+            lblSousTitre.Size = new Size(panelFul.Width - margin, panelFul.Height / 3);
+            lblSousTitre.Location = new Point((panelFul.Width - lblSousTitre.Width) * 6 / 4, lblFulBank.Bottom / 2 + margin);
         }
+
 
         // Méthode Paint pour le label "FulBank"
         public static void lblFulBank_Paint(object sender, PaintEventArgs e)
@@ -239,49 +242,51 @@ namespace fulbank
             // Méthode pour ajuster la disposition des boutons
             void AdjustButtonLayout()
             {
-                // Calcul des dimensions pour adapter les boutons directionnels
+                // Dimensions des boutons
                 int buttonHeight = form.ClientSize.Height / 5;
                 int buttonWidth = form.ClientSize.Width / 8;
-                int topMargin = 40;
 
-                // Ajustement de la taille de la police des boutons directionnels
+                // Espacement vertical basé sur celui des panneaux
+                int buttonSpacing = form.ClientSize.Height / 20;
+
+                // Ajustement de la taille de la police
                 float fontSize = Math.Max(14, buttonHeight / 4);
 
-                // Configurer les boutons directionnels
+                // Position et dimensions des boutons directionnels
                 btnHaut.Size = new Size(buttonWidth, buttonHeight);
-                btnHaut.Location = new Point(0, topMargin);
+                btnHaut.Location = new Point(0, buttonSpacing / 2);
                 btnHaut.Font = new Font(btnHaut.Font.FontFamily, fontSize);
 
                 btnGauche.Size = new Size(buttonWidth, buttonHeight);
-                btnGauche.Location = new Point(0, btnHaut.Bottom + topMargin);
+                btnGauche.Location = new Point(0, btnHaut.Bottom + buttonSpacing);
                 btnGauche.Font = new Font(btnGauche.Font.FontFamily, fontSize);
 
-                btnBas.Size = new Size(buttonWidth, buttonHeight);
-                btnBas.Location = new Point(0, btnGauche.Bottom + topMargin);
-                btnBas.Font = new Font(btnBas.Font.FontFamily, fontSize);
-
                 btnDroite.Size = new Size(buttonWidth, buttonHeight);
-                btnDroite.Location = new Point(0, btnBas.Bottom + topMargin);
+                btnDroite.Location = new Point(0, btnGauche.Bottom + buttonSpacing);
                 btnDroite.Font = new Font(btnDroite.Font.FontFamily, fontSize);
 
-                // Configurer les boutons de contrôle
-                int controlButtonWidth = form.ClientSize.Width / 8;
-                int controlButtonHeight = form.ClientSize.Height / 5;
+                btnBas.Size = new Size(buttonWidth, buttonHeight);
+                btnBas.Location = new Point(0, btnDroite.Bottom + buttonSpacing);
+                btnBas.Font = new Font(btnBas.Font.FontFamily, fontSize);
+
+                // Position et dimensions des boutons de contrôle
+                int controlButtonWidth = buttonWidth;
+                int controlButtonHeight = buttonHeight;
 
                 btnValider.Size = new Size(controlButtonWidth, controlButtonHeight);
-                btnValider.Location = new Point(form.ClientSize.Width - controlButtonWidth, topMargin);
+                btnValider.Location = new Point(form.ClientSize.Width - controlButtonWidth, buttonSpacing / 2);
                 btnValider.Font = new Font(btnValider.Font.FontFamily, fontSize);
 
                 btnRetour.Size = new Size(controlButtonWidth, controlButtonHeight);
-                btnRetour.Location = new Point(form.ClientSize.Width - controlButtonWidth, btnValider.Bottom + topMargin);
+                btnRetour.Location = new Point(form.ClientSize.Width - controlButtonWidth, btnValider.Bottom + buttonSpacing);
                 btnRetour.Font = new Font(btnRetour.Font.FontFamily, fontSize);
 
                 btnMaison.Size = new Size(controlButtonWidth, controlButtonHeight);
-                btnMaison.Location = new Point(form.ClientSize.Width - controlButtonWidth, btnRetour.Bottom + topMargin);
+                btnMaison.Location = new Point(form.ClientSize.Width - controlButtonWidth, btnRetour.Bottom + buttonSpacing);
                 btnMaison.Font = new Font(btnMaison.Font.FontFamily, fontSize);
 
                 btnFermer.Size = new Size(controlButtonWidth, controlButtonHeight);
-                btnFermer.Location = new Point(form.ClientSize.Width - controlButtonWidth, btnMaison.Bottom + topMargin);
+                btnFermer.Location = new Point(form.ClientSize.Width - controlButtonWidth, btnMaison.Bottom + buttonSpacing);
                 btnFermer.Font = new Font(btnFermer.Font.FontFamily, fontSize);
             }
 

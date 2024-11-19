@@ -177,118 +177,6 @@ namespace fulbank
             }
         }
 
-        private void Initializeform3()
-        {
-            // Définir le formulaire en plein écran
-            this.WindowState = FormWindowState.Maximized; // Maximise le formulaire
-            this.Size = new Size(1920, 1080);  // Taille ajustée pour un écran 1920x1080
-            this.FormBorderStyle = FormBorderStyle.None; // Supprime la bordure du formulaire
-            // Configuration générale du formulaire 
-            this.Text = "FulBank";
-            this.BackColor = Color.FromArgb(128, 194, 236);
-            // Appelle la méthode pour afficher le panel de fulbank
-            Methode.Fulbank(this);
-
-            // Panel contenant les champs Compte Choisi
-            panelChoixOperation = new RoundedPanel();
-            panelChoixOperation.BackColor = Color.FromArgb(34, 67, 153);
-            panelChoixOperation.Size = new Size(1090, 225);  // Agrandir le panel 
-            panelChoixOperation.Location = new Point(560, -25);  // Centré 
-            this.Controls.Add(panelChoixOperation);
-
-            // Panel contenant les champs Montant
-            panelMontant = new RoundedPanel();
-            panelMontant.BackColor = Color.FromArgb(34, 67, 153);
-            panelMontant.Size = new Size(1090, 225);  // Agrandir le panel 
-            panelMontant.Location = new Point(560, (this.ClientSize.Height - 520) / 2 + 5);  // Centré 
-            this.Controls.Add(panelMontant);
-            
-            // Panel contenant les champs Compte Choisi
-            panelCompteChoisi = new RoundedPanel();
-            panelCompteChoisi.BackColor = Color.FromArgb(34, 67, 153);
-            panelCompteChoisi.Size = new Size(1090, 225);  // Agrandir le panel 
-            panelCompteChoisi.Location = new Point(560, (this.ClientSize.Height - 260) / 2 + 155);  // Centré 
-            this.Controls.Add(panelCompteChoisi);
-
-            // Panel contenant les champs Montant Compte Choisi
-            panelArgentCompteChoisi = new RoundedPanel();
-            panelArgentCompteChoisi.BackColor = Color.FromArgb(34, 67, 153);
-            panelArgentCompteChoisi.Size = new Size(1090, 225);  // Agrandir le panel 
-            panelArgentCompteChoisi.Location = new Point(560, this.ClientSize.Height - 203);  // Centré 
-            this.Controls.Add(panelArgentCompteChoisi);
-
-            // Label Montant 
-            Label lblMontant = new Label();
-            lblMontant.Text = "Montant :";
-            lblMontant.ForeColor = Color.FromArgb(128, 194, 236);
-            lblMontant.Font = new Font("Arial", 60);  // Taille énorme 
-            lblMontant.AutoSize = true; // Assurez-vous que le label s'ajuste à son contenu
-            lblMontant.Location = new Point(10, 100);
-            panelMontant.Controls.Add(lblMontant);
-
-            // TextBox pour le montant
-            txtMontant = new TextBox
-            {
-                Font = new Font("Arial", 60, FontStyle.Regular),
-                Size = new Size(690, 100),
-                Location = new Point(600, 100) // Assurez-vous que cette position permet au texte d'être visible
-            };
-            panelMontant.Controls.Add(txtMontant);
-
-            // Label pour le compte choisi
-            lblCompteChoisi = new Label
-            {
-                Text = "Compte choisi: " + selectedAccount,
-                Font = new Font("Arial", 60, FontStyle.Bold),
-                ForeColor = Color.FromArgb(128, 194, 236),
-                BackColor = Color.FromArgb(34, 67, 153),
-                TextAlign = ContentAlignment.MiddleCenter,
-                AutoSize = true // S'assurer que le label s'ajuste à son contenu
-            };
-            panelCompteChoisi.Controls.Add(lblCompteChoisi);
-            Methode.CenterControlInParent(lblCompteChoisi);      
-
-            // Label Choix de l'operation
-            lblChoixOperation = new Label
-            {
-                Text = operations[selectedOperationIndex],
-                Font = new Font("Arial", 60, FontStyle.Bold),
-                ForeColor = Color.FromArgb(128, 194, 236),
-                BackColor = Color.FromArgb(34, 67, 153),
-                TextAlign = ContentAlignment.MiddleCenter,
-                AutoSize = true // Assurez-vous que le label s'ajuste à son contenu
-            };
-            panelChoixOperation.Controls.Add(lblChoixOperation);
-            Methode.CenterControlInParent(lblChoixOperation);
-
-            panels = new RoundedPanel[] { panelChoixOperation, panelMontant, panelCompteChoisi, panelArgentCompteChoisi };
-        }
-
-        private RoundedPanel CreateRoundedPanel(string labelText, Point location)
-        {
-            var panel = new RoundedPanel
-            {
-                BackColor = Color.FromArgb(34, 67, 153),
-                Size = new Size(1090, 225),
-                Location = location,
-                Anchor = AnchorStyles.None,
-                BorderRadius = 90,
-                Visible = false // Initially not visible
-            };
-            var label = new Label
-            {
-                Text = labelText,
-                Font = new Font("Arial", 120, FontStyle.Bold),
-                ForeColor = Color.FromArgb(128, 194, 236),
-                AutoSize = true
-            };
-            panel.Controls.Add(label);
-            Methode.CenterControlInParent(label);
-            this.Controls.Add(panel);
-
-            return panel;
-        }
-
         private void ExecuteTransaction()
         {
             if (string.IsNullOrWhiteSpace(txtMontant.Text) || !decimal.TryParse(txtMontant.Text, out decimal transactionAmount))
@@ -324,6 +212,114 @@ namespace fulbank
                 default:
                     MessageBox.Show("Aucune action sélectionnée.");
                     break;
+            }
+        }
+        private void Initializeform3()
+        {
+            this.WindowState = FormWindowState.Maximized;
+            this.FormBorderStyle = FormBorderStyle.None;
+            this.BackColor = Color.FromArgb(128, 194, 236);
+            this.Text = "FulBank";
+
+            Methode.Fulbank(this);
+
+            // Initialisation des panneaux avec taille par défaut
+            panelChoixOperation = new RoundedPanel { BackColor = Color.FromArgb(34, 67, 153), BorderRadius = 90 };
+            panelMontant = new RoundedPanel { BackColor = Color.FromArgb(34, 67, 153), BorderRadius = 90 };
+            panelCompteChoisi = new RoundedPanel { BackColor = Color.FromArgb(34, 67, 153), BorderRadius = 90 };
+            panelArgentCompteChoisi = new RoundedPanel { BackColor = Color.FromArgb(34, 67, 153), BorderRadius = 90 };
+
+            // Ajout des panneaux au formulaire
+            this.Controls.AddRange(new Control[] { panelChoixOperation, panelMontant, panelCompteChoisi, panelArgentCompteChoisi });
+
+            panels = new RoundedPanel[] { panelChoixOperation, panelMontant, panelCompteChoisi, panelArgentCompteChoisi };
+
+            // Appel de la méthode de création des boutons et de l'ajustement
+            Methode.CreateDirectionalButtons(this, BtnHaut_Click, BtnBas_Click, BtnGauche_Click, BtnDroite_Click, BtnValider_Click, BtnRetour_Click, BtnMaison_Click, BtnFermer_Click);
+
+            // Initialiser la disposition des panneaux
+            AdjustPanelLayout();
+
+            // Ajouter un événement pour redimensionner les panneaux automatiquement
+            this.Resize += (s, e) => AdjustPanelLayout();
+
+            // Label Montant 
+            Label lblMontant = new Label();
+            lblMontant.Text = "Montant :";
+            lblMontant.ForeColor = Color.FromArgb(128, 194, 236);
+            lblMontant.Font = new Font("Arial", 60);  // Taille énorme 
+            lblMontant.AutoSize = true; // Assurez-vous que le label s'ajuste à son contenu
+            lblMontant.Location = new Point(10, 100);
+            panelMontant.Controls.Add(lblMontant);
+
+            // TextBox pour le montant
+            txtMontant = new TextBox
+            {
+                Font = new Font("Arial", 60, FontStyle.Regular),
+                Size = new Size(690, 100),
+                Location = new Point(600, 100) // Assurez-vous que cette position permet au texte d'être visible
+            };
+            panelMontant.Controls.Add(txtMontant);
+
+            // Label pour le compte choisi
+            lblCompteChoisi = new Label
+            {
+                Text = "Compte choisi: " + selectedAccount,
+                Font = new Font("Arial", 60, FontStyle.Bold),
+                ForeColor = Color.FromArgb(128, 194, 236),
+                BackColor = Color.FromArgb(34, 67, 153),
+                TextAlign = ContentAlignment.MiddleCenter,
+                AutoSize = true // S'assurer que le label s'ajuste à son contenu
+            };
+            panelCompteChoisi.Controls.Add(lblCompteChoisi);
+            Methode.CenterControlInParent(lblCompteChoisi);
+
+            // Label Choix de l'operation
+            lblChoixOperation = new Label
+            {
+                Text = operations[selectedOperationIndex],
+                Font = new Font("Arial", 60, FontStyle.Bold),
+                ForeColor = Color.FromArgb(128, 194, 236),
+                BackColor = Color.FromArgb(34, 67, 153),
+                TextAlign = ContentAlignment.MiddleCenter,
+                AutoSize = true // Assurez-vous que le label s'ajuste à son contenu
+            };
+            panelChoixOperation.Controls.Add(lblChoixOperation);
+            Methode.CenterControlInParent(lblChoixOperation);
+        }
+
+        // Méthode pour ajuster la disposition des panneaux
+        private void AdjustPanelLayout()
+        {
+            // Largeur et hauteur des panneaux basées sur les dimensions des boutons
+            int panelWidth = this.ClientSize.Width * 53 / 90;
+            int buttonHeight = this.ClientSize.Height / 5;
+            int panelHeight = buttonHeight; // Même hauteur que les boutons de contrôle
+
+            // Largeur des boutons de contrôle (Valider, Retour, Maison, Fermer)
+            int buttonWidth = this.ClientSize.Width / 8;
+            int buttonSpacing = this.ClientSize.Height / 20; // Même espacement que pour les boutons
+
+            // Position horizontale des panneaux juste à côté des boutons de contrôle
+            int panelX = this.ClientSize.Width - buttonWidth - panelWidth - buttonSpacing;
+
+            // Calculer la marge supérieure pour centrer les panneaux verticalement
+            int topMargin = (this.ClientSize.Height - (panelHeight * panels.Length + buttonSpacing * (panels.Length - 1))) / 2;
+
+            // Ajustement des panneaux sur l'écran
+            for (int i = 0; i < panels.Length; i++)
+            {
+                RoundedPanel panel = panels[i];
+
+                // Définir la taille et la position des panneaux
+                panel.Size = new Size(panelWidth, panelHeight);
+                panel.Location = new Point(panelX * 105 / 100, topMargin + i * (panelHeight + buttonSpacing));
+
+                // Centrer le contenu (label) dans le panneau
+                if (panel.Controls.Count > 0 && panel.Controls[0] is Label lbl)
+                {
+                    Methode.CenterControlInParent(lbl);
+                }
             }
         }
     }

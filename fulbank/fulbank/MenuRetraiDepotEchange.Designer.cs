@@ -37,7 +37,6 @@
             ClientSize = new Size(800, 450);
             Name = "MenuRetraiDepotEchange";
             Text = "MenuRetraiDepotEchange";
-            Load += MenuRetraiDepotEchange_Load;
             ResumeLayout(false);
         }
 
