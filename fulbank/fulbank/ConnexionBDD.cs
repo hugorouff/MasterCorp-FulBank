@@ -20,8 +20,6 @@ namespace fulbank
             try
             {
                 this.connexionDB = new MySqlConnection(" Server = 192.168.56.220 ; User ID = cast ; Password = C@st ; Database=fulbank");
-                connexionDB.Open();
-                connexionDB.Close();
             } 
             catch (MySqlException ex)
             {
