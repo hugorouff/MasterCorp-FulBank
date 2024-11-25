@@ -11,6 +11,7 @@ namespace fulbank
     {
         private static Utilisateur utilActuel;
 
+
         private int id;
         private List<int> numComptes;
         private List<float> soldes;
@@ -59,43 +60,6 @@ namespace fulbank
             BDD.Close();
         }
 
-
-        public static Utilisateur getUser()
-        {
-            return Utilisateur.utilActuel;
-        }
-        public List<int> getNumComptes() { return numComptes; }
-        public List<float> getSoldes() { return soldes; }
-        public List<string> getTypeComptes() { return typeComptes; }
-        public List <string> getMonnaies() { return monnaies; }
-
-
-        public void cleansComptes()
-        {
-            this.typeComptes.Clear();
-            this.monnaies.Clear();
-            this.soldes.Clear();
-            this.typeComptes.Clear();
-        }
-
-        public void PullComptes()
-        { 
-            MySqlConnection BDD = ConnexionBDD.Connexion();
-            MySqlCommand cmd = new MySqlCommand("select numeroCompte,typeCompte,solde,Monnaie from comptes_utilisateur where titulaire = @id_ or coTitulaire = @id_ ;", BDD);
-            cmd.Parameters.Add(new MySqlParameter("id_", this.id));
-            BDD.Open();
-            MySqlDataReader data = cmd.ExecuteReader();
-            
-            while (data.Read()) {
-                this.numComptes.Add(data.GetInt32(0));
-                this.soldes.Add(data.GetFloat(2));
-                this.typeComptes.Add(data.GetString(1));
-                this.monnaies.Add(data.GetString(3));
-                }
-            BDD.Close();
-        }
-        
-   
         public List<int> GetNumComptes() => new List<int>(numComptes);
         public List<float> GetSoldes() => new List<float>(soldes);
         public List<string> GetTypeComptes() => new List<string>(typeComptes);

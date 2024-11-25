@@ -139,3 +139,4 @@ D:\document\SIO\Projet\MasterCorp-FulBank\fulbank\fulbank\obj\Debug\net8.0-windo
 D:\document\SIO\Projet\MasterCorp-FulBank\fulbank\fulbank\obj\Debug\net8.0-windows\fulbank.pdb
 D:\document\SIO\Projet\MasterCorp-FulBank\fulbank\fulbank\obj\Debug\net8.0-windows\fulbank.genruntimeconfig.cache
 D:\document\SIO\Projet\MasterCorp-FulBank\fulbank\fulbank\obj\Debug\net8.0-windows\ref\fulbank.dll
+C:\Users\castagna\PROJETS\fullbank\fulbank\fulbank\obj\Debug\net8.0-windows\fulbank.MenuHistoriqueCompts.resources
