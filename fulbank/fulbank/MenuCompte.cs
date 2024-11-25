@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using MySqlConnector;
 namespace fulbank
 {
     public partial class MenuCompte : Form
@@ -21,11 +21,26 @@ namespace fulbank
         private RoundedPanel panelCompte2;
         private int selectedPanelIndex = 0; // Index to track the currently selected panel
 
+        // AH
+
+        private Utilisateur util = Utilisateur.getInstance();
+        private List<int> comptes = Utilisateur.getInstance().getNumComptes();
+        private List<float> soldes = Utilisateur.getInstance().getSoldes();
+        private List<string> monnaies = Utilisateur.getInstance().getMonnaies();
+        private List<string> types = Utilisateur.getInstance().getTypeComptes();
+        
+        private List<RoundedPanel> panelsComptes = new List<RoundedPanel> { };
+
         // Liste des panels et un index pour suivre le panel actif
         private RoundedPanel[] panels;
         private int currentPanelIndex = 0;
         public MenuCompte()
         {
+
+            util.cleansComptes();
+            util.PullComptes();
+            panels = new RoundedPanel[comptes.Count()];
+
             InitializeComponent();
             Initializeform3();
             Methode.CreateDirectionalButtons(
@@ -86,7 +101,6 @@ namespace fulbank
             }
             UpdatePanelSelection();
         }
-
         private void BtnHaut_Click(object sender, EventArgs e)
         {
             // Empêcher selectedPanelIndex de descendre en dessous de 0
@@ -102,8 +116,7 @@ namespace fulbank
         private void UpdatePanelSelection()
         {
             // Deselect all panels
-            foreach (var panel in panels)
-            {
+            foreach (var panel in panels) { 
                 panel.BackColor = Color.FromArgb(34, 67, 153); // Default color
             }
 
@@ -121,16 +134,31 @@ namespace fulbank
 
             Methode.Fulbank(this);
 
-            // Initialisation des panneaux avec taille par défaut
+            // entrée du code pour insert dans les panels des compte (on y crois)
+            // pour les info interne au compte ; select compteSource,compteDest,DateOperation,montant,monnaie from historique_compte where ...
+
+            for (int i = 0; i < comptes.Count(); i++)
+            {
+                panelsComptes.Add(new RoundedPanel {BackColor = Color.FromArgb(34, 67, 153), BorderRadius = 90 });
+                InitPanelLabel(panelsComptes[i], types[i] + ": " + soldes[i] + monnaies[i]);
+                MessageBox.Show(i + "" +types[i] + ": " + soldes[i] + monnaies[i]);
+            }
+
+
+
+            //// Initialisation des panneaux avec taille par défaut
             panelCompte1 = new RoundedPanel { BackColor = Color.FromArgb(34, 67, 153), BorderRadius = 90 };
             panelCompte2 = new RoundedPanel { BackColor = Color.FromArgb(34, 67, 153), BorderRadius = 90 };
 
             // Ajout des panneaux au formulaire
-            this.Controls.AddRange(new Control[] { panelCompte1, panelCompte2 });
+            Control[] controlPannels = new Control[] {};
+            foreach (RoundedPanel panel in controlPannels)
+                {
+                controlPannels.Append(panel);
+                }
+            this.Controls.AddRange(controlPannels);
 
             // Initialisation des labels et leur centrage dans les panneaux
-            InitPanelLabel(panelCompte1, "Courant: 1500$");
-            InitPanelLabel(panelCompte2, "Épargne: 3000$");
 
             panels = new RoundedPanel[] { panelCompte1, panelCompte2 };
 
@@ -162,7 +190,7 @@ namespace fulbank
             // Ajustement des panneaux sur l'écran
             for (int i = 0; i < panels.Length; i++)
             {
-                RoundedPanel panel = panels[i];
+                RoundedPanel panel = panelsComptes[i];
 
                 // Définir la taille et la position des panneaux
                 panel.Size = new Size(panelWidth, panelHeight);

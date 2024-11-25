@@ -43,9 +43,23 @@ namespace fulbank
             return utilActuel;
         }
 
+
         public static Utilisateur getUser()
         {
             return Utilisateur.utilActuel;
+        }
+        public List<int> getNumComptes() { return numComptes; }
+        public List<float> getSoldes() { return soldes; }
+        public List<string> getTypeComptes() { return typeComptes; }
+        public List <string> getMonnaies() { return monnaies; }
+
+
+        public void cleansComptes()
+        {
+            this.typeComptes.Clear();
+            this.monnaies.Clear();
+            this.soldes.Clear();
+            this.typeComptes.Clear();
         }
 
         public void PullComptes()
@@ -62,7 +76,7 @@ namespace fulbank
                 this.typeComptes.Add(data.GetString(1));
                 this.monnaies.Add(data.GetString(3));
                 }
-
+            BDD.Close();
         }
         
    
