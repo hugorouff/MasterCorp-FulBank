@@ -11,14 +11,14 @@ namespace fulbank
     {
         private static Utilisateur utilActuel;
 
-
         private int id;
         private List<int> numComptes;
         private List<float> soldes;
         private List<string> typeComptes;
         private List<string> monnaies;
 
-        Utilisateur(int idUtil)
+        // Constructeur privé
+        private Utilisateur(int idUtil)
         {
             this.id = idUtil;
             this.numComptes = new List<int>();
@@ -27,20 +27,36 @@ namespace fulbank
             this.monnaies = new List<string>();
         }
 
-        public int getId()  { return id; }
+        public int getId() { return id; }
+        public static Utilisateur getInstance() { return utilActuel; }
+        public static void NewInstance(int idUtil) { utilActuel = new Utilisateur(idUtil); }
 
-        public static void NewInstance(int idUtil) 
+        public void PullComptes()
         {
-            Utilisateur.utilActuel = new Utilisateur(idUtil);
-        }
+            MySqlConnection BDD = ConnexionBDD.Connexion();
+            MySqlCommand cmd = new MySqlCommand(
+                "select numeroCompte, typeCompte, solde, Monnaie " +
+                "from comptes_utilisateur where titulaire = @id_ or coTitulaire = @id_;", BDD);
+            cmd.Parameters.Add(new MySqlParameter("id_", this.id));
 
-        public static Utilisateur getInstance()
-        {
-            if (utilActuel == null)
+            BDD.Open();
+            MySqlDataReader data = cmd.ExecuteReader();
+
+            // Réinitialiser les données pour éviter les doublons
+            numComptes.Clear();
+            soldes.Clear();
+            typeComptes.Clear();
+            monnaies.Clear();
+
+            while (data.Read())
             {
-                throw new InvalidOperationException("L'utilisateur n'a pas été initialisé. Appelez Utilisateur.NewInstance() avant d'utiliser cette méthode.");
+                numComptes.Add(data.GetInt32(0));
+                typeComptes.Add(data.GetString(1));
+                soldes.Add(data.GetFloat(2));
+                monnaies.Add(data.GetString(3));
             }
-            return utilActuel;
+
+            BDD.Close();
         }
 
 
@@ -80,6 +96,10 @@ namespace fulbank
         }
         
    
+        public List<int> GetNumComptes() => new List<int>(numComptes);
+        public List<float> GetSoldes() => new List<float>(soldes);
+        public List<string> GetTypeComptes() => new List<string>(typeComptes);
+        public List<string> GetMonnaies() => new List<string>(monnaies);
     }
 }
 
