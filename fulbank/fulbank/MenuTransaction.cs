@@ -53,7 +53,7 @@ namespace fulbank
             switch (selectedPanelIndex)
             {
                 case 0:
-                    nextForm = new MenuDepot("Depot");
+                    nextForm = new MenuChoixCompte("Depot");
                     break;
                 case 1:
                     nextForm = new MenuRetrait("Retrait");
