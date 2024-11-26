@@ -18,11 +18,14 @@ left join CompteBanquaire as CBS on O.compteCible = CBS.numeroDeCompte
 left join Utilisateur as UP on CBP.titulaire = UP.id
 left join Utilisateur as US on CBS.titulaire = US.id
 where suprimee is false;
-
+#*/
+drop view comptes_utilisateur;
 create view comptes_utilisateur as
-select numeroDeCompte, label, solde,M.nom
+select numeroDeCompte as numeroCompte , titulaire as titulaire, coTitulaire as coTitulaire, label as typeCompte, solde as solde,M.nom as monnaie
 from CompteBanquaire as CB inner join Monnaie as M on M.id = CB.monaie 
-inner join TypeCompte as TC on TC.id = CB.`type`;
+inner join TypeCompte as TC on TC.id = CB.`type`
+left join Utilisateur as UT on UT.id = CB.titulaire
+left join Utilisateur as UCT on UCT.id = CB.coTitulaire;
 #*/
 
 delimiter $$

@@ -1,0 +1,165 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\rouff\\Documents\\MasterCorp-FulBank\\MasterCorp-FulBank\\fulbank\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{63076290-BCE2-43B9-AB4A-55FC645C6B26}|fulbank\\fulbank.csproj|c:\\users\\rouff\\documents\\mastercorp-fulbank\\mastercorp-fulbank\\fulbank\\fulbank\\menuchoixcompte.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{63076290-BCE2-43B9-AB4A-55FC645C6B26}|fulbank\\fulbank.csproj|solutionrelative:fulbank\\menuchoixcompte.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{63076290-BCE2-43B9-AB4A-55FC645C6B26}|fulbank\\fulbank.csproj|c:\\users\\rouff\\documents\\mastercorp-fulbank\\mastercorp-fulbank\\fulbank\\fulbank\\menufinaltransactionretrait.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{63076290-BCE2-43B9-AB4A-55FC645C6B26}|fulbank\\fulbank.csproj|solutionrelative:fulbank\\menufinaltransactionretrait.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{63076290-BCE2-43B9-AB4A-55FC645C6B26}|fulbank\\fulbank.csproj|c:\\users\\rouff\\documents\\mastercorp-fulbank\\mastercorp-fulbank\\fulbank\\fulbank\\utilisateur.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{63076290-BCE2-43B9-AB4A-55FC645C6B26}|fulbank\\fulbank.csproj|solutionrelative:fulbank\\utilisateur.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{63076290-BCE2-43B9-AB4A-55FC645C6B26}|fulbank\\fulbank.csproj|c:\\users\\rouff\\documents\\mastercorp-fulbank\\mastercorp-fulbank\\fulbank\\fulbank\\menubase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{63076290-BCE2-43B9-AB4A-55FC645C6B26}|fulbank\\fulbank.csproj|solutionrelative:fulbank\\menubase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{63076290-BCE2-43B9-AB4A-55FC645C6B26}|fulbank\\fulbank.csproj|c:\\users\\rouff\\documents\\mastercorp-fulbank\\mastercorp-fulbank\\fulbank\\fulbank\\menutransaction.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{63076290-BCE2-43B9-AB4A-55FC645C6B26}|fulbank\\fulbank.csproj|solutionrelative:fulbank\\menutransaction.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{63076290-BCE2-43B9-AB4A-55FC645C6B26}|fulbank\\fulbank.csproj|c:\\users\\rouff\\documents\\mastercorp-fulbank\\mastercorp-fulbank\\fulbank\\fulbank\\menufinaltransactionvirement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{63076290-BCE2-43B9-AB4A-55FC645C6B26}|fulbank\\fulbank.csproj|solutionrelative:fulbank\\menufinaltransactionvirement.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{63076290-BCE2-43B9-AB4A-55FC645C6B26}|fulbank\\fulbank.csproj|c:\\users\\rouff\\documents\\mastercorp-fulbank\\mastercorp-fulbank\\fulbank\\fulbank\\menufinaltransactiondepot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{63076290-BCE2-43B9-AB4A-55FC645C6B26}|fulbank\\fulbank.csproj|solutionrelative:fulbank\\menufinaltransactiondepot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{63076290-BCE2-43B9-AB4A-55FC645C6B26}|fulbank\\fulbank.csproj|c:\\users\\rouff\\documents\\mastercorp-fulbank\\mastercorp-fulbank\\fulbank\\fulbank\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{63076290-BCE2-43B9-AB4A-55FC645C6B26}|fulbank\\fulbank.csproj|solutionrelative:fulbank\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{63076290-BCE2-43B9-AB4A-55FC645C6B26}|fulbank\\fulbank.csproj|c:\\users\\rouff\\documents\\mastercorp-fulbank\\mastercorp-fulbank\\fulbank\\fulbank\\courscrypto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{63076290-BCE2-43B9-AB4A-55FC645C6B26}|fulbank\\fulbank.csproj|solutionrelative:fulbank\\courscrypto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 3,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "MenuFinalTransactionRetrait.cs",
+              "DocumentMoniker": "C:\\Users\\rouff\\Documents\\MasterCorp-FulBank\\MasterCorp-FulBank\\fulbank\\fulbank\\MenuFinalTransactionRetrait.cs",
+              "RelativeDocumentMoniker": "fulbank\\MenuFinalTransactionRetrait.cs",
+              "ToolTip": "C:\\Users\\rouff\\Documents\\MasterCorp-FulBank\\MasterCorp-FulBank\\fulbank\\fulbank\\MenuFinalTransactionRetrait.cs",
+              "RelativeToolTip": "fulbank\\MenuFinalTransactionRetrait.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAB8AAAAsAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-26T10:33:08.472Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "MenuBase.cs",
+              "DocumentMoniker": "C:\\Users\\rouff\\Documents\\MasterCorp-FulBank\\MasterCorp-FulBank\\fulbank\\fulbank\\MenuBase.cs",
+              "RelativeDocumentMoniker": "fulbank\\MenuBase.cs",
+              "ToolTip": "C:\\Users\\rouff\\Documents\\MasterCorp-FulBank\\MasterCorp-FulBank\\fulbank\\fulbank\\MenuBase.cs",
+              "RelativeToolTip": "fulbank\\MenuBase.cs",
+              "ViewState": "AgIAAHcAAAAAAAAAAAAQwLgAAABAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-26T09:59:35.771Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Utilisateur.cs",
+              "DocumentMoniker": "C:\\Users\\rouff\\Documents\\MasterCorp-FulBank\\MasterCorp-FulBank\\fulbank\\fulbank\\Utilisateur.cs",
+              "RelativeDocumentMoniker": "fulbank\\Utilisateur.cs",
+              "ToolTip": "C:\\Users\\rouff\\Documents\\MasterCorp-FulBank\\MasterCorp-FulBank\\fulbank\\fulbank\\Utilisateur.cs",
+              "RelativeToolTip": "fulbank\\Utilisateur.cs",
+              "ViewState": "AgIAACEAAAAAAAAAAAA8wEgAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-19T08:10:36.24Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "MenuChoixCompte.cs",
+              "DocumentMoniker": "C:\\Users\\rouff\\Documents\\MasterCorp-FulBank\\MasterCorp-FulBank\\fulbank\\fulbank\\MenuChoixCompte.cs",
+              "RelativeDocumentMoniker": "fulbank\\MenuChoixCompte.cs",
+              "ToolTip": "C:\\Users\\rouff\\Documents\\MasterCorp-FulBank\\MasterCorp-FulBank\\fulbank\\fulbank\\MenuChoixCompte.cs",
+              "RelativeToolTip": "fulbank\\MenuChoixCompte.cs",
+              "ViewState": "AgIAAM0AAAAAAAAAAAAUwOwAAAAZAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-26T10:21:58.086Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "MenuTransaction.cs",
+              "DocumentMoniker": "C:\\Users\\rouff\\Documents\\MasterCorp-FulBank\\MasterCorp-FulBank\\fulbank\\fulbank\\MenuTransaction.cs",
+              "RelativeDocumentMoniker": "fulbank\\MenuTransaction.cs",
+              "ToolTip": "C:\\Users\\rouff\\Documents\\MasterCorp-FulBank\\MasterCorp-FulBank\\fulbank\\fulbank\\MenuTransaction.cs",
+              "RelativeToolTip": "fulbank\\MenuTransaction.cs",
+              "ViewState": "AgIAAH4AAAAAAAAAAAAYwJwAAAAyAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-26T09:21:42.733Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\rouff\\Documents\\MasterCorp-FulBank\\MasterCorp-FulBank\\fulbank\\fulbank\\Program.cs",
+              "RelativeDocumentMoniker": "fulbank\\Program.cs",
+              "ToolTip": "C:\\Users\\rouff\\Documents\\MasterCorp-FulBank\\MasterCorp-FulBank\\fulbank\\fulbank\\Program.cs",
+              "RelativeToolTip": "fulbank\\Program.cs",
+              "ViewState": "AgIAABoBAAAAAAAAAAAAADMBAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-26T10:24:10.018Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "MenuFinalTransactionVirement.cs",
+              "DocumentMoniker": "C:\\Users\\rouff\\Documents\\MasterCorp-FulBank\\MasterCorp-FulBank\\fulbank\\fulbank\\MenuFinalTransactionVirement.cs",
+              "RelativeDocumentMoniker": "fulbank\\MenuFinalTransactionVirement.cs",
+              "ToolTip": "C:\\Users\\rouff\\Documents\\MasterCorp-FulBank\\MasterCorp-FulBank\\fulbank\\fulbank\\MenuFinalTransactionVirement.cs",
+              "RelativeToolTip": "fulbank\\MenuFinalTransactionVirement.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB8AAAArAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-26T10:33:48.528Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "MenuFinalTransactionDepot.cs",
+              "DocumentMoniker": "C:\\Users\\rouff\\Documents\\MasterCorp-FulBank\\MasterCorp-FulBank\\fulbank\\fulbank\\MenuFinalTransactionDepot.cs",
+              "RelativeDocumentMoniker": "fulbank\\MenuFinalTransactionDepot.cs",
+              "ToolTip": "C:\\Users\\rouff\\Documents\\MasterCorp-FulBank\\MasterCorp-FulBank\\fulbank\\fulbank\\MenuFinalTransactionDepot.cs",
+              "RelativeToolTip": "fulbank\\MenuFinalTransactionDepot.cs",
+              "ViewState": "AgIAABABAAAAAAAAAAAowEYBAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-26T09:32:29.208Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "CoursCrypto.cs",
+              "DocumentMoniker": "C:\\Users\\rouff\\Documents\\MasterCorp-FulBank\\MasterCorp-FulBank\\fulbank\\fulbank\\CoursCrypto.cs",
+              "RelativeDocumentMoniker": "fulbank\\CoursCrypto.cs",
+              "ToolTip": "C:\\Users\\rouff\\Documents\\MasterCorp-FulBank\\MasterCorp-FulBank\\fulbank\\fulbank\\CoursCrypto.cs",
+              "RelativeToolTip": "fulbank\\CoursCrypto.cs",
+              "ViewState": "AgIAAEUAAAAAAAAAAAAqwG0AAAAzAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-19T11:30:08.064Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,11 +1,19 @@
 {
   "version": 2,
-  "dgSpecHash": "GJMPap17OAKSMKoL4JlTPaYlWVSdwOj/SJrw4oENXIam3YgBRFW8r6kcrPsHSmL811rDPoQxsgPA4swszEG4IQ==",
+  "dgSpecHash": "ma7EIfEmiIc=",
   "success": true,
-  "projectFilePath": "D:\\document\\SIO\\Projet\\MasterCorp-FulBank\\fulbank\\fulbank\\fulbank.csproj",
+  "projectFilePath": "C:\\Users\\rouff\\Documents\\MasterCorp-FulBank\\MasterCorp-FulBank\\fulbank\\fulbank\\fulbank.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\rouff\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\7.0.1\\microsoft.extensions.logging.abstractions.7.0.1.nupkg.sha512",
-    "C:\\Users\\rouff\\.nuget\\packages\\mysqlconnector\\2.3.7\\mysqlconnector.2.3.7.nupkg.sha512"
+    "C:\\Users\\rouff\\.nuget\\packages\\mysqlconnector\\2.3.7\\mysqlconnector.2.3.7.nupkg.sha512",
+    "C:\\Users\\rouff\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512"
   ],
-  "logs": []
+  "logs": [
+    {
+      "code": "Undefined",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Problème de lecture du fichier cache C:\\Users\\rouff\\Documents\\MasterCorp-FulBank\\MasterCorp-FulBank\\fulbank\\fulbank\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
+    }
+  ]
 }

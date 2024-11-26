@@ -1,53 +1,263 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
+using System.Net.Http;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Newtonsoft.Json.Linq;
 
 namespace fulbank
 {
     public partial class CoursCrypto : Form
     {
-        // Déclaration des panels comme champs de la classe
-        private RoundedPanel panelCompte;
-        private RoundedPanel panelCoursCrypto;
-        private RoundedPanel panelTransaction;
-        private RoundedPanel panelAutres;
-        private int selectedPanelIndex = 0; // Index to track the currently selected panel
-
-        // Liste des panels et un index pour suivre le panel actif
+        // Déclaration des variables
         private RoundedPanel[] panels;
-        private int currentPanelIndex = 0;
+        private int selectedPanelIndex = 0; // Index du panel sélectionné dans la liste globale
+        private int visibleStartIndex = 0; // Premier index visible
+        private readonly List<string> cryptos = new List<string>
+        {
+            "binancecoin", "bitcoin", "cardano", "celestia", "chainlink",
+            "cosmos", "dogecoin", "ethereum", "fantom", "litecoin",
+            "monero", "neo", "polkadot", "ripple", "shiba-inu", "solana",
+            "stellar", "sui", "tron", "uniswap", "usd-coin", "vechain",
+            "wrapped-bitcoin"
+        };
+        private readonly List<string> currencies = new List<string> { "usd", "eur", "gbp" };
+        private const int panelsPerPage = 4; // Nombre de panels visibles à la fois
+
         public CoursCrypto()
         {
             InitializeComponent();
-            Initializeform3();
-            UpdatePanelSelection();
+            InitializeForm();
             Methode.CreateDirectionalButtons(
-            this,
-            BtnHaut_Click,    // Gestionnaire d'événement pour le bouton Haut
-            BtnBas_Click,     // Gestionnaire d'événement pour le bouton Bas
-            BtnGauche_Click,  // Gestionnaire d'événement pour le bouton Gauche
-            BtnDroite_Click,  // Gestionnaire d'événement pour le bouton Droite
-            BtnValider_Click, // Gestionnaire d'événement pour le bouton Valider
-            BtnRetour_Click,  // Gestionnaire d'événement pour le bouton Retour
-            BtnMaison_Click,  // Gestionnaire d'événement pour le bouton Maison
-            BtnFermer_Click   // Gestionnaire d'événement pour le bouton Fermer
+                this,
+                BtnHaut_Click,
+                BtnBas_Click,
+                BtnGauche_Click,
+                BtnDroite_Click,
+                BtnValider_Click,
+                BtnRetour_Click,
+                BtnMaison_Click,
+                BtnFermer_Click
             );
         }
 
-        private void CoursCrypto_Load(object sender, EventArgs e)
+        private async void InitializeForm()
         {
+            this.WindowState = FormWindowState.Maximized;
+            this.FormBorderStyle = FormBorderStyle.None;
+            this.BackColor = Color.FromArgb(128, 194, 236);
+            this.Text = "FulBank";
 
+            Methode.Fulbank(this);
+
+            // Charger les données et initialiser les panneaux
+            await LoadCryptoDataAsync();
+
+            // Vérifier l'initialisation des panneaux
+            if (panels == null || panels.Length == 0)
+            {
+                Console.Error.WriteLine("Les panneaux n'ont pas été initialisés.");
+                return;
+            }
+
+            UpdatePanelSelection();
+            AdjustPanelLayout();
+
+            this.Resize += (s, e) => AdjustPanelLayout();
+        }
+
+        private async Task LoadCryptoDataAsync()
+        {
+            string apiUrl = $"https://api.coingecko.com/api/v3/simple/price?ids={string.Join(",", cryptos)}&vs_currencies={string.Join(",", currencies)}";
+            using (HttpClient client = new HttpClient())
+            {
+                try
+                {
+                    string json = await client.GetStringAsync(apiUrl);
+                    Console.WriteLine("Données JSON récupérées : " + json);
+                    JObject data = JObject.Parse(json);
+
+                    List<RoundedPanel> createdPanels = new List<RoundedPanel>();
+
+                    // Get the current date and time
+                    string currentTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+
+                    foreach (var crypto in cryptos)
+                    {
+                        if (data[crypto] != null)
+                        {
+                            Dictionary<string, string> currencyPrices = new Dictionary<string, string>();
+
+                            foreach (var currency in currencies)
+                            {
+                                var price = data[crypto]?[currency]?.ToString();
+                                if (price != null)
+                                {
+                                    currencyPrices[currency.ToUpper()] = price;
+                                }
+                            }
+
+                            if (currencyPrices.Count > 0)
+                            {
+                                var panel = CreateCryptoPanel(crypto.ToUpper(), currencyPrices, currentTime); // Pass the current time to the panel creation
+                                createdPanels.Add(panel);
+                            }
+                        }
+                    }
+
+                    panels = createdPanels.ToArray();
+                    this.Controls.AddRange(panels);
+                    Console.WriteLine($"{panels.Length} panneaux créés et ajoutés au formulaire.");
+                }
+                catch (Exception ex)
+                {
+                    Console.Error.WriteLine("Erreur lors de la récupération des données de l'API : " + ex.Message);
+                }
+            }
+        }
+
+        private RoundedPanel CreateCryptoPanel(string cryptoName, Dictionary<string, string> currencyPrices, string timestamp)
+        {
+            RoundedPanel panel = new RoundedPanel
+            {
+                BackColor = Color.FromArgb(34, 67, 153),
+                BorderRadius = 90,
+                Anchor = AnchorStyles.None
+            };
+
+            Label lblCrypto = new Label
+            {
+                Text = cryptoName,
+                Font = new Font("Arial", 40, FontStyle.Bold),
+                ForeColor = Color.FromArgb(128, 194, 236),
+                TextAlign = ContentAlignment.MiddleCenter,
+                Dock = DockStyle.Top,
+                Height = 70
+            };
+            panel.Controls.Add(lblCrypto);
+
+            FlowLayoutPanel pricesContainer = new FlowLayoutPanel
+            {
+                Dock = DockStyle.Bottom,
+                AutoScroll = true,
+                Padding = new Padding(10),
+                FlowDirection = FlowDirection.LeftToRight,
+                WrapContents = true,
+                Height = 70
+            };
+
+            foreach (var currencyPrice in currencyPrices)
+            {
+                Label lblCurrency = new Label
+                {
+                    Text = $"{currencyPrice.Key}:",
+                    Font = new Font("Arial", 30, FontStyle.Bold),
+                    ForeColor = Color.White,
+                    AutoSize = true,
+                    Margin = new Padding(10, 0, 10, 0)
+                };
+
+                Label lblPrice = new Label
+                {
+                    Text = $"{currencyPrice.Value}",
+                    Font = new Font("Arial", 30, FontStyle.Regular),
+                    ForeColor = Color.FromArgb(207, 162, 0),
+                    AutoSize = true,
+                    Margin = new Padding(10, 0, 10, 0)
+                };
+
+                pricesContainer.Controls.Add(lblCurrency);
+                pricesContainer.Controls.Add(lblPrice);
+            }
+
+            panel.Controls.Add(pricesContainer);
+
+            Label lblTimestamp = new Label
+            {
+                Text = $"Last updated: {timestamp}",
+                Font = new Font("Arial", 12, FontStyle.Italic),
+                ForeColor = Color.White,
+                TextAlign = ContentAlignment.MiddleCenter,
+                Dock = DockStyle.Bottom,
+                Height = 30
+            };
+            panel.Controls.Add(lblTimestamp);
+
+            return panel;
+        }
+
+        private void AdjustPanelLayout()
+        {
+            int panelWidth = this.ClientSize.Width * 53 / 90;
+            int buttonHeight = this.ClientSize.Height / 5;
+            int panelHeight = buttonHeight;                 
+
+            int buttonWidth = this.ClientSize.Width / 8;
+            int buttonSpacing = this.ClientSize.Height / 20;
+
+            int panelX = this.ClientSize.Width - buttonWidth - panelWidth - buttonSpacing;
+
+            int visiblePanelsCount = Math.Min(panelsPerPage, panels.Length - visibleStartIndex); 
+            int totalPanelHeight = visiblePanelsCount * panelHeight + (visiblePanelsCount - 1) * buttonSpacing;
+            int topMargin = (this.ClientSize.Height - totalPanelHeight) / 2;
+
+            // Parcourir les panneaux
+            for (int i = 0; i < panels.Length; i++)
+            {
+                RoundedPanel panel = panels[i];
+
+                if (i >= visibleStartIndex && i < visibleStartIndex + panelsPerPage)
+                {
+                    int visibleIndex = i - visibleStartIndex;
+                    panel.Size = new Size(panelWidth, panelHeight);
+                    panel.Location = new Point(panelX * 105 / 100, topMargin + visibleIndex * (panelHeight + buttonSpacing));
+                    panel.Visible = true;
+                }
+                else
+                {
+                    panel.Visible = false;
+                }
+
+                if (panel.Controls.Count > 0 && panel.Controls[0] is Label lbl)
+                {
+                    Methode.CenterControlInParent(lbl);
+                }
+            }
+        }
+
+
+        private void BtnHaut_Click(object sender, EventArgs e)
+        {
+            if (selectedPanelIndex > 0)
+            {
+                selectedPanelIndex--;
+                if (selectedPanelIndex < visibleStartIndex)
+                {
+                    visibleStartIndex--;
+                }
+                UpdatePanelSelection();
+                AdjustPanelLayout();
+            }
+        }
+
+        private void BtnBas_Click(object sender, EventArgs e)
+        {
+            if (selectedPanelIndex < panels.Length - 1)
+            {
+                selectedPanelIndex++;
+                if (selectedPanelIndex >= visibleStartIndex + panelsPerPage)
+                {
+                    visibleStartIndex++;
+                }
+                UpdatePanelSelection();
+                AdjustPanelLayout();
+            }
         }
 
         private void BtnFermer_Click(object sender, EventArgs e)
         {
-            Connexion form2 = new();
+            Connexion form2 = new Connexion();
             form2.Show();
             this.Close();
         }
@@ -59,11 +269,6 @@ namespace fulbank
             this.Close();
         }
 
-        private void BtnGauche_Click(object sender, EventArgs e) { }
-
-        private void BtnDroite_Click(object sender, EventArgs e) { }
-        private void BtnValider_Click(object sender, EventArgs e) { }
-
         private void BtnMaison_Click(object sender, EventArgs e)
         {
             MenuBase form2 = new MenuBase();
@@ -71,106 +276,18 @@ namespace fulbank
             this.Close();
         }
 
-        private void BtnBas_Click(object sender, EventArgs e)
-        {
-            // Change the selected panel index downwards
-            if (selectedPanelIndex < panels.Length - 1)
-            {
-                selectedPanelIndex++;
-            }
-            UpdatePanelSelection();
-        }
+        private void BtnGauche_Click(object sender, EventArgs e) { }
+        private void BtnDroite_Click(object sender, EventArgs e) { }
+        private void BtnValider_Click(object sender, EventArgs e) { }
 
-        private void BtnHaut_Click(object sender, EventArgs e)
-        {
-            // Empêcher selectedPanelIndex de descendre en dessous de 0
-            if (selectedPanelIndex > 0)
-            {
-                selectedPanelIndex--;
-            }
-            UpdatePanelSelection();
-        }
-
-
-        // Method to update the visual state of the panels based on selection
         private void UpdatePanelSelection()
         {
-            // Deselect all panels
             foreach (var panel in panels)
             {
-                panel.BackColor = Color.FromArgb(34, 67, 153); // Default color
+                panel.BackColor = Color.FromArgb(34, 67, 153); // Couleur par défaut
             }
 
-            // Highlight the selected panel
-            panels[selectedPanelIndex].BackColor = Color.FromArgb(50, 100, 200); // Highlight color
-        }
-
-        private void Initializeform3()
-        {
-            // Définir le formulaire en plein écran
-            this.WindowState = FormWindowState.Maximized; // Maximise le formulaire
-            this.Size = new Size(1920, 1080);  // Taille ajustée pour un écran 1920x1080
-            this.FormBorderStyle = FormBorderStyle.None; // Supprime la bordure du formulaire
-            // Configuration générale du formulaire 
-            this.Text = "FulBank";
-            this.BackColor = Color.FromArgb(128, 194, 236);
-            // Appelle la méthode pour afficher le panel de fulbank
-            Methode.Fulbank(this);
-
-            // Panel contenant les champs Crypto
-            RoundedPanel panelCrypto = new RoundedPanel();
-            panelCrypto.BackColor = Color.FromArgb(34, 67, 153);
-            panelCrypto.Size = new Size(1090, 225);  // Agrandir le panel 
-            panelCrypto.Location = new Point(560, -25);  // Centré 
-            panelCrypto.Anchor = AnchorStyles.None;  // Garder le panel centré 
-            panelCrypto.BorderRadius = 90;
-            this.Controls.Add(panelCrypto);
-
-            // Label Nom Crypto 
-            Label lblNomCrypto = new Label();
-            lblNomCrypto.Text = "Bitcoins";
-            lblNomCrypto.Font = new Font("Arial", 90, FontStyle.Bold);  // Texte énorme 
-            lblNomCrypto.ForeColor = Color.FromArgb(128, 194, 236);
-            lblNomCrypto.Location = new Point(0, 75);  // Centré 
-            lblNomCrypto.AutoSize = true;
-            panelCrypto.Controls.Add(lblNomCrypto);
-
-            // Label Prix Crypto 
-            Label lblPrixCrypto = new Label();
-            lblPrixCrypto.Text = "57000$/BTC";
-            lblPrixCrypto.Font = new Font("Arial", 90, FontStyle.Bold);  // Texte énorme 
-            lblPrixCrypto.ForeColor = Color.FromArgb(207, 162, 0);
-            lblPrixCrypto.Location = new Point(900, 75);  // Centré 
-            lblPrixCrypto.AutoSize = true;
-            panelCrypto.Controls.Add(lblPrixCrypto);
-            // Panel contenant les champs Crypto
-            RoundedPanel panelCrypto1 = new RoundedPanel();
-            panelCrypto1.BackColor = Color.FromArgb(34, 67, 153);
-            panelCrypto1.Size = new Size(1360, 300);  // Agrandir le panel 
-            panelCrypto1.Location = new Point(560, (this.ClientSize.Height - 520) / 2 + 5);  // Centré 
-            panelCrypto1.Anchor = AnchorStyles.None;  // Garder le panel centré 
-            panelCrypto1.BorderRadius = 90;
-            this.Controls.Add(panelCrypto1);
-
-            // Label Nom Crypto 
-            Label lblNomCrypto1 = new Label();
-            lblNomCrypto1.Text = "Bitcoins";
-            lblNomCrypto1.Font = new Font("Arial", 90, FontStyle.Bold);  // Texte énorme 
-            lblNomCrypto1.ForeColor = Color.FromArgb(128, 194, 236);
-            lblNomCrypto1.Location = new Point(0, 75);  // Centré 
-            lblNomCrypto1.AutoSize = true;
-            panelCrypto1.Controls.Add(lblNomCrypto1);
-
-            // Label Prix Crypto 
-            Label lblPrixCrypto1 = new Label();
-            lblPrixCrypto1.Text = "57000$/BTC";
-            lblPrixCrypto1.Font = new Font("Arial", 90, FontStyle.Bold);  // Texte énorme 
-            lblPrixCrypto1.ForeColor = Color.FromArgb(207, 162, 0);
-            lblPrixCrypto1.Location = new Point(900, 75);  // Centré 
-            lblPrixCrypto1.AutoSize = true;
-            panelCrypto1.Controls.Add(lblPrixCrypto1);
-
-            panels = new RoundedPanel[] { panelCrypto, panelCrypto1 };
+            panels[selectedPanelIndex].BackColor = Color.FromArgb(50, 100, 200); // Couleur sélectionnée
         }
     }
 }
