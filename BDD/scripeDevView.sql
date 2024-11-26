@@ -27,6 +27,7 @@ inner join TypeCompte as TC on TC.id = CB.`type`
 left join Utilisateur as UT on UT.id = CB.titulaire
 left join Utilisateur as UCT on UCT.id = CB.coTitulaire;
 #*/
+drop view historique_compte;
 create view historique_compte as
 select CBSO.numeroDeCompte as compteSource, CBDE.numeroDeCompte as compteDest, dateOperation as dateOperation,OPP.montant, MON.sigle as monnaie
 from Opperation AS OPP 
@@ -35,6 +36,9 @@ left join CompteBanquaire as CBSO on CBSO.numeroDeCompte = OPP.compte
 left join CompteBanquaire as CBDE on CBDE.numeroDeCompte = OPP.compteCible
 where suprimee = false
 order by dateOperation;
+
+select * from historique_compte;
+explain historique_compte;
 
 delimiter $$
 show tables;

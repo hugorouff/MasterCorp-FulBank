@@ -39,7 +39,7 @@ CREATE TABLE Utilisateur(
 
 CREATE TABLE CompteBanquaire(
    numeroDeCompte INT,
-   solde DECIMAL(12,2),
+   solde float,
    coTitulaire INT,
    titulaire INT NOT NULL,
    `type` INT NOT NULL,
@@ -54,7 +54,7 @@ CREATE TABLE CompteBanquaire(
 CREATE TABLE Opperation(
    id INT auto_increment,
    dateOperation DATETIME NOT NULL,
-   montant INT not null default 0,
+   montant float not null default 0,
    tauxDeChange INT,
    suprimee bool NOT NULL default false,
    monaie INT,
