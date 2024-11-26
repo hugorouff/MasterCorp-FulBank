@@ -3,16 +3,16 @@
   "WorkspaceRootPath": "C:\\Users\\castagna\\PROJETS\\fullbank\\fulbank\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{63076290-BCE2-43B9-AB4A-55FC645C6B26}|fulbank\\fulbank.csproj|c:\\users\\castagna\\projets\\fullbank\\fulbank\\fulbank\\menuhistoriquecompts.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{63076290-BCE2-43B9-AB4A-55FC645C6B26}|fulbank\\fulbank.csproj|solutionrelative:fulbank\\menuhistoriquecompts.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{63076290-BCE2-43B9-AB4A-55FC645C6B26}|fulbank\\fulbank.csproj|c:\\users\\castagna\\projets\\fullbank\\fulbank\\fulbank\\connexionbdd.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{63076290-BCE2-43B9-AB4A-55FC645C6B26}|fulbank\\fulbank.csproj|solutionrelative:fulbank\\connexionbdd.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{63076290-BCE2-43B9-AB4A-55FC645C6B26}|fulbank\\fulbank.csproj|c:\\users\\castagna\\projets\\fullbank\\fulbank\\fulbank\\fulbank.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
       "RelativeMoniker": "D:0:0:{63076290-BCE2-43B9-AB4A-55FC645C6B26}|fulbank\\fulbank.csproj|solutionrelative:fulbank\\fulbank.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{63076290-BCE2-43B9-AB4A-55FC645C6B26}|fulbank\\fulbank.csproj|c:\\users\\castagna\\projets\\fullbank\\fulbank\\fulbank\\menuhistoriquecompts.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{63076290-BCE2-43B9-AB4A-55FC645C6B26}|fulbank\\fulbank.csproj|solutionrelative:fulbank\\menuhistoriquecompts.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{63076290-BCE2-43B9-AB4A-55FC645C6B26}|fulbank\\fulbank.csproj|c:\\users\\castagna\\projets\\fullbank\\fulbank\\fulbank\\utilisateur.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -50,17 +50,17 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
               "Title": "MenuHistoriqueCompts.cs",
               "DocumentMoniker": "C:\\Users\\castagna\\PROJETS\\fullbank\\fulbank\\fulbank\\MenuHistoriqueCompts.cs",
               "RelativeDocumentMoniker": "fulbank\\MenuHistoriqueCompts.cs",
               "ToolTip": "C:\\Users\\castagna\\PROJETS\\fullbank\\fulbank\\fulbank\\MenuHistoriqueCompts.cs",
               "RelativeToolTip": "fulbank\\MenuHistoriqueCompts.cs",
-              "ViewState": "AgIAAKkAAAAAAAAAAAAawLcAAAAJAAAAAAAAAA==",
+              "ViewState": "AgIAADsAAAAAAAAAAAAawFQAAAAvAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-26T07:18:30.727Z",
               "EditorCaption": ""
@@ -106,12 +106,12 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "ConnexionBDD.cs",
               "DocumentMoniker": "C:\\Users\\castagna\\PROJETS\\fullbank\\fulbank\\fulbank\\ConnexionBDD.cs",
               "RelativeDocumentMoniker": "fulbank\\ConnexionBDD.cs",
-              "ToolTip": "C:\\Users\\castagna\\PROJETS\\fullbank\\fulbank\\fulbank\\ConnexionBDD.cs*",
-              "RelativeToolTip": "fulbank\\ConnexionBDD.cs*",
+              "ToolTip": "C:\\Users\\castagna\\PROJETS\\fullbank\\fulbank\\fulbank\\ConnexionBDD.cs",
+              "RelativeToolTip": "fulbank\\ConnexionBDD.cs",
               "ViewState": "AgIAAAwAAAAAAAAAAAAYwBUAAACNAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-06T12:09:12.138Z",
@@ -145,7 +145,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "fulbank.csproj",
               "DocumentMoniker": "C:\\Users\\castagna\\PROJETS\\fullbank\\fulbank\\fulbank\\fulbank.csproj",
               "RelativeDocumentMoniker": "fulbank\\fulbank.csproj",
