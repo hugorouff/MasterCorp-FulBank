@@ -193,19 +193,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-<<<<<<< HEAD
       "projectUniqueName": "C:\\Users\\rouff\\Documents\\MasterCorp-FulBank\\MasterCorp-FulBank\\fulbank\\fulbank\\fulbank.csproj",
       "projectName": "fulbank",
       "projectPath": "C:\\Users\\rouff\\Documents\\MasterCorp-FulBank\\MasterCorp-FulBank\\fulbank\\fulbank\\fulbank.csproj",
       "packagesPath": "C:\\Users\\rouff\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\rouff\\Documents\\MasterCorp-FulBank\\MasterCorp-FulBank\\fulbank\\fulbank\\obj\\",
-=======
-      "projectUniqueName": "C:\\Users\\rouff\\Documents\\fulbank\\MasterCorp-FulBank\\fulbank\\fulbank\\fulbank.csproj",
-      "projectName": "fulbank",
-      "projectPath": "C:\\Users\\rouff\\Documents\\fulbank\\MasterCorp-FulBank\\fulbank\\fulbank\\fulbank.csproj",
-      "packagesPath": "C:\\Users\\rouff\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\rouff\\Documents\\fulbank\\MasterCorp-FulBank\\fulbank\\fulbank\\obj\\",
->>>>>>> 1f4f42aac5aa9613d14ffde66ce3716d5472faa1
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -275,5 +267,13 @@
         "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400/PortableRuntimeIdentifierGraph.json"
       }
     }
-  }
+  },
+  "logs": [
+    {
+      "code": "Undefined",
+      "level": "Warning",
+      "warningLevel": 1,
+      "message": "Problème de lecture du fichier cache C:\\Users\\rouff\\Documents\\MasterCorp-FulBank\\MasterCorp-FulBank\\fulbank\\fulbank\\obj\\project.nuget.cache : Invalid property identifier character: <. Path 'version', line 3, position 0."
+    }
+  ]
 }

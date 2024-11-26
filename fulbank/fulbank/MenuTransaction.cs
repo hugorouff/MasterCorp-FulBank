@@ -56,12 +56,6 @@ namespace fulbank
                     nextForm = new MenuChoixCompte("Depot");
                     break;
                 case 1:
-                    nextForm = new MenuRetrait("Retrait");
-                    break;
-                case 2:
-                    nextForm = new MenuVirement("Virement");
-                    break;
-                case 3:
                     this.Close();
                     break;
             }
