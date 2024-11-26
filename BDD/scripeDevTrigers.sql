@@ -16,6 +16,7 @@ create trigger default_user_role before insert
 
 # not working
 $$
+/*
 drop trigger save_operation$$
 create trigger save_operation before delete
 on Opperation for each row
@@ -24,13 +25,13 @@ on Opperation for each row
 	update Opperation 
     set suprimee = true
     where Opperation.id = old.id;
-    */
-    signal sqlstate '45000'
+    #*/
+/*    signal sqlstate '45000'
 		set message_text = 'impossible de suprimer, passer le boolen de la variable suprimee à true';
         
 	#call setTrue(old.id);	#non fonctionelle update impossible
  end$$
-
+#*/
 
 /* not posssible in mariadb, switch to postgres ?
 create trigger soft_delete_view before delete
@@ -60,18 +61,7 @@ create procedure setTrue(in anid int)
  end$$
  */
  
- delimiter $$ 
-drop function checkConnexion$$
-create function checkConnexion(mdp varchar(255), usr int) returns bool
-begin
-declare mdp_check varchar(255) ;
-select binary motDePasse into mdp_check from Utilisateur where id = usr;
 
-if mdp_check = binary mdp 
-then
-return True;
-else
-return false;
-end if;
-end $$
+
+
 delimiter ;

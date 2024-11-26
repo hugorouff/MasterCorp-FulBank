@@ -9,6 +9,7 @@ where id = idOpp;
 end$$
 # taux de change à mêtre vers la fin
 drop procedure opperation_banquaire$$
+/*
 create procedure opperation_banquaire(in montant_transaction float, in taux_change int, in _DAB int, in compte_source int, in compte_dest int)
 begin
 	declare montant_compte_source float default 0;
@@ -49,6 +50,115 @@ begin
 		end if;
 	commit;
 end$$
+#*/
+drop function checkConnexion$$
+create function checkConnexion(mdp varchar(255), usr int) returns bool
+begin
+declare mdp_check varchar(255) ;
+select binary motDePasse into mdp_check from Utilisateur where id = usr;
+
+if mdp_check = binary mdp 
+then
+return True;
+else
+return false;
+end if;
+end $$
+
+
+
+create procedure virement(in montant_transaction float, in compteSource int, in compteDest int, in tauxDeChange int, in DAB int)
+begin 
+
+declare montant_source int;
+declare monaie int;
+
+select monaie, solde into monaie, montant_source
+from CompteBanquaire
+where numeroDeCompte = compteSource ;
+
+if (montant_source > montant_transaction)
+then
+start transaction;
+insert into Opperation(dateOperation, montant,compte, compteCible,tauxDeChange,monaie,DAB)
+values(now(),montantEntrant,compteSource, compteDest, tauxDeChange, monaie,DAB);
+
+
+update CompteBanquaire
+set solde = solde + montant_transaction
+where numeroDeCompte = compteDest;
+
+
+update CompteBanquaire 
+set solde = solde - montant_transaction
+where numeroDeCompte = compteSource;
+
+commit;
+
+end if;
+
+end$$
+
+drop procedure depos;
+create procedure depos(in montantEntrant float, in compteDest int, in tauxDeChange int, in DAB int)
+begin
+
+declare monaie int;
+
+select monaie into monaie
+from CompteBanquaire 
+where numeroDeCompte = compteDest;
+
+start transaction;
+insert into Opperation(dateOperation, montant, compteCible,tauxDeChange,monaie,DAB)
+values(now(),montantEntrant, compteDest, tauxDeChange, monaie,DAB);
+
+update CompteBanquaire
+set solde = solde + montantEntrant
+where numeroDeCompte = compteDest;
+
+commit;
+
+end$$
+
+drop procedure retrait;
+create procedure retrait(in montantR float, in compteSource int, in tauxDeChange int, in DAB int)
+begin
+
+declare montantPoseder int;
+declare monaie int;
+
+
+
+SELECT solde, solde INTO montantPoseder, monaie
+FROM CompteBanquaire
+WHERE numeroDeCompte = compteSource;
+
+if (montantPoseder > montantR)
+then
+
+start transaction;
+
+
+insert into Opperation(dateOperation, montant,compte,tauxDeChange,monaie,DAB)
+values(now(),montantR,compteSource,tauxDeChange,monaie,DAB);
+
+update CompteBanquaire 
+set solde = solde - montantR
+where numeroDeCompte = compteSource;
+end if;
+
+commit;
+
+end$$
+
+
+
+
+
+
+
+
 select * from comptes_utilisateur;
 call opperation_banquaire(300, 1,1, 102012,102013);
 select * from comptes_utilisateur;
