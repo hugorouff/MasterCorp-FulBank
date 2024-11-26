@@ -37,7 +37,6 @@
             ClientSize = new Size(800, 450);
             Name = "MenuCompte";
             Text = "Form3";
-            Load += MenuCompte_Load;
             ResumeLayout(false);
         }
 

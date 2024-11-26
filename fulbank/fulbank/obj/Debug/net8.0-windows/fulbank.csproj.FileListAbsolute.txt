@@ -235,3 +235,4 @@ C:\Users\rouff\Documents\fulbank\MasterCorp-FulBank\fulbank\fulbank\obj\Debug\ne
 C:\Users\rouff\Documents\fulbank\MasterCorp-FulBank\fulbank\fulbank\obj\Debug\net8.0-windows\fulbank.MenuFinalTransactionVirement.resources
 C:\Users\rouff\Documents\fulbank\MasterCorp-FulBank\fulbank\fulbank\obj\Debug\net8.0-windows\fulbank.MenuRetrait.resources
 C:\Users\rouff\Documents\fulbank\MasterCorp-FulBank\fulbank\fulbank\obj\Debug\net8.0-windows\fulbank.MenuVirement.resources
+C:\Users\rouff\Documents\fulbank\MasterCorp-FulBank\fulbank\fulbank\obj\Debug\net8.0-windows\fulbank.MenuHistoriqueCompts.resources

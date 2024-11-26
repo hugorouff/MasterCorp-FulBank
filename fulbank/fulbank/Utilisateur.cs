@@ -11,11 +11,13 @@ namespace fulbank
     {
         private static Utilisateur utilActuel;
 
+
         private int id;
         private List<int> numComptes;
         private List<float> soldes;
         private List<string> typeComptes;
         private List<string> monnaies;
+        private int numCompteChoisi;
 
         // Constructeur privé
         private Utilisateur(int idUtil)
@@ -26,10 +28,12 @@ namespace fulbank
             this.typeComptes = new List<string>();
             this.monnaies = new List<string>();
         }
+        public void setCompteChoisi(int compteChoisi) { this.numCompteChoisi = compteChoisi; }
 
         public int getId() { return id; }
         public static Utilisateur getInstance() { return utilActuel; }
         public static void NewInstance(int idUtil) { utilActuel = new Utilisateur(idUtil); }
+        public int getCompteChoisi() { return numCompteChoisi; }
 
         public void PullComptes()
         {
@@ -58,6 +62,8 @@ namespace fulbank
 
             BDD.Close();
         }
+
+
 
         public List<int> GetNumComptes() => new List<int>(numComptes);
         public List<float> GetSoldes() => new List<float>(soldes);

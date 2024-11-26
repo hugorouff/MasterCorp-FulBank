@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Design;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+
+
 namespace fulbank
-    {
+{
     public partial class MenuCompte : Form
     {
         private RoundedPanel panelCompte1;
@@ -18,6 +21,7 @@ namespace fulbank
 
         private RoundedPanel[] panels; // Panneaux actifs dans une page
         private int currentPageIndex = 0; // Page actuelle
+        private int selectedPanelIndex = 0;//panel actuelle
         private int totalPages = 0; // Nombre total de pages
 
         private List<string> compteInfos; // Stocke les données des comptes
@@ -74,6 +78,15 @@ namespace fulbank
             // Afficher la première page
             UpdatePage();
         }
+        private void UpdatePanel()
+        {
+            foreach (var panel in panels)
+            {
+                panel.BackColor = Color.FromArgb(34, 67, 153); // Couleur par défaut
+            }
+
+            panels[selectedPanelIndex].BackColor = Color.FromArgb(50, 100, 200); // Couleur sélectionnée
+        }
 
         private void UpdatePage()
         {
@@ -95,26 +108,40 @@ namespace fulbank
 
                 // Ajouter un label avec les données du compte
                 InitPanelLabel(panel, compteInfo);
+
             }
 
             AdjustPanelLayout();
+            UpdatePanel();
         }
-
         private void BtnBas_Click(object sender, EventArgs e)
         {
-            if (currentPageIndex < totalPages - 1)
+            if (selectedPanelIndex < 3)
+            {
+                selectedPanelIndex++;
+                UpdatePanel();
+            }
+            else if (currentPageIndex < totalPages - 1)
             {
                 currentPageIndex++;
+                selectedPanelIndex = 0;
                 UpdatePage();
             }
         }
 
         private void BtnHaut_Click(object sender, EventArgs e)
         {
-            if (currentPageIndex > 0)
+            if (selectedPanelIndex > 0)
+            {
+                selectedPanelIndex--;
+                UpdatePanel();
+            }
+            else if (currentPageIndex > 0)
             {
                 currentPageIndex--;
+                selectedPanelIndex = 3;
                 UpdatePage();
+
             }
         }
 
@@ -181,6 +208,10 @@ namespace fulbank
         private void BtnValider_Click(object sender, EventArgs e)
         {
 
+            Utilisateur.getInstance().setCompteChoisi(Utilisateur.getInstance().GetNumComptes()[selectedPanelIndex + 4 * currentPageIndex]);
+            MenuHistoriqueCompts form = new MenuHistoriqueCompts();
+            form.Show();
+            this.Close();
         }
 
         private void BtnGauche_Click(object sender, EventArgs e) { }
@@ -206,11 +237,6 @@ namespace fulbank
             MenuBase form2 = new MenuBase();
             form2.Show();
             this.Close();
-        }
-
-        private void MenuCompte_Load(object sender, EventArgs e)
-        {
-
         }
     }
 }
