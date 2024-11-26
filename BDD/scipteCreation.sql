@@ -87,6 +87,24 @@ create view comptes_utilisateur as
 	from CompteBanquaire as CB inner join Monnaie as M on M.id = CB.monaie 
 	inner join TypeCompte as TC on TC.id = CB.`type`;
 
+CREATE VIEW historique_compte AS
+    SELECT 
+        CBSO.numeroDeCompte AS compteSource,
+        CBDE.numeroDeCompte AS compteDest,
+        dateOperation AS dateOperation,
+        OPP.montant,
+        MON.sigle AS monnaie
+    FROM
+        Opperation AS OPP
+            INNER JOIN
+        Monnaie AS MON ON OPP.monaie = MON.id
+            LEFT JOIN
+        CompteBanquaire AS CBSO ON CBSO.numeroDeCompte = OPP.compte
+            LEFT JOIN
+        CompteBanquaire AS CBDE ON CBDE.numeroDeCompte = OPP.compteCible
+    WHERE
+        suprimee = FALSE
+    ORDER BY dateOperation;
 
 # triggers
 delimiter $$

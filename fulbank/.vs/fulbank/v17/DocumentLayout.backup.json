@@ -3,8 +3,20 @@
   "WorkspaceRootPath": "C:\\Users\\castagna\\PROJETS\\fullbank\\fulbank\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{63076290-BCE2-43B9-AB4A-55FC645C6B26}|fulbank\\fulbank.csproj|c:\\users\\castagna\\projets\\fullbank\\fulbank\\fulbank\\connexionbdd.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{63076290-BCE2-43B9-AB4A-55FC645C6B26}|fulbank\\fulbank.csproj|solutionrelative:fulbank\\connexionbdd.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{63076290-BCE2-43B9-AB4A-55FC645C6B26}|fulbank\\fulbank.csproj|c:\\users\\castagna\\projets\\fullbank\\fulbank\\fulbank\\fulbank.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{63076290-BCE2-43B9-AB4A-55FC645C6B26}|fulbank\\fulbank.csproj|solutionrelative:fulbank\\fulbank.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{63076290-BCE2-43B9-AB4A-55FC645C6B26}|fulbank\\fulbank.csproj|c:\\users\\castagna\\projets\\fullbank\\fulbank\\fulbank\\menuhistoriquecompts.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{63076290-BCE2-43B9-AB4A-55FC645C6B26}|fulbank\\fulbank.csproj|solutionrelative:fulbank\\menuhistoriquecompts.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{63076290-BCE2-43B9-AB4A-55FC645C6B26}|fulbank\\fulbank.csproj|c:\\users\\castagna\\projets\\fullbank\\fulbank\\fulbank\\utilisateur.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{63076290-BCE2-43B9-AB4A-55FC645C6B26}|fulbank\\fulbank.csproj|solutionrelative:fulbank\\utilisateur.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{63076290-BCE2-43B9-AB4A-55FC645C6B26}|fulbank\\fulbank.csproj|c:\\users\\castagna\\projets\\fullbank\\fulbank\\fulbank\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -19,20 +31,8 @@
       "RelativeMoniker": "D:0:0:{63076290-BCE2-43B9-AB4A-55FC645C6B26}|fulbank\\fulbank.csproj|solutionrelative:fulbank\\connexion.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{63076290-BCE2-43B9-AB4A-55FC645C6B26}|fulbank\\fulbank.csproj|c:\\users\\castagna\\projets\\fullbank\\fulbank\\fulbank\\utilisateur.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{63076290-BCE2-43B9-AB4A-55FC645C6B26}|fulbank\\fulbank.csproj|solutionrelative:fulbank\\utilisateur.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{63076290-BCE2-43B9-AB4A-55FC645C6B26}|fulbank\\fulbank.csproj|c:\\users\\castagna\\projets\\fullbank\\fulbank\\fulbank\\courscrypto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{63076290-BCE2-43B9-AB4A-55FC645C6B26}|fulbank\\fulbank.csproj|solutionrelative:fulbank\\courscrypto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{63076290-BCE2-43B9-AB4A-55FC645C6B26}|fulbank\\fulbank.csproj|c:\\users\\castagna\\projets\\fullbank\\fulbank\\fulbank\\connexionbdd.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{63076290-BCE2-43B9-AB4A-55FC645C6B26}|fulbank\\fulbank.csproj|solutionrelative:fulbank\\connexionbdd.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{63076290-BCE2-43B9-AB4A-55FC645C6B26}|fulbank\\fulbank.csproj|c:\\users\\castagna\\projets\\fullbank\\fulbank\\fulbank\\fulbank.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
-      "RelativeMoniker": "D:0:0:{63076290-BCE2-43B9-AB4A-55FC645C6B26}|fulbank\\fulbank.csproj|solutionrelative:fulbank\\fulbank.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
     },
     {
       "AbsoluteMoniker": "D:0:0:{63076290-BCE2-43B9-AB4A-55FC645C6B26}|fulbank\\fulbank.csproj|c:\\users\\castagna\\projets\\fullbank\\fulbank\\fulbank\\connexion.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -50,63 +50,37 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "MenuCompte.cs",
-              "DocumentMoniker": "C:\\Users\\castagna\\PROJETS\\fullbank\\fulbank\\fulbank\\MenuCompte.cs",
-              "RelativeDocumentMoniker": "fulbank\\MenuCompte.cs",
-              "ToolTip": "C:\\Users\\castagna\\PROJETS\\fullbank\\fulbank\\fulbank\\MenuCompte.cs",
-              "RelativeToolTip": "fulbank\\MenuCompte.cs",
-              "ViewState": "AgIAACgAAAAAAAAAAAAgwFoAAAAfAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-26T09:48:44.948Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
               "Title": "MenuHistoriqueCompts.cs",
               "DocumentMoniker": "C:\\Users\\castagna\\PROJETS\\fullbank\\fulbank\\fulbank\\MenuHistoriqueCompts.cs",
               "RelativeDocumentMoniker": "fulbank\\MenuHistoriqueCompts.cs",
               "ToolTip": "C:\\Users\\castagna\\PROJETS\\fullbank\\fulbank\\fulbank\\MenuHistoriqueCompts.cs",
               "RelativeToolTip": "fulbank\\MenuHistoriqueCompts.cs",
-              "ViewState": "AgIAAOsAAAAAAAAAAAAuwPcAAAArAAAAAAAAAA==",
+              "ViewState": "AgIAAKkAAAAAAAAAAAAawLcAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-26T07:18:30.727Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\castagna\\PROJETS\\fullbank\\fulbank\\fulbank\\Program.cs",
-              "RelativeDocumentMoniker": "fulbank\\Program.cs",
-              "ToolTip": "C:\\Users\\castagna\\PROJETS\\fullbank\\fulbank\\fulbank\\Program.cs",
-              "RelativeToolTip": "fulbank\\Program.cs",
-              "ViewState": "AgIAAAoAAAAAAAAAAAAIwB8AAAAMAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-11-13T15:09:34.837Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 3,
               "Title": "Utilisateur.cs",
               "DocumentMoniker": "C:\\Users\\castagna\\PROJETS\\fullbank\\fulbank\\fulbank\\Utilisateur.cs",
               "RelativeDocumentMoniker": "fulbank\\Utilisateur.cs",
               "ToolTip": "C:\\Users\\castagna\\PROJETS\\fullbank\\fulbank\\fulbank\\Utilisateur.cs",
               "RelativeToolTip": "fulbank\\Utilisateur.cs",
-              "ViewState": "AgIAACAAAAAAAAAAAAAUwCkAAABEAAAAAAAAAA==",
+              "ViewState": "AgIAABwAAAAAAAAAAAAgwD4AAAAYAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-06T15:19:52.498Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 6,
               "Title": "Connexion.cs",
               "DocumentMoniker": "C:\\Users\\castagna\\PROJETS\\fullbank\\fulbank\\fulbank\\Connexion.cs",
               "RelativeDocumentMoniker": "fulbank\\Connexion.cs",
@@ -119,7 +93,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 7,
               "Title": "CoursCrypto.cs",
               "DocumentMoniker": "C:\\Users\\castagna\\PROJETS\\fullbank\\fulbank\\fulbank\\CoursCrypto.cs",
               "RelativeDocumentMoniker": "fulbank\\CoursCrypto.cs",
@@ -132,20 +106,46 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 0,
               "Title": "ConnexionBDD.cs",
               "DocumentMoniker": "C:\\Users\\castagna\\PROJETS\\fullbank\\fulbank\\fulbank\\ConnexionBDD.cs",
               "RelativeDocumentMoniker": "fulbank\\ConnexionBDD.cs",
               "ToolTip": "C:\\Users\\castagna\\PROJETS\\fullbank\\fulbank\\fulbank\\ConnexionBDD.cs",
               "RelativeToolTip": "fulbank\\ConnexionBDD.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAACwAAAAIAAAAAAAAAA==",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAYwBUAAACHAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-11-06T12:09:12.138Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 4,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\castagna\\PROJETS\\fullbank\\fulbank\\fulbank\\Program.cs",
+              "RelativeDocumentMoniker": "fulbank\\Program.cs",
+              "ToolTip": "C:\\Users\\castagna\\PROJETS\\fullbank\\fulbank\\fulbank\\Program.cs",
+              "RelativeToolTip": "fulbank\\Program.cs",
+              "ViewState": "AgIAAAoAAAAAAAAAAAAIwB8AAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-13T15:09:34.837Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "MenuCompte.cs",
+              "DocumentMoniker": "C:\\Users\\castagna\\PROJETS\\fullbank\\fulbank\\fulbank\\MenuCompte.cs",
+              "RelativeDocumentMoniker": "fulbank\\MenuCompte.cs",
+              "ToolTip": "C:\\Users\\castagna\\PROJETS\\fullbank\\fulbank\\fulbank\\MenuCompte.cs",
+              "RelativeToolTip": "fulbank\\MenuCompte.cs",
+              "ViewState": "AgIAACgAAAAAAAAAAAAgwFoAAAAfAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-26T09:48:44.948Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "fulbank.csproj",
               "DocumentMoniker": "C:\\Users\\castagna\\PROJETS\\fullbank\\fulbank\\fulbank\\fulbank.csproj",
               "RelativeDocumentMoniker": "fulbank\\fulbank.csproj",
