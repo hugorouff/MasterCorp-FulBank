@@ -230,3 +230,4 @@ C:\Users\rouff\Documents\fulbank\MasterCorp-FulBank\fulbank\fulbank\obj\Debug\ne
 C:\Users\rouff\Documents\fulbank\MasterCorp-FulBank\fulbank\fulbank\obj\Debug\net8.0-windows\fulbank.pdb
 C:\Users\rouff\Documents\fulbank\MasterCorp-FulBank\fulbank\fulbank\obj\Debug\net8.0-windows\fulbank.genruntimeconfig.cache
 C:\Users\rouff\Documents\fulbank\MasterCorp-FulBank\fulbank\fulbank\obj\Debug\net8.0-windows\ref\fulbank.dll
+C:\Users\rouff\Documents\fulbank\MasterCorp-FulBank\fulbank\fulbank\bin\Debug\net8.0-windows\Newtonsoft.Json.dll
