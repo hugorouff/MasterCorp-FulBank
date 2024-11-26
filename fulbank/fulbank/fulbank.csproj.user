@@ -28,13 +28,7 @@
     <Compile Update="MenuHistoriqueCompts.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="MenuRetrait.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Update="MenuTransaction.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Update="MenuVirement.cs">
       <SubType>Form</SubType>
     </Compile>
   </ItemGroup>
