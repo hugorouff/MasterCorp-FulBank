@@ -53,13 +53,13 @@ namespace fulbank
             switch (selectedPanelIndex)
             {
                 case 0:
-                    nextForm = new MenuRetraiDepotEchange("Depot");
+                    nextForm = new MenuDepot("Depot");
                     break;
                 case 1:
-                    nextForm = new MenuRetraiDepotEchange("Retrait"); // Assuming you have this form
+                    nextForm = new MenuRetrait("Retrait");
                     break;
                 case 2:
-                    nextForm = new MenuRetraiDepotEchange("Echange"); // Assuming you have this form
+                    nextForm = new MenuVirement("Virement");
                     break;
                 case 3:
                     this.Close();
@@ -153,7 +153,7 @@ namespace fulbank
             // Initialisation des labels et leur centrage dans les panneaux
             InitPanelLabel(panelDepot, "Dépôt");
             InitPanelLabel(panelRetrait, "Retrait");
-            InitPanelLabel(panelEchange, "Échange");
+            InitPanelLabel(panelEchange, "Virement");
             InitPanelLabel(panelAutres, "Autres");
 
             panels = new RoundedPanel[] { panelDepot, panelRetrait, panelEchange, panelAutres };

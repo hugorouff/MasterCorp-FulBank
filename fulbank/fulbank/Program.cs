@@ -297,4 +297,13 @@ namespace fulbank
             form.Resize += (s, e) => AdjustButtonLayout();
         }
     }
+
+    // Classe pour représenter un compte bancaire
+    public class Account
+    {
+        public int Id { get; set; }
+        public string Name { get; set; } // Type de compte (e.g., "Courant", "Épargne")
+        public decimal Balance { get; set; }
+        public string Currency { get; set; } // Nom de la monnaie
+    }
 }

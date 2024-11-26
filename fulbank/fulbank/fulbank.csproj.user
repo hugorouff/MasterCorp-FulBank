@@ -13,13 +13,25 @@
     <Compile Update="MenuCompte.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="MenuFinalTransaction.cs">
+    <Compile Update="MenuDepot.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="MenuRetraiDepotEchange.cs">
+    <Compile Update="MenuFinalTransactionDepot.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="MenuFinalTransactionRetrait.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="MenuFinalTransactionVirement.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="MenuRetrait.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="MenuTransaction.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="MenuVirement.cs">
       <SubType>Form</SubType>
     </Compile>
   </ItemGroup>
