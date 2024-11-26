@@ -215,8 +215,6 @@ C:\Users\rouff\Documents\fulbank\MasterCorp-FulBank\fulbank\fulbank\obj\Debug\ne
 C:\Users\rouff\Documents\fulbank\MasterCorp-FulBank\fulbank\fulbank\obj\Debug\net8.0-windows\fulbank.CoursCrypto.resources
 C:\Users\rouff\Documents\fulbank\MasterCorp-FulBank\fulbank\fulbank\obj\Debug\net8.0-windows\fulbank.MenuBase.resources
 C:\Users\rouff\Documents\fulbank\MasterCorp-FulBank\fulbank\fulbank\obj\Debug\net8.0-windows\fulbank.MenuCompte.resources
-C:\Users\rouff\Documents\fulbank\MasterCorp-FulBank\fulbank\fulbank\obj\Debug\net8.0-windows\fulbank.MenuFinalTransaction.resources
-C:\Users\rouff\Documents\fulbank\MasterCorp-FulBank\fulbank\fulbank\obj\Debug\net8.0-windows\fulbank.MenuRetraiDepotEchange.resources
 C:\Users\rouff\Documents\fulbank\MasterCorp-FulBank\fulbank\fulbank\obj\Debug\net8.0-windows\fulbank.MenuTransaction.resources
 C:\Users\rouff\Documents\fulbank\MasterCorp-FulBank\fulbank\fulbank\obj\Debug\net8.0-windows\fulbank.csproj.GenerateResource.cache
 C:\Users\rouff\Documents\fulbank\MasterCorp-FulBank\fulbank\fulbank\obj\Debug\net8.0-windows\fulbank.GeneratedMSBuildEditorConfig.editorconfig
@@ -230,3 +228,11 @@ C:\Users\rouff\Documents\fulbank\MasterCorp-FulBank\fulbank\fulbank\obj\Debug\ne
 C:\Users\rouff\Documents\fulbank\MasterCorp-FulBank\fulbank\fulbank\obj\Debug\net8.0-windows\fulbank.pdb
 C:\Users\rouff\Documents\fulbank\MasterCorp-FulBank\fulbank\fulbank\obj\Debug\net8.0-windows\fulbank.genruntimeconfig.cache
 C:\Users\rouff\Documents\fulbank\MasterCorp-FulBank\fulbank\fulbank\obj\Debug\net8.0-windows\ref\fulbank.dll
+C:\Users\rouff\Documents\fulbank\MasterCorp-FulBank\fulbank\fulbank\bin\Debug\net8.0-windows\Newtonsoft.Json.dll
+C:\Users\rouff\Documents\fulbank\MasterCorp-FulBank\fulbank\fulbank\obj\Debug\net8.0-windows\fulbank.MenuDepot.resources
+C:\Users\rouff\Documents\fulbank\MasterCorp-FulBank\fulbank\fulbank\obj\Debug\net8.0-windows\fulbank.MenuFinalTransactionDepot.resources
+C:\Users\rouff\Documents\fulbank\MasterCorp-FulBank\fulbank\fulbank\obj\Debug\net8.0-windows\fulbank.MenuFinalTransactionRetrait.resources
+C:\Users\rouff\Documents\fulbank\MasterCorp-FulBank\fulbank\fulbank\obj\Debug\net8.0-windows\fulbank.MenuFinalTransactionVirement.resources
+C:\Users\rouff\Documents\fulbank\MasterCorp-FulBank\fulbank\fulbank\obj\Debug\net8.0-windows\fulbank.MenuRetrait.resources
+C:\Users\rouff\Documents\fulbank\MasterCorp-FulBank\fulbank\fulbank\obj\Debug\net8.0-windows\fulbank.MenuVirement.resources
+C:\Users\rouff\Documents\fulbank\MasterCorp-FulBank\fulbank\fulbank\obj\Debug\net8.0-windows\fulbank.MenuHistoriqueCompts.resources

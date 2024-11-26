@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "zMFO/6efI/M=",
+  "dgSpecHash": "ma7EIfEmiIc=",
   "success": true,
-  "projectFilePath": "C:\\Users\\rouff\\Documents\\MasterCorp-FulBank\\fulbank\\fulbank\\fulbank.csproj",
+  "projectFilePath": "C:\\Users\\rouff\\Documents\\MasterCorp-FulBank\\MasterCorp-FulBank\\fulbank\\fulbank\\fulbank.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\rouff\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\7.0.1\\microsoft.extensions.logging.abstractions.7.0.1.nupkg.sha512",
-    "C:\\Users\\rouff\\.nuget\\packages\\mysqlconnector\\2.3.7\\mysqlconnector.2.3.7.nupkg.sha512"
+    "C:\\Users\\rouff\\.nuget\\packages\\mysqlconnector\\2.3.7\\mysqlconnector.2.3.7.nupkg.sha512",
+    "C:\\Users\\rouff\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512"
   ],
   "logs": []
 }

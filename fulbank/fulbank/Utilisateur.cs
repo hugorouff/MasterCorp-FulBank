@@ -17,8 +17,10 @@ namespace fulbank
         private List<float> soldes;
         private List<string> typeComptes;
         private List<string> monnaies;
+        private int numCompteChoisi;
 
-        Utilisateur(int idUtil)
+        // Constructeur privé
+        private Utilisateur(int idUtil)
         {
             this.id = idUtil;
             this.numComptes = new List<int>();
@@ -26,38 +28,46 @@ namespace fulbank
             this.typeComptes = new List<string>();
             this.monnaies = new List<string>();
         }
+        public void setCompteChoisi(int compteChoisi) { this.numCompteChoisi = compteChoisi; }
 
         public int getId() { return id; }
-        public static Utilisateur getInstance()
-        {
-            return Utilisateur.utilActuel;
-        }
-
-        public static void NewInstance(int idUtil)
-        {
-            Utilisateur.utilActuel = new Utilisateur(idUtil);
-        }
-
-        public static Utilisateur getUser()
-        {
-            return Utilisateur.utilActuel;
-        }
+        public static Utilisateur getInstance() { return utilActuel; }
+        public static void NewInstance(int idUtil) { utilActuel = new Utilisateur(idUtil); }
+        public int getCompteChoisi() { return numCompteChoisi; }
 
         public void PullComptes()
         {
             MySqlConnection BDD = ConnexionBDD.Connexion();
-            MySqlCommand cmd = new MySqlCommand("select numeroCompte,typeCompte,solde,Monnaie from comptes_utilisateur where titulaire = @id_ or coTitulaire = @id_ ;", BDD);
+            MySqlCommand cmd = new MySqlCommand(
+                "select numeroCompte, typeCompte, solde, Monnaie " +
+                "from comptes_utilisateur where titulaire = @id_ or coTitulaire = @id_;", BDD);
             cmd.Parameters.Add(new MySqlParameter("id_", this.id));
+
             BDD.Open();
             MySqlDataReader data = cmd.ExecuteReader();
 
+            // Réinitialiser les données pour éviter les doublons
+            numComptes.Clear();
+            soldes.Clear();
+            typeComptes.Clear();
+            monnaies.Clear();
+
             while (data.Read())
             {
-                this.numComptes.Add(data.GetInt32(0));
-                this.soldes.Add(data.GetFloat(2));
-                this.typeComptes.Add(data.GetString(1));
-                this.monnaies.Add(data.GetString(3));
+                numComptes.Add(data.GetInt32(0));
+                typeComptes.Add(data.GetString(1));
+                soldes.Add(data.GetFloat(2));
+                monnaies.Add(data.GetString(3));
             }
+
+            BDD.Close();
         }
+
+
+
+        public List<int> GetNumComptes() => new List<int>(numComptes);
+        public List<float> GetSoldes() => new List<float>(soldes);
+        public List<string> GetTypeComptes() => new List<string>(typeComptes);
+        public List<string> GetMonnaies() => new List<string>(monnaies);
     }
 }
