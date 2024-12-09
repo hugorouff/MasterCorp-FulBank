@@ -66,8 +66,8 @@ end if;
 end $$
 
 
-
-create procedure virement(in montant_transaction float, in compteSource int, in compteDest int, in tauxDeChange int, in DAB int)
+drop procedure virement$$
+create procedure if not exists virement(in montant_transaction float, in compteSource int, in compteDest int, in tauxDeChange int, in DAB int)
 begin 
 
 declare montant_source int;
@@ -100,7 +100,7 @@ end if;
 end$$
 
 drop procedure depos;
-create procedure depos(in montantEntrant float, in compteDest int, in tauxDeChange int, in DAB int)
+create procedure if not exists depos(in montantEntrant float, in compteDest int, in tauxDeChange int, in DAB int)
 begin
 
 declare monaie int;
@@ -123,7 +123,7 @@ end$$
 
 drop procedure retrait;
 create procedure retrait(in montantR float, in compteSource int, in tauxDeChange int, in DAB int)
-begin
+begin 					#montant requis 
 
 declare montantPoseder int;
 declare monaie int;

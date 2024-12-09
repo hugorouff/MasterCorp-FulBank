@@ -19,7 +19,7 @@ namespace fulbank
         {
             try
             {
-                this.connexionDB = new MySqlConnection(" Server = 172.16.119.51; User ID = hugorouff ; Password = hugorouff; Database=FulBank");
+                this.connexionDB = new MySqlConnection(" Server = 172.16.119.51; User ID = APP ; Password = M0tDEp@SS561234ADMlN; Database=FulBank");
             } // ip = 192.168.56.220, user =cast , psw = C@st database = fulbank
             catch (MySqlException ex)
             {
