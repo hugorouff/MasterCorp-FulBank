@@ -1,3 +1,3 @@
 "# MasterCorp-Fulbank" 
 
-actuellement pas config bdd prod
+actuellement config bdd prod
