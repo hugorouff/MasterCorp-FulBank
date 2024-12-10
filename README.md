@@ -1,3 +1,3 @@
 "# MasterCorp-Fulbank" 
 
-actuellement config bdd prod
+actuellement config bdd prod sur APP
