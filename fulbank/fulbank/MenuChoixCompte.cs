@@ -27,7 +27,7 @@ namespace fulbank
 
         private List<string> compteInfos; // Stocke les données des comptes
 
-        public MenuChoixCompte(string action)
+        public MenuChoixCompte(string choix)
         {
             InitializeComponent();
 
@@ -199,31 +199,68 @@ namespace fulbank
             Methode.CenterControlInParent(label);
         }
 
-        // Navigation vers le compte précédent
-        private void BtnHaut_Click(object sender, EventArgs e)
+        private void UpdatePanel()
         {
-            if (accounts != null && accounts.Count > 0)
+            foreach (var panel in panels)
             {
-                selectedAccountIndex = (selectedAccountIndex - 1 + accounts.Count) % accounts.Count;
+                panel.BackColor = Color.FromArgb(34, 67, 153); // Couleur par défaut
             }
+
+            panels[selectedPanelIndex].BackColor = Color.FromArgb(50, 100, 200); // Couleur sélectionnée
         }
 
-        // Navigation vers le compte suivant
         private void BtnBas_Click(object sender, EventArgs e)
         {
-            if (accounts != null && accounts.Count > 0)
+            if (selectedPanelIndex < 3)
             {
-                selectedAccountIndex = (selectedAccountIndex + 1) % accounts.Count;
+                selectedPanelIndex++;
+                UpdatePanel();
+            }
+            else if (currentPageIndex < totalPages - 1)
+            {
+                currentPageIndex++;
+                selectedPanelIndex = 0;
+                UpdatePage();
             }
         }
 
-        // Valider la sélection du compte
+        private void BtnHaut_Click(object sender, EventArgs e)
+        {
+            if (selectedPanelIndex > 0)
+            {
+                selectedPanelIndex--;
+                UpdatePanel();
+            }
+            else if (currentPageIndex > 0)
+            {
+                currentPageIndex--;
+                selectedPanelIndex = 3;
+                UpdatePage();
+
+            }
+        }
+
         private void BtnValider_Click(object sender, EventArgs e)
         {
             if (accounts != null && accounts.Count > 0)
             {
+                // Récupération du compte sélectionné
                 var selectedAccount = accounts[selectedAccountIndex];
-                // MessageBox.Show($"Compte sélectionné : {selectedAccount.AccountNumber}", "Validation");
+                string account = selectedAccount.ToString();
+                if (account != null) 
+                {
+                    MenuFinalTransactionDepot finalTransactionMenu = new MenuFinalTransactionDepot();
+                    finalTransactionMenu.Show();
+                    this.Close();
+                }
+                else
+                {
+                    MessageBox.Show("Action non définie, impossible de valider.", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Aucun compte sélectionné.", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -233,7 +270,7 @@ namespace fulbank
 
         private void BtnRetour_Click(object sender, EventArgs e)
         {
-            MenuTransaction form2 = new MenuTransaction();
+            MenuBase form2 = new MenuBase();
             form2.Show();
             this.Close();
         }

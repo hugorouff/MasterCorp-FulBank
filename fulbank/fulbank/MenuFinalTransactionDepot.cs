@@ -1,319 +1,360 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
+﻿using MySqlConnector;
+using System;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace fulbank
 {
     public partial class MenuFinalTransactionDepot : Form
     {
-        // Déclaration des panels comme champs de la classe
-        private RoundedPanel panelMontant;
-        private RoundedPanel panelCompteChoisi;
-        private RoundedPanel panelArgentCompteChoisi;
-        private RoundedPanel panelChoixOperation;
-        private int selectedPanelIndex = 0; // Index to track the currently selected panel
-        private string selectedAction;  // Nouveau champ pour stocker l'action sélectionnée
-        private TextBox txtMontant;
-        private Label lblChoixOperation;
-        private Label lblCompteChoisi;
-        private string[] operations = { "Retrait", "Dépôt", "Échange" };
-        private int selectedOperationIndex = 0;
-        private string selectedAccount = "Compte 1"; // Exemple, tu peux ajouter la sélection dynamique
-        private decimal accountBalance = 1000; // Exemple de solde de compte pour les transactions
-        // Liste des panels et un index pour suivre le panel actif
-        private RoundedPanel[] panels;
-        private int currentPanelIndex = 0;
+        private TextBox txtMontant;  // TextBox pour le montant
+        private TextBox txtCompteSource;   // TextBox pour le numéro de compte
+        private TextBox txtCompteDestination;
+        private Label lblMontant;
+        private Label lblCompteSource;
+        private Label lblCompteDestination;
+        private Label lblTitre;
+        private RoundedPanel panelTransaction;
+        private Panel panelChamps;
+        private Button btnValider;
+
         public MenuFinalTransactionDepot()
         {
             InitializeComponent();
-            Initializeform3();
+            InitializeLayout();
             Methode.CreateDirectionalButtons(
-            this,
-            BtnHaut_Click,    // Gestionnaire d'événement pour le bouton Haut
-            BtnBas_Click,     // Gestionnaire d'événement pour le bouton Bas
-            BtnGauche_Click,  // Gestionnaire d'événement pour le bouton Gauche
-            BtnDroite_Click,  // Gestionnaire d'événement pour le bouton Droite
-            BtnValider_Click, // Gestionnaire d'événement pour le bouton Valider
-            BtnRetour_Click,  // Gestionnaire d'événement pour le bouton Retour
-            BtnMaison_Click,  // Gestionnaire d'événement pour le bouton Maison
-            BtnFermer_Click   // Gestionnaire d'événement pour le bouton Fermer
+                this,
+                BtnHaut_Click,    // Gestionnaire d'événement pour le bouton Haut
+                BtnBas_Click,     // Gestionnaire d'événement pour le bouton Bas
+                BtnGauche_Click,  // Gestionnaire d'événement pour le bouton Gauche
+                BtnDroite_Click,  // Gestionnaire d'événement pour le bouton Droite
+                BtnValider_Click, // Gestionnaire d'événement pour le bouton Valider
+                BtnRetour_Click,  // Gestionnaire d'événement pour le bouton Retour
+                BtnMaison_Click,  // Gestionnaire d'événement pour le bouton Maison
+                BtnFermer_Click   // Gestionnaire d'événement pour le bouton Fermer
             );
+            Methode.Fulbank(this);
+
+            // Ajouter l'événement Resize pour ajuster les contrôles lors du redimensionnement de la fenêtre
+            this.Resize += new EventHandler(Connexion_Resize);
         }
 
-        private void MenuFinalTransaction_Load(object sender, EventArgs e)
+        // Événement appelé lors du redimensionnement de la fenêtre
+        private void Connexion_Resize(object sender, EventArgs e)
         {
+            AdjustLayout(); // Appelle une méthode pour ajuster les éléments
+        }
 
+        private void InitializeLayout()
+        {
+            this.WindowState = FormWindowState.Maximized;
+            this.FormBorderStyle = FormBorderStyle.None;
+            this.Text = "Transaction Dépôt";
+            this.BackColor = Color.FromArgb(128, 194, 236);
+
+            panelTransaction = new RoundedPanel
+            {
+                BackColor = Color.FromArgb(34, 67, 153),
+                BorderRadius = 50
+            };
+            this.Controls.Add(panelTransaction);
+
+            lblTitre = new Label
+            {
+                Text = "Transaction Dépôt",
+                Font = new Font("Arial", 50, FontStyle.Bold),
+                ForeColor = Color.FromArgb(207, 162, 0)
+            };
+            panelTransaction.Controls.Add(lblTitre);
+
+            panelChamps = new Panel
+            {
+                BackColor = Color.FromArgb(34, 67, 153)
+            };
+            this.Controls.Add(panelChamps);
+
+            lblCompteSource = new Label
+            {
+                Text = "Numéro Compte Source :",
+                ForeColor = Color.FromArgb(128, 194, 236),
+                AutoSize = true
+            };
+            panelChamps.Controls.Add(lblCompteSource);
+
+            txtCompteSource = new TextBox();
+            panelChamps.Controls.Add(txtCompteSource);
+
+            lblCompteDestination = new Label
+            {
+                Text = "Numéro Compte Destination :",
+                ForeColor = Color.FromArgb(128, 194, 236),
+                AutoSize = true
+            };
+            panelChamps.Controls.Add(lblCompteDestination);
+
+            txtCompteDestination = new TextBox();
+            panelChamps.Controls.Add(txtCompteDestination);
+
+            lblMontant = new Label
+            {
+                Text = "Montant :",
+                ForeColor = Color.FromArgb(128, 194, 236),
+                AutoSize = true
+            };
+            panelChamps.Controls.Add(lblMontant);
+
+            txtMontant = new TextBox();
+            panelChamps.Controls.Add(txtMontant);
+
+            AdjustLayout();
+            Methode.Fulbank(this);
+        }
+
+        private void AdjustLayout()
+        {
+            int margin = this.ClientSize.Height / 40;
+
+            panelChamps.Size = new Size(this.ClientSize.Width * 59 / 100, this.ClientSize.Height * 2 / 2);
+            panelChamps.Location = new Point((((this.ClientSize.Width - panelChamps.Width) / 2) * 4 / 3), panelTransaction.Bottom + margin * 4);
+
+            lblCompteSource.Location = new Point(margin, margin);
+            txtCompteSource.Size = new Size(panelChamps.Width - 2 * margin, panelChamps.Height / 12);
+            txtCompteSource.Location = new Point(margin, lblCompteSource.Bottom + margin);
+
+            lblCompteDestination.Location = new Point(margin, txtCompteSource.Bottom + margin);
+            txtCompteDestination.Size = new Size(panelChamps.Width - 2 * margin, panelChamps.Height / 12);
+            txtCompteDestination.Location = new Point(margin, lblCompteDestination.Bottom + margin);
+
+            lblMontant.Location = new Point(margin, txtCompteDestination.Bottom + margin);
+            txtMontant.Size = new Size(panelChamps.Width - 2 * margin, panelChamps.Height / 12);
+            txtMontant.Location = new Point(margin, lblMontant.Bottom + margin);
+
+            panelTransaction.Size = new Size(this.ClientSize.Width * 59 / 100, this.ClientSize.Height / 5);
+            panelTransaction.Location = new Point((((this.ClientSize.Width - panelTransaction.Width) / 2) * 4 / 3), margin);
+
+            float baseFontSize = this.ClientSize.Height / 40f;
+            lblTitre.Font = new Font("Arial", baseFontSize * 3, FontStyle.Bold);
+            lblMontant.Font = lblCompteSource.Font = lblCompteDestination.Font = new Font("Arial", baseFontSize * 2);
+            txtMontant.Font = txtCompteSource.Font = txtCompteDestination.Font = new Font("Arial", baseFontSize * 2);
+
+            lblTitre.AutoSize = true;
+            lblTitre.Location = new Point((panelTransaction.Width - lblTitre.Width) / 2, margin);
         }
 
         private void BtnValider_Click(object sender, EventArgs e)
         {
-            ExecuteTransaction(); // Exécuter la transaction basée sur l'action sélectionnée
+            // Récupérer et valider les informations des TextBox
+            string compte = txtCompteSource.Text.Trim();
+            string montantText = txtMontant.Text.Trim();
+
+            if (string.IsNullOrWhiteSpace(compte))
+            {
+                MessageBox.Show("Veuillez entrer un numéro de compte valide.", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                txtCompteSource.Focus();
+                return;
+            }
+
+            if (!decimal.TryParse(montantText, out decimal montant) || montant <= 0)
+            {
+                MessageBox.Show("Veuillez entrer un montant valide et supérieur à 0.", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                txtMontant.Focus();
+                return;
+            }
+
+            try
+            {
+                // Effectuer le dépôt
+                EffectuerDepot(compte, montant);
+
+                // Afficher un message de succès
+                MessageBox.Show("Le dépôt a été effectué avec succès !", "Succès", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                // Réinitialiser les champs après le dépôt réussi
+                txtCompteSource.Clear();
+                txtMontant.Clear();
+
+                // Revenir au premier champ
+                txtCompteSource.Focus();
+            }
+            catch (Exception ex)
+            {
+                // Gérer les exceptions et afficher un message d'erreur
+                MessageBox.Show($"Une erreur s'est produite lors du dépôt : {ex.Message}", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
-        private void BtnFermer_Click(object sender, EventArgs e)
+        private void EffectuerDepot(string compte, decimal montant)
         {
-            Connexion form2 = new();
-            form2.Show();
-            this.Close();
+            using (var connection = ConnexionBDD.Connexion())
+            {
+                try
+                {
+                    connection.Open();
+
+                    using (var transaction = connection.BeginTransaction())
+                    {
+                        // Vérifier si le compte existe
+                        string queryCheckSource = @"
+                            SELECT solde
+                            FROM CompteBanquaire
+                            WHERE numeroDeCompte = @Compte";
+
+                        decimal soldeSource;
+
+                        using (var command = new MySqlCommand(queryCheckSource, connection, transaction))
+                        {
+                            command.Parameters.AddWithValue("@Compte", compte);
+                            var result = command.ExecuteScalar();
+
+                            if (result == null)
+                            {
+                                throw new InvalidOperationException("Le compte n'existe pas.");
+                            }
+
+                            soldeSource = Convert.ToDecimal(result);
+
+                            if (soldeSource < montant)
+                            {
+                                throw new InvalidOperationException("Fonds insuffisants sur le compte.");
+                            }
+                        }
+
+                        // Débiter le montant du compte
+                        string queryDebit = @"
+                            UPDATE CompteBanquaire
+                            SET solde = solde - @Montant
+                            WHERE numeroDeCompte = @Compte";
+
+                        using (var command = new MySqlCommand(queryDebit, connection, transaction))
+                        {
+                            command.Parameters.AddWithValue("@Montant", montant);
+                            command.Parameters.AddWithValue("@Compte", compte);
+                            command.ExecuteNonQuery();
+                        }
+
+                        // Créditer le montant au compte (ce serait le même compte dans ce cas pour un dépôt)
+                        string queryCredit = @"
+                            UPDATE CompteBanquaire
+                            SET solde = solde + @Montant
+                            WHERE numeroDeCompte = @Compte";
+
+                        using (var command = new MySqlCommand(queryCredit, connection, transaction))
+                        {
+                            command.Parameters.AddWithValue("@Montant", montant);
+                            command.Parameters.AddWithValue("@Compte", compte);
+                            command.ExecuteNonQuery();
+                        }
+
+                        // Insérer l'opération dans la table Opperation
+                        string queryInsertOperation = @"
+                            INSERT INTO Opperation (dateOperation, montant, suprimee, compte)
+                            VALUES (@DateOperation, @Montant, false, @Compte)";
+
+                        using (var command = new MySqlCommand(queryInsertOperation, connection, transaction))
+                        {
+                            command.Parameters.AddWithValue("@DateOperation", DateTime.Now);
+                            command.Parameters.AddWithValue("@Montant", montant);
+                            command.Parameters.AddWithValue("@Compte", compte);
+                            command.ExecuteNonQuery();
+                        }
+
+                        // Commit de la transaction
+                        transaction.Commit();
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Erreur lors du dépôt : {ex.Message}", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    throw; // Relever l'exception pour le traitement en amont si nécessaire
+                }
+                finally
+                {
+                    if (connection.State == System.Data.ConnectionState.Open)
+                    {
+                        connection.Close();
+                    }
+                }
+            }
         }
 
         private void BtnRetour_Click(object sender, EventArgs e)
         {
-            Form nextForm = null;
-
-            // Decide which form to show based on the selected panel
-            switch (selectedPanelIndex)
-            {
-                case 0:
-                    nextForm = new MenuChoixCompte("Depot");
-                    break;
-                case 1:
-                    this.Close();
-                    break;
-            }
-
-            if (nextForm != null)
-            {
-                nextForm.Show();
-                this.Hide();
-            }
+            var previousMenu = new MenuTransaction();
+            previousMenu.Show();
+            this.Close();
         }
 
         private void BtnMaison_Click(object sender, EventArgs e)
         {
-            MenuBase form2 = new MenuBase();
-            form2.Show();
+            var mainMenu = new MenuBase();
+            mainMenu.Show();
             this.Close();
         }
 
-        /*private void BtnHaut_Click(object sender, EventArgs e)
+        private void BtnFermer_Click(object sender, EventArgs e)
         {
-            // Changer l'index de l'opération vers le haut
-            if (selectedOperationIndex > 0)
-            {
-                selectedOperationIndex--;
-                UpdateOperationSelection();
-            }
+            Application.Exit();
         }
 
-        private void BtnBas_Click(object sender, EventArgs e)
+        private void BtnGauche_Click(object sender, EventArgs e)
         {
-            // Changer l'index de l'opération vers le bas
-            if (selectedOperationIndex < operations.Length - 1)
+            if (txtCompteSource.Text.Length > 0 && txtCompteSource.SelectionStart > 0)
             {
-                selectedOperationIndex++;
-                UpdateOperationSelection();
+                txtCompteSource.SelectionStart--;
+                txtCompteSource.Focus();
             }
+            else if (txtCompteDestination.Text.Length > 0 && txtCompteDestination.SelectionStart > 0)
+            {
+                txtCompteDestination.SelectionStart--;
+                txtCompteDestination.Focus();
+            }
+            /*else if (txtMontant.Text.Length > 0 && txtMontant.SelectionStart > 0)
+            {
+                txtMontant.SelectionStart--;
+                txtMontant.Focus();
+            }*/
         }
 
-        private void UpdateOperationSelection()
+        private void BtnDroite_Click(object sender, EventArgs e)
         {
-            lblChoixOperation.Text = operations[selectedOperationIndex];
-        }*/
-
-        private void BtnGauche_Click(object sender, EventArgs e) { }
-
-        private void BtnDroite_Click(object sender, EventArgs e) { }
-
-        private void BtnBas_Click(object sender, EventArgs e)
-        {
-            // Changer l'index du panel sélectionné vers le bas
-            if (selectedPanelIndex < panels.Length - 1)
+            if (txtCompteSource.Text.Length > 0 && txtCompteSource.SelectionStart < txtCompteSource.Text.Length)
             {
-                selectedPanelIndex++;
+                txtCompteSource.SelectionStart++;
+                txtCompteSource.Focus();
             }
-            UpdatePanelSelection();
+            else if (txtCompteDestination.Text.Length > 0 && txtCompteDestination.SelectionStart < txtCompteDestination.Text.Length)
+            {
+                txtCompteDestination.SelectionStart++;
+                txtCompteDestination.Focus();
+            }
+            /*else if (txtMontant.Text.Length > 0 && txtMontant.SelectionStart < txtMontant.Text.Length)
+            {
+                txtMontant.SelectionStart++;
+                txtMontant.Focus();
+            }*/
         }
 
         private void BtnHaut_Click(object sender, EventArgs e)
         {
-            // Empêcher selectedPanelIndex de descendre en dessous de 0
-            if (selectedPanelIndex > 0)
+            if (txtCompteDestination.Focused)
             {
-                selectedPanelIndex--;
+                txtCompteSource.Focus();
             }
-            UpdatePanelSelection();
-        }
-
-        // Mise à jour de la sélection du panel et de l'action
-        private void UpdatePanelSelection()
-        {
-            // Déselectionner tous les panels
-            foreach (var panel in panels)
+            else
             {
-                panel.Visible = false; // Cache tous les panels
-            }
-
-            // Sélectionner le panel actif
-            panels[selectedPanelIndex].Visible = true; // Affiche le panel actif
-
-            // Déterminer l'action en fonction du panel sélectionné
-            switch (selectedPanelIndex)
-            {
-                case 0:
-                    selectedAction = "Depot";
-                    break;
-                case 1:
-                    selectedAction = "Retrait";
-                    break;
-                case 2:
-                    selectedAction = "Echange";
-                    break;
-                default:
-                    selectedAction = "";
-                    break;
+                txtCompteSource.Focus();
             }
         }
 
-        private void ExecuteTransaction()
+        private void BtnBas_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(txtMontant.Text) || !decimal.TryParse(txtMontant.Text, out decimal transactionAmount))
+            if (txtCompteSource.Focused)
             {
-                MessageBox.Show("Veuillez entrer un montant valide.");
-                return;
+                txtCompteDestination.Focus();
             }
-
-            switch (operations[selectedOperationIndex])
+            else
             {
-                case "Dépôt":
-                    accountBalance += transactionAmount;  // Ajouter le montant au solde
-                    MessageBox.Show($"Dépôt effectué. Nouveau solde: {accountBalance:C}");
-                    break;
-
-                case "Retrait":
-                    if (accountBalance >= transactionAmount)
-                    {
-                        accountBalance -= transactionAmount; // Soustraire du solde
-                        MessageBox.Show($"Retrait effectué. Nouveau solde: {accountBalance:C}");
-                    }
-                    else
-                    {
-                        MessageBox.Show("Fonds insuffisants pour effectuer ce retrait.");
-                    }
-                    break;
-
-                case "Échange":
-                    // Logique de conversion ou d'échange à définir
-                    MessageBox.Show("Échange de devises effectué.");
-                    break;
-
-                default:
-                    MessageBox.Show("Aucune action sélectionnée.");
-                    break;
-            }
-        }
-        private void Initializeform3()
-        {
-            this.WindowState = FormWindowState.Maximized;
-            this.FormBorderStyle = FormBorderStyle.None;
-            this.BackColor = Color.FromArgb(128, 194, 236);
-            this.Text = "FulBank";
-
-            Methode.Fulbank(this);
-
-            // Initialisation des panneaux avec taille par défaut
-            panelChoixOperation = new RoundedPanel { BackColor = Color.FromArgb(34, 67, 153), BorderRadius = 90 };
-            panelMontant = new RoundedPanel { BackColor = Color.FromArgb(34, 67, 153), BorderRadius = 90 };
-            panelCompteChoisi = new RoundedPanel { BackColor = Color.FromArgb(34, 67, 153), BorderRadius = 90 };
-            panelArgentCompteChoisi = new RoundedPanel { BackColor = Color.FromArgb(34, 67, 153), BorderRadius = 90 };
-
-            // Ajout des panneaux au formulaire
-            this.Controls.AddRange(new Control[] { panelChoixOperation, panelMontant, panelCompteChoisi, panelArgentCompteChoisi });
-
-            panels = new RoundedPanel[] { panelChoixOperation, panelMontant, panelCompteChoisi, panelArgentCompteChoisi };
-
-            // Appel de la méthode de création des boutons et de l'ajustement
-            Methode.CreateDirectionalButtons(this, BtnHaut_Click, BtnBas_Click, BtnGauche_Click, BtnDroite_Click, BtnValider_Click, BtnRetour_Click, BtnMaison_Click, BtnFermer_Click);
-
-            // Initialiser la disposition des panneaux
-            AdjustPanelLayout();
-
-            // Ajouter un événement pour redimensionner les panneaux automatiquement
-            this.Resize += (s, e) => AdjustPanelLayout();
-
-            // Label Montant 
-            Label lblMontant = new Label();
-            lblMontant.Text = "Montant :";
-            lblMontant.ForeColor = Color.FromArgb(128, 194, 236);
-            lblMontant.Font = new Font("Arial", 60);  // Taille énorme 
-            lblMontant.AutoSize = true; // Assurez-vous que le label s'ajuste à son contenu
-            lblMontant.Location = new Point(10, 100);
-            panelMontant.Controls.Add(lblMontant);
-
-            // TextBox pour le montant
-            txtMontant = new TextBox
-            {
-                Font = new Font("Arial", 60, FontStyle.Regular),
-                Size = new Size(690, 100),
-                Location = new Point(600, 100) // Assurez-vous que cette position permet au texte d'être visible
-            };
-            panelMontant.Controls.Add(txtMontant);
-
-            // Label pour le compte choisi
-            lblCompteChoisi = new Label
-            {
-                Text = "Compte choisi: " + selectedAccount,
-                Font = new Font("Arial", 60, FontStyle.Bold),
-                ForeColor = Color.FromArgb(128, 194, 236),
-                BackColor = Color.FromArgb(34, 67, 153),
-                TextAlign = ContentAlignment.MiddleCenter,
-                AutoSize = true // S'assurer que le label s'ajuste à son contenu
-            };
-            panelCompteChoisi.Controls.Add(lblCompteChoisi);
-            Methode.CenterControlInParent(lblCompteChoisi);
-
-            // Label Choix de l'operation
-            lblChoixOperation = new Label
-            {
-                Text = operations[selectedOperationIndex],
-                Font = new Font("Arial", 60, FontStyle.Bold),
-                ForeColor = Color.FromArgb(128, 194, 236),
-                BackColor = Color.FromArgb(34, 67, 153),
-                TextAlign = ContentAlignment.MiddleCenter,
-                AutoSize = true // Assurez-vous que le label s'ajuste à son contenu
-            };
-            panelChoixOperation.Controls.Add(lblChoixOperation);
-            Methode.CenterControlInParent(lblChoixOperation);
-        }
-
-        // Méthode pour ajuster la disposition des panneaux
-        private void AdjustPanelLayout()
-        {
-            // Largeur et hauteur des panneaux basées sur les dimensions des boutons
-            int panelWidth = this.ClientSize.Width * 53 / 90;
-            int buttonHeight = this.ClientSize.Height / 5;
-            int panelHeight = buttonHeight; // Même hauteur que les boutons de contrôle
-
-            // Largeur des boutons de contrôle (Valider, Retour, Maison, Fermer)
-            int buttonWidth = this.ClientSize.Width / 8;
-            int buttonSpacing = this.ClientSize.Height / 20; // Même espacement que pour les boutons
-
-            // Position horizontale des panneaux juste à côté des boutons de contrôle
-            int panelX = this.ClientSize.Width - buttonWidth - panelWidth - buttonSpacing;
-
-            // Calculer la marge supérieure pour centrer les panneaux verticalement
-            int topMargin = (this.ClientSize.Height - (panelHeight * panels.Length + buttonSpacing * (panels.Length - 1))) / 2;
-
-            // Ajustement des panneaux sur l'écran
-            for (int i = 0; i < panels.Length; i++)
-            {
-                RoundedPanel panel = panels[i];
-
-                // Définir la taille et la position des panneaux
-                panel.Size = new Size(panelWidth, panelHeight);
-                panel.Location = new Point(panelX * 105 / 100, topMargin + i * (panelHeight + buttonSpacing));
-
-                // Centrer le contenu (label) dans le panneau
-                if (panel.Controls.Count > 0 && panel.Controls[0] is Label lbl)
-                {
-                    Methode.CenterControlInParent(lbl);
-                }
+                txtCompteDestination.Focus();
             }
         }
     }

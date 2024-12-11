@@ -53,9 +53,18 @@ namespace fulbank
             switch (selectedPanelIndex)
             {
                 case 0:
-                    nextForm = new MenuChoixCompte("Depot");
+                    nextForm = new MenuFinalTransactionDepot();
                     break;
                 case 1:
+                    nextForm = new MenuFinalTransactionRetrait();
+                    break;
+                case 2:
+                    nextForm = new MenuFinalTransactionVirement();
+                    break;
+                case 3:
+                    nextForm = new MenuFinalTransactionChangeMonnaie();
+                    break;
+                case 4:
                     this.Close();
                     break;
             }
@@ -148,7 +157,7 @@ namespace fulbank
             InitPanelLabel(panelDepot, "Dépôt");
             InitPanelLabel(panelRetrait, "Retrait");
             InitPanelLabel(panelEchange, "Virement");
-            InitPanelLabel(panelAutres, "Autres");
+            InitPanelLabel(panelAutres, "Change Monnaie");
 
             panels = new RoundedPanel[] { panelDepot, panelRetrait, panelEchange, panelAutres };
 

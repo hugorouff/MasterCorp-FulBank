@@ -37,7 +37,6 @@
             ClientSize = new Size(800, 450);
             Name = "MenuTransaction";
             Text = "MenuTransaction";
-            Load += MenuTransaction_Load;
             ResumeLayout(false);
         }
 
