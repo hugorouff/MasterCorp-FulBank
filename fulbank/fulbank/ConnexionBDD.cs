@@ -19,7 +19,7 @@ namespace fulbank
         {
             try
             {
-                this.connexionDB = new MySqlConnection(" Server = 172.16.119.51 ; User ID = hugorouff ; Password = hugorouff ; Database=FulBank");
+                this.connexionDB = new MySqlConnection(" Server = 192.168.56.12 ; User ID = hugorouff ; Password = hugorouff ; Database=FulBank");
                 connexionDB.Open();
                 connexionDB.Close();
             } 
