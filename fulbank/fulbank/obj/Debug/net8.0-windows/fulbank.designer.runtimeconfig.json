@@ -12,8 +12,8 @@
       }
     ],
     "additionalProbingPaths": [
-      "C:\\Users\\rouff\\.dotnet\\store\\|arch|\\|tfm|",
-      "C:\\Users\\rouff\\.nuget\\packages",
+      "C:\\Users\\momon\\.dotnet\\store\\|arch|\\|tfm|",
+      "C:\\Users\\momon\\.nuget\\packages",
       "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
     ],
     "configProperties": {
