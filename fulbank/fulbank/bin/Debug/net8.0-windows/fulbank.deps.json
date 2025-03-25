@@ -10,10 +10,19 @@
         "dependencies": {
           "MySqlConnector": "2.3.7",
           "Newtonsoft.Json": "13.0.3",
-          "System.Threading.Timer": "4.3.0"
+          "System.Threading.Timer": "4.3.0",
+          "ini-parser": "2.5.2"
         },
         "runtime": {
           "fulbank.dll": {}
+        }
+      },
+      "ini-parser/2.5.2": {
+        "runtime": {
+          "lib/net20/INIFileParser.dll": {
+            "assemblyVersion": "2.5.2.0",
+            "fileVersion": "2.5.2.0"
+          }
         }
       },
       "Microsoft.Extensions.Logging.Abstractions/7.0.1": {
@@ -65,6 +74,13 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
+    },
+    "ini-parser/2.5.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-hp3gKmC/14+6eKLgv7Jd1Z7OV86lO+tNfOXr/stQbwmRhdQuXVSvrRAuAe7G5+lwhkov0XkqZ8/bn1PYWMx6eg==",
+      "path": "ini-parser/2.5.2",
+      "hashPath": "ini-parser.2.5.2.nupkg.sha512"
     },
     "Microsoft.Extensions.Logging.Abstractions/7.0.1": {
       "type": "package",
