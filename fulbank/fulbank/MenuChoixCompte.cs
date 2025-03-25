@@ -112,8 +112,9 @@ namespace fulbank
 
         private void Initializeform3()
         {
-            this.WindowState = FormWindowState.Maximized;
+            this.Size = new Size(1580, 1024);
             this.FormBorderStyle = FormBorderStyle.None;
+            this.StartPosition = FormStartPosition.CenterScreen;
             this.BackColor = Color.FromArgb(128, 194, 236);
             this.Text = "FulBank";
 
@@ -177,7 +178,7 @@ namespace fulbank
             Label label = new Label
             {
                 Text = text,
-                Font = new Font("Arial", 50, FontStyle.Bold),
+                Font = new Font("Arial", 45, FontStyle.Bold),
                 ForeColor = Color.FromArgb(128, 194, 236),
                 AutoSize = true
             };
@@ -191,7 +192,7 @@ namespace fulbank
             Label label = new Label
             {
                 Text = text,
-                Font = new Font("Arial", 90, FontStyle.Bold),
+                Font = new Font("Arial", 80, FontStyle.Bold),
                 ForeColor = Color.FromArgb(128, 194, 236),
                 AutoSize = true
             };

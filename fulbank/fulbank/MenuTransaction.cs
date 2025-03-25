@@ -62,7 +62,7 @@ namespace fulbank
                     nextForm = new MenuFinalTransactionVirement();
                     break;
                 case 3:
-                    nextForm = new MenuFinalTransactionChangeMonnaie();
+                    //nextForm = new MenuFinalTransactionChangeMonnaie();
                     break;
                 case 4:
                     this.Close();
@@ -137,8 +137,9 @@ namespace fulbank
 
         private void Initializeform3()
         {
-            this.WindowState = FormWindowState.Maximized;
+            this.Size = new Size(1580, 1024);
             this.FormBorderStyle = FormBorderStyle.None;
+            this.StartPosition = FormStartPosition.CenterScreen;
             this.BackColor = Color.FromArgb(128, 194, 236);
             this.Text = "FulBank";
 
@@ -212,7 +213,7 @@ namespace fulbank
             Label label = new Label
             {
                 Text = text,
-                Font = new Font("Arial", 90, FontStyle.Bold),
+                Font = new Font("Arial", 60, FontStyle.Bold),
                 ForeColor = Color.FromArgb(128, 194, 236),
                 AutoSize = true
             };

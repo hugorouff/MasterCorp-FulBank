@@ -1,4 +1,5 @@
 ﻿using System.Drawing.Drawing2D;
+using System.Drawing.Printing;
 
 namespace fulbank
 {
@@ -97,19 +98,36 @@ namespace fulbank
 
         public static void Fulbank(Form form)
         {
-            // Panel contenant les champs FulBank
+            // Largeur des boutons directionnels (Supposons qu'il y en ait à gauche)
+            int buttonWidth = form.ClientSize.Width / 8;
+            int spacing = 15;
+            int margin = 20;
+
+            // Largeur du panneau latéral
+            int panelWidth = form.ClientSize.Width / 10;
+
+            // Panel contenant le bandeau FulBank (placé après les boutons directionnels)
             Panel panelFul = new Panel
             {
-                BackColor = Color.FromArgb(34, 67, 153)
+                BackColor = Color.FromArgb(34, 67, 153),
+                Size = new Size(panelWidth, form.ClientSize.Height),
+                Location = new Point(buttonWidth + spacing * 2, 0) // Après les boutons directionnels
             };
             form.Controls.Add(panelFul);
 
-            // Label FulBank
+            // Taille dynamique des polices
+            float titleFontSize = form.ClientSize.Height / 18f;
+            float subtitleFontSize = form.ClientSize.Height / 28f;
+
+            // Label FulBank (Texte vertical)
             Label lblFulBank = new Label
             {
                 Text = "FulBank",
                 ForeColor = Color.FromArgb(207, 162, 0),
-                AutoSize = false
+                AutoSize = false,
+                Font = new Font("Arial", titleFontSize, FontStyle.Bold),
+                Size = new Size(panelFul.Width, panelFul.Height / 3),
+                Location = new Point(0, panelFul.Height / 4)
             };
             lblFulBank.Paint += new PaintEventHandler(lblFulBank_Paint);
             panelFul.Controls.Add(lblFulBank);
@@ -119,77 +137,80 @@ namespace fulbank
             {
                 Text = "Bank et Crypto",
                 ForeColor = Color.FromArgb(207, 162, 0),
-                AutoSize = false
+                AutoSize = false,
+                Font = new Font("Arial", subtitleFontSize, FontStyle.Italic),
+                Size = new Size(panelFul.Width, panelFul.Height / 4),
+                Location = new Point(0, lblFulBank.Bottom + margin)
             };
             lblSousTitre.Paint += new PaintEventHandler(lblSousTitre_Paint);
             panelFul.Controls.Add(lblSousTitre);
 
-            // Redimensionnement dynamique
+            // Ajustement dynamique en cas de redimensionnement
             form.Resize += (s, e) => AdjustLayout(form, panelFul, lblFulBank, lblSousTitre);
         }
 
         public static void AdjustLayout(Form form, Panel panelFul, Label lblFulBank, Label lblSousTitre)
         {
-            // Calculer la largeur des boutons directionnels
+            // Largeur des boutons de direction
             int buttonWidth = form.ClientSize.Width / 8;
             int spacing = 15;
+            int margin = 20;
 
-            // Positionner le panel juste à droite des boutons directionnels
-            panelFul.Size = new Size(form.ClientSize.Width / 8, form.ClientSize.Height);
-            panelFul.Location = new Point(buttonWidth + spacing * 2, 0);
+            // Largeur du panneau latéral
+            int panelWidth = form.ClientSize.Width / 10;
 
-            int margin = form.ClientSize.Height / 20;
+            panelFul.Size = new Size(panelWidth, form.ClientSize.Height);
+            panelFul.Location = new Point(buttonWidth + spacing * 2, 0); // Ajusté à droite des boutons
 
-            // Calculer la taille de la police en fonction de la hauteur de la fenêtre
-            float baseFontSize = form.ClientSize.Height / 40f;
+            // Ajustement des tailles de police
+            float titleFontSize = form.ClientSize.Height / 18f;
+            float subtitleFontSize = form.ClientSize.Height / 28f;
 
-            // Taille et police du label FulBank
-            lblFulBank.Font = new Font("Arial", baseFontSize * 5 / 2, FontStyle.Bold); // Taille dynamique
-            lblFulBank.Size = new Size(panelFul.Width - margin * 2, panelFul.Height / 3);
-            lblFulBank.Location = new Point((panelFul.Width - lblFulBank.Width) / 3, margin * 13);
+            lblFulBank.Font = new Font("Arial", titleFontSize, FontStyle.Bold);
+            lblFulBank.Size = new Size(panelFul.Width, panelFul.Height / 2);
+            lblFulBank.Location = new Point(0, panelFul.Height / 2);
 
-            // Taille et police du label SousTitre
-            lblSousTitre.Font = new Font("Arial", baseFontSize, FontStyle.Italic); // Taille dynamique
-            lblSousTitre.Size = new Size(panelFul.Width - margin, panelFul.Height / 3);
-            lblSousTitre.Location = new Point((panelFul.Width - lblSousTitre.Width) * 6 / 4, lblFulBank.Bottom / 2 + margin);
+            lblSousTitre.Font = new Font("Arial", subtitleFontSize, FontStyle.Italic);
+            lblSousTitre.Size = new Size(panelFul.Width, panelFul.Height / 2);
+            lblSousTitre.Location = new Point(0, panelFul.Height / 4 - margin * 12);
         }
 
-
-        // Méthode Paint pour le label "FulBank"
+        // Rotation du texte "FulBank"
         public static void lblFulBank_Paint(object sender, PaintEventArgs e)
         {
             Label lbl = sender as Label;
             e.Graphics.Clear(lbl.BackColor);
 
-            // Appliquer la rotation de 90 degrés
-            e.Graphics.TranslateTransform(lbl.Width / 2, lbl.Height / 2); // Centre le texte
-            e.Graphics.RotateTransform(-90); // Rotation horaire de 90 degrés
+            e.Graphics.TranslateTransform(lbl.Width / 2, lbl.Height / 2);
+            e.Graphics.RotateTransform(-90);
 
-            // Calculer le texte à centrer correctement
-            StringFormat stringFormat = new StringFormat();
-            stringFormat.Alignment = StringAlignment.Center;
-            stringFormat.LineAlignment = StringAlignment.Center;
+            StringFormat stringFormat = new StringFormat
+            {
+                Alignment = StringAlignment.Center,
+                LineAlignment = StringAlignment.Center
+            };
 
             e.Graphics.DrawString(lbl.Text, lbl.Font, new SolidBrush(lbl.ForeColor), 0, 0, stringFormat);
         }
 
-        // Méthode Paint pour le label "Bank et Crypto"
+        // Rotation du texte "Bank et Crypto"
         public static void lblSousTitre_Paint(object sender, PaintEventArgs e)
         {
             Label lbl = sender as Label;
             e.Graphics.Clear(lbl.BackColor);
 
-            // Appliquer la rotation de 90 degrés
-            e.Graphics.TranslateTransform(lbl.Width / 2, lbl.Height / 2); // Centre le texte
-            e.Graphics.RotateTransform(-90); // Rotation horaire de 90 degrés
+            e.Graphics.TranslateTransform(lbl.Width / 2, lbl.Height / 2);
+            e.Graphics.RotateTransform(-90);
 
-            // Calculer le texte à centrer correctement
-            StringFormat stringFormat = new StringFormat();
-            stringFormat.Alignment = StringAlignment.Center;
-            stringFormat.LineAlignment = StringAlignment.Near;
+            StringFormat stringFormat = new StringFormat
+            {
+                Alignment = StringAlignment.Center,
+                LineAlignment = StringAlignment.Center
+            };
 
             e.Graphics.DrawString(lbl.Text, lbl.Font, new SolidBrush(lbl.ForeColor), 0, 0, stringFormat);
         }
+
 
         public static void CreateDirectionalButtons(
             Form form,

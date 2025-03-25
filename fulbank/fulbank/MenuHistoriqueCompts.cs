@@ -184,8 +184,9 @@ namespace fulbank
         private void Initializeform2()
         {
             // Configuration générale du formulaire
-            this.WindowState = FormWindowState.Maximized;
+            this.Size = new Size(1580, 1024);
             this.FormBorderStyle = FormBorderStyle.None;
+            this.StartPosition = FormStartPosition.CenterScreen;
             this.BackColor = Color.FromArgb(128, 194, 236);
             this.Text = "FulBank";
 
@@ -262,7 +263,7 @@ namespace fulbank
             {
 
                 Text = texte,
-                Font = new Font("Arial", 50, FontStyle.Bold),
+                Font = new Font("Arial", 40, FontStyle.Bold),
                 ForeColor = Color.FromArgb(128, 194, 236),
                 AutoSize = true
             };

@@ -47,8 +47,9 @@ namespace fulbank
 
         private void InitializeLayout()
         {
-            this.WindowState = FormWindowState.Maximized;
+            this.Size = new Size(1580, 1024);
             this.FormBorderStyle = FormBorderStyle.None;
+            this.StartPosition = FormStartPosition.CenterScreen;
             this.Text = "Transaction Retrait";
             this.BackColor = Color.FromArgb(128, 194, 236);
 
@@ -62,7 +63,7 @@ namespace fulbank
             lblTitre = new Label
             {
                 Text = "Transaction Retrait",
-                Font = new Font("Arial", 50, FontStyle.Bold),
+                Font = new Font("Arial", 35, FontStyle.Bold),
                 ForeColor = Color.FromArgb(207, 162, 0)
             };
             panelTransaction.Controls.Add(lblTitre);
@@ -133,9 +134,9 @@ namespace fulbank
             panelTransaction.Location = new Point((((this.ClientSize.Width - panelTransaction.Width) / 2) * 4 / 3), margin);
 
             float baseFontSize = this.ClientSize.Height / 40f;
-            lblTitre.Font = new Font("Arial", baseFontSize * 3, FontStyle.Bold);
-            lblMontant.Font = lblCompteSource.Font = lblCompteDestination.Font = new Font("Arial", baseFontSize * 2);
-            txtMontant.Font = txtCompteSource.Font = txtCompteDestination.Font = new Font("Arial", baseFontSize * 2);
+            lblTitre.Font = new Font("Arial", baseFontSize * 2.2f, FontStyle.Bold);
+            lblMontant.Font = lblCompteSource.Font = lblCompteDestination.Font = new Font("Arial", baseFontSize * 1.5f);
+            txtMontant.Font = txtCompteSource.Font = txtCompteDestination.Font = new Font("Arial", baseFontSize * 1.5f);
 
             lblTitre.AutoSize = true;
             lblTitre.Location = new Point((panelTransaction.Width - lblTitre.Width) / 2, margin);

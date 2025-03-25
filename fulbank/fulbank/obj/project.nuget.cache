@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "8FjTpWmDsas=",
+  "dgSpecHash": "jWURsEjno+Y=",
   "success": true,
-  "projectFilePath": "C:\\Users\\rouff\\Documents\\fulbank\\MasterCorp-FulBank\\fulbank\\fulbank\\fulbank.csproj",
+  "projectFilePath": "D:\\document\\SIO\\final Fulbank\\fulbank\\fulbank\\fulbank.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\rouff\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\7.0.1\\microsoft.extensions.logging.abstractions.7.0.1.nupkg.sha512",
     "C:\\Users\\rouff\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",

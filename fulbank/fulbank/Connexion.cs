@@ -135,8 +135,11 @@ namespace fulbank
 
         private void Initializeform1()
         {
-            this.WindowState = FormWindowState.Maximized; // Maximise le formulaire
-            this.FormBorderStyle = FormBorderStyle.None; // Supprime la bordure du formulaire
+            //this.WindowState = FormWindowState.Maximized; // Maximise le formulaire
+            //this.FormBorderStyle = FormBorderStyle.None; // Supprime la bordure du formulaire
+            this.Size = new Size(1580, 1024);
+            this.FormBorderStyle = FormBorderStyle.None;
+            this.StartPosition = FormStartPosition.CenterScreen;
             this.Text = "FulBank";
             this.BackColor = Color.FromArgb(128, 194, 236);
 
@@ -178,14 +181,12 @@ namespace fulbank
             // Label FulBank
             lblFulBank = new Label();
             lblFulBank.Text = "FulBank";
-            lblFulBank.Font = new Font("Arial", 90, FontStyle.Bold);
             lblFulBank.ForeColor = Color.FromArgb(207, 162, 0);
             panelFul.Controls.Add(lblFulBank);
 
             // Label Sous-titre
             lblSousTitre = new Label();
             lblSousTitre.Text = "Bank et Crypto";
-            lblSousTitre.Font = new Font("Arial", 35, FontStyle.Italic);
             lblSousTitre.ForeColor = Color.FromArgb(207, 162, 0);
             panelFul.Controls.Add(lblSousTitre);
 
@@ -253,27 +254,34 @@ namespace fulbank
 
             int margin = this.ClientSize.Height / 50;
 
-            // Position des labels et des textboxes dans panelChamps
-            lblIdentifiant.Location = new Point(margin, margin);
-            txtIdentifiant.Size = new Size(panelChamps.Width - 2 * margin, panelChamps.Height / 4);
-            txtIdentifiant.Location = new Point(margin, lblIdentifiant.Bottom + margin);
-
-            lblMotDePasse.Location = new Point(margin, txtIdentifiant.Bottom + margin * 4);
-            txtMotDePasse.Size = new Size(panelChamps.Width - 2 * margin, panelChamps.Height / 4);
-            txtMotDePasse.Location = new Point(margin, lblMotDePasse.Bottom + margin);
-
-            // Taille et position de panelFul
-            panelFul.Size = new Size(this.ClientSize.Width * 2 / 4, this.ClientSize.Height / 4);
-            panelFul.Location = new Point((this.ClientSize.Width - panelFul.Width) / 2, panelChamps.Bottom + margin * 4);
-
-            // Ajustement dynamique de la taille de police
+            //// Ajustement dynamique de la taille de police
             float baseFontSize = this.ClientSize.Height / 40f;
-            lblFulBank.Font = new Font("Arial", baseFontSize * 4, FontStyle.Bold);
+            lblFulBank.Font = new Font("Arial", baseFontSize * 3, FontStyle.Bold);
             lblSousTitre.Font = new Font("Arial", baseFontSize * 2, FontStyle.Italic);
             lblIdentifiant.Font = new Font("Arial", baseFontSize * 2);
             lblMotDePasse.Font = new Font("Arial", baseFontSize * 2);
             txtIdentifiant.Font = new Font("Arial", baseFontSize * 2);
             txtMotDePasse.Font = new Font("Arial", baseFontSize * 2);
+
+            lblIdentifiant.Location = new Point(margin, margin);
+            txtIdentifiant.Size = new Size(this.ClientSize.Width * 70 / 100, 30);
+            txtIdentifiant.Location = new Point(margin, lblIdentifiant.Bottom + margin);
+
+            lblMotDePasse.Location = new Point(margin, txtIdentifiant.Bottom + margin * 2);
+            txtMotDePasse.Size = new Size(this.ClientSize.Width * 70 / 100, 30);
+            txtMotDePasse.Location = new Point(margin, lblMotDePasse.Bottom + margin);
+
+
+            // Taille et position de panelFul
+            panelFul.Size = new Size(this.ClientSize.Width * 2 / 4, this.ClientSize.Height / 4);
+            panelFul.Location = new Point((this.ClientSize.Width - panelFul.Width) / 2, panelChamps.Bottom + margin * 4);
+            //panelFul.Location = new Point((this.ClientSize.Width - panelFul.Width) / 2, panelChamps.Bottom + margin);
+
+            lblFulBank.AutoSize = true;
+            lblFulBank.Location = new Point((panelFul.Width - lblFulBank.Width) / 2, margin / 2);
+
+            lblSousTitre.AutoSize = true;
+            lblSousTitre.Location = new Point((panelFul.Width - lblSousTitre.Width) / 2, lblFulBank.Bottom + 10);
 
             // Centrage dynamique de lblFulBank dans panelFul
             lblFulBank.AutoSize = true; // Activer AutoSize pour obtenir la largeur réelle
@@ -281,7 +289,7 @@ namespace fulbank
 
             // Aligner lblSousTitre à gauche avec un décalage fixe
             lblSousTitre.AutoSize = true; // Activer AutoSize pour obtenir la largeur réelle
-            lblSousTitre.Location = new Point(margin*20, lblFulBank.Bottom + margin / 20);
+            lblSousTitre.Location = new Point(margin*10, lblFulBank.Bottom + margin / 10);
         }
     }
 }

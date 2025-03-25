@@ -16,9 +16,6 @@
     <Compile Update="MenuChoixCompte.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="MenuFinalTransactionChangeMonnaie.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Update="MenuFinalTransactionDepot.cs">
       <SubType>Form</SubType>
     </Compile>

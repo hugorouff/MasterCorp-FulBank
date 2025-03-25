@@ -47,9 +47,10 @@ namespace fulbank
 
         private void InitializeLayout()
         {
-            this.WindowState = FormWindowState.Maximized;
+            this.Size = new Size(1580, 1024);
             this.FormBorderStyle = FormBorderStyle.None;
-            this.Text = "Transaction Virementt";
+            this.StartPosition = FormStartPosition.CenterScreen;
+            this.Text = "Transaction Virement";
             this.BackColor = Color.FromArgb(128, 194, 236);
 
             panelTransaction = new RoundedPanel
@@ -62,8 +63,9 @@ namespace fulbank
             lblTitre = new Label
             {
                 Text = "Transaction Virement",
-                Font = new Font("Arial", 50, FontStyle.Bold),
-                ForeColor = Color.FromArgb(207, 162, 0)
+                Font = new Font("Arial", 24, FontStyle.Bold), // Réduction de la taille de la police
+                ForeColor = Color.FromArgb(207, 162, 0),
+                AutoSize = true
             };
             panelTransaction.Controls.Add(lblTitre);
 
@@ -75,35 +77,38 @@ namespace fulbank
 
             lblCompteSource = new Label
             {
-                Text = "Numéro Compte Source :",
+                Text = "Compte Source :",
                 ForeColor = Color.FromArgb(128, 194, 236),
-                AutoSize = true
+                AutoSize = true,
+                Font = new Font("Arial", 14) // Réduction de la taille de la police
             };
             panelChamps.Controls.Add(lblCompteSource);
 
-            txtCompteSource = new TextBox();
+            txtCompteSource = new TextBox { Font = new Font("Arial", 14) };
             panelChamps.Controls.Add(txtCompteSource);
 
             lblCompteDestination = new Label
             {
-                Text = "Numéro Compte Destination :",
+                Text = "Compte Destination :",
                 ForeColor = Color.FromArgb(128, 194, 236),
-                AutoSize = true
+                AutoSize = true,
+                Font = new Font("Arial", 14)
             };
             panelChamps.Controls.Add(lblCompteDestination);
 
-            txtCompteDestination = new TextBox();
+            txtCompteDestination = new TextBox { Font = new Font("Arial", 14) };
             panelChamps.Controls.Add(txtCompteDestination);
 
             lblMontant = new Label
             {
                 Text = "Montant :",
                 ForeColor = Color.FromArgb(128, 194, 236),
-                AutoSize = true
+                AutoSize = true,
+                Font = new Font("Arial", 14)
             };
             panelChamps.Controls.Add(lblMontant);
 
-            txtMontant = new TextBox();
+            txtMontant = new TextBox { Font = new Font("Arial", 14) };
             panelChamps.Controls.Add(txtMontant);
 
             AdjustLayout();
@@ -133,9 +138,9 @@ namespace fulbank
             panelTransaction.Location = new Point((((this.ClientSize.Width - panelTransaction.Width) / 2) * 4 / 3), margin);
 
             float baseFontSize = this.ClientSize.Height / 40f;
-            lblTitre.Font = new Font("Arial", baseFontSize * 3, FontStyle.Bold);
-            lblMontant.Font = lblCompteSource.Font = lblCompteDestination.Font = new Font("Arial", baseFontSize * 2);
-            txtMontant.Font = txtCompteSource.Font = txtCompteDestination.Font = new Font("Arial", baseFontSize * 2);
+            lblTitre.Font = new Font("Arial", baseFontSize * 2.2f, FontStyle.Bold);
+            lblMontant.Font = lblCompteSource.Font = lblCompteDestination.Font = new Font("Arial", baseFontSize * 1.5f);
+            txtMontant.Font = txtCompteSource.Font = txtCompteDestination.Font = new Font("Arial", baseFontSize * 1.5f);
 
             lblTitre.AutoSize = true;
             lblTitre.Location = new Point((panelTransaction.Width - lblTitre.Width) / 2, margin);
@@ -143,7 +148,6 @@ namespace fulbank
 
         private void BtnValider_Click(object sender, EventArgs e)
         {
-            // Récupérer et valider les informations des TextBox
             string compte = txtCompteSource.Text.Trim();
             string montantText = txtMontant.Text.Trim();
 
@@ -161,26 +165,10 @@ namespace fulbank
                 return;
             }
 
-            try
-            {
-                // Effectuer le dépôt
-                EffectuerVirement(compte, montant);
-
-                // Afficher un message de succès
-                MessageBox.Show("Le dépôt a été effectué avec succès !", "Succès", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                // Réinitialiser les champs après le dépôt réussi
-                txtCompteSource.Clear();
-                txtMontant.Clear();
-
-                // Revenir au premier champ
-                txtCompteSource.Focus();
-            }
-            catch (Exception ex)
-            {
-                // Gérer les exceptions et afficher un message d'erreur
-                MessageBox.Show($"Une erreur s'est produite lors du dépôt : {ex.Message}", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            MessageBox.Show($"Virement de {montant}€ effectué du compte {compte}.", "Succès", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            txtCompteSource.Clear();
+            txtMontant.Clear();
+            txtCompteSource.Focus();
         }
 
         private void EffectuerVirement(string compte, decimal montant)
