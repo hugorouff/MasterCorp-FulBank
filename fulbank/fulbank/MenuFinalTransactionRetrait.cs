@@ -1,5 +1,6 @@
 ﻿using MySqlConnector;
 using System;
+using System.Data;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -8,11 +9,9 @@ namespace fulbank
     public partial class MenuFinalTransactionRetrait : Form
     {
         private TextBox txtMontant;  // TextBox pour le montant
-        private TextBox txtCompteSource;   // TextBox pour le numéro de compte
-        private TextBox txtCompteDestination;
+        private TextBox txtCompteSource;   // TextBox pour le numéro de 
         private Label lblMontant;
-        private Label lblCompteSource;
-        private Label lblCompteDestination;
+        private Label lblCompteSource;        
         private Label lblTitre;
         private RoundedPanel panelTransaction;
         private Panel panelChamps;
@@ -85,17 +84,6 @@ namespace fulbank
             txtCompteSource = new TextBox();
             panelChamps.Controls.Add(txtCompteSource);
 
-            lblCompteDestination = new Label
-            {
-                Text = "Numéro Compte Destination :",
-                ForeColor = Color.FromArgb(128, 194, 236),
-                AutoSize = true
-            };
-            panelChamps.Controls.Add(lblCompteDestination);
-
-            txtCompteDestination = new TextBox();
-            panelChamps.Controls.Add(txtCompteDestination);
-
             lblMontant = new Label
             {
                 Text = "Montant :",
@@ -122,11 +110,11 @@ namespace fulbank
             txtCompteSource.Size = new Size(panelChamps.Width - 2 * margin, panelChamps.Height / 12);
             txtCompteSource.Location = new Point(margin, lblCompteSource.Bottom + margin);
 
-            lblCompteDestination.Location = new Point(margin, txtCompteSource.Bottom + margin);
-            txtCompteDestination.Size = new Size(panelChamps.Width - 2 * margin, panelChamps.Height / 12);
-            txtCompteDestination.Location = new Point(margin, lblCompteDestination.Bottom + margin);
+            //lblCompteDestination.Location = new Point(margin, txtCompte.Bottom + margin);
+            //txtCompteDestination.Size = new Size(panelChamps.Width - 2 * margin, panelChamps.Height / 12);
+            //txtCompteDestination.Location = new Point(margin, lblCompteDestination.Bottom + margin);
 
-            lblMontant.Location = new Point(margin, txtCompteDestination.Bottom + margin);
+            lblMontant.Location = new Point(margin, txtCompteSource.Bottom + margin);
             txtMontant.Size = new Size(panelChamps.Width - 2 * margin, panelChamps.Height / 12);
             txtMontant.Location = new Point(margin, lblMontant.Bottom + margin);
 
@@ -135,8 +123,8 @@ namespace fulbank
 
             float baseFontSize = this.ClientSize.Height / 40f;
             lblTitre.Font = new Font("Arial", baseFontSize * 2.2f, FontStyle.Bold);
-            lblMontant.Font = lblCompteSource.Font = lblCompteDestination.Font = new Font("Arial", baseFontSize * 1.5f);
-            txtMontant.Font = txtCompteSource.Font = txtCompteDestination.Font = new Font("Arial", baseFontSize * 1.5f);
+            lblMontant.Font = lblCompteSource.Font = new Font("Arial", baseFontSize * 1.5f);
+            txtMontant.Font = txtCompteSource.Font = new Font("Arial", baseFontSize * 1.5f);
 
             lblTitre.AutoSize = true;
             lblTitre.Location = new Point((panelTransaction.Width - lblTitre.Width) / 2, margin);
@@ -144,136 +132,90 @@ namespace fulbank
 
         private void BtnValider_Click(object sender, EventArgs e)
         {
-            // Récupérer et valider les informations des TextBox
             string compte = txtCompteSource.Text.Trim();
             string montantText = txtMontant.Text.Trim();
+            string tauxDeChange = InfoDab.TauxDeChange;
+            string dabId = InfoDab.DabId;
 
-            if (string.IsNullOrWhiteSpace(compte))
+            // Vérification des champs obligatoires
+            if (string.IsNullOrEmpty(compte) || string.IsNullOrEmpty(montantText) ||
+                string.IsNullOrEmpty(tauxDeChange) || string.IsNullOrEmpty(dabId))
             {
-                MessageBox.Show("Veuillez entrer un numéro de compte valide.", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                txtCompteSource.Focus();
+                MessageBox.Show("Tous les champs sont obligatoires.", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
+            // Conversion et validation des entrées utilisateur
             if (!decimal.TryParse(montantText, out decimal montant) || montant <= 0)
             {
-                MessageBox.Show("Veuillez entrer un montant valide et supérieur à 0.", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Veuillez entrer un montant valide.", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 txtMontant.Focus();
                 return;
             }
 
+            //if (!int.TryParse(tauxDeChangeText, out int tauxDeChange) || tauxDeChange <= 0)
+            //{
+            //    MessageBox.Show("Veuillez entrer un taux de change valide.", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //    txtTauxDeChange.Focus();
+            //    return;
+            //}
+
+            //if (!int.TryParse(dabText, out int dabId) || dabId <= 0)
+            //{
+            //    MessageBox.Show("Veuillez entrer un identifiant de DAB valide.", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //    txtDAB.Focus();
+            //    return;
+            //}
+
+            // Appel à la méthode EffectuerDepot
             try
             {
-                // Effectuer le dépôt
-                EffectuerRetrait(compte, montant);
-
-                // Afficher un message de succès
-                MessageBox.Show("Le dépôt a été effectué avec succès !", "Succès", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                // Réinitialiser les champs après le dépôt réussi
-                txtCompteSource.Clear();
-                txtMontant.Clear();
-
-                // Revenir au premier champ
-                txtCompteSource.Focus();
+                EffectuerRetrait(montant, compte, int.Parse(tauxDeChange), int.Parse(dabId));
             }
             catch (Exception ex)
             {
-                // Gérer les exceptions et afficher un message d'erreur
-                MessageBox.Show($"Une erreur s'est produite lors du dépôt : {ex.Message}", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Une erreur inattendue s'est produite : {ex.Message}", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        private void EffectuerRetrait(string compte, decimal montant)
+        // =============== Fonction Retrait =============== \\
+        private void EffectuerRetrait(decimal montant, string compte, int tauxDeChange, int dabId)
         {
-            using (var connection = ConnexionBDD.Connexion())
+            try
             {
-                try
+                // Réutiliser la connexion singleton existante
+                var connection = ConnexionBDD.Connexion();
+
+                // Vérifier si la connexion est fermée 
+                if (connection.State == ConnectionState.Closed)
                 {
+                    // Rouvrir la connexion si nécessaire
                     connection.Open();
-
-                    using (var transaction = connection.BeginTransaction())
-                    {
-                        // Vérifier si le compte existe
-                        string queryCheckSource = @"
-                            SELECT solde
-                            FROM CompteBanquaire
-                            WHERE numeroDeCompte = @Compte";
-
-                        decimal soldeSource;
-
-                        using (var command = new MySqlCommand(queryCheckSource, connection, transaction))
-                        {
-                            command.Parameters.AddWithValue("@Compte", compte);
-                            var result = command.ExecuteScalar();
-
-                            if (result == null)
-                            {
-                                throw new InvalidOperationException("Le compte n'existe pas.");
-                            }
-
-                            soldeSource = Convert.ToDecimal(result);
-
-                            if (soldeSource < montant)
-                            {
-                                throw new InvalidOperationException("Fonds insuffisants sur le compte.");
-                            }
-                        }
-
-                        // Débiter le montant du compte
-                        string queryDebit = @"
-                            UPDATE CompteBanquaire
-                            SET solde = solde - @Montant
-                            WHERE numeroDeCompte = @Compte";
-
-                        using (var command = new MySqlCommand(queryDebit, connection, transaction))
-                        {
-                            command.Parameters.AddWithValue("@Montant", montant);
-                            command.Parameters.AddWithValue("@Compte", compte);
-                            command.ExecuteNonQuery();
-                        }
-
-                        // Créditer le montant au compte (ce serait le même compte dans ce cas pour un dépôt)
-                        string queryCredit = @"
-                            UPDATE CompteBanquaire
-                            SET solde = solde + @Montant
-                            WHERE numeroDeCompte = @Compte";
-
-                        using (var command = new MySqlCommand(queryCredit, connection, transaction))
-                        {
-                            command.Parameters.AddWithValue("@Montant", montant);
-                            command.Parameters.AddWithValue("@Compte", compte);
-                            command.ExecuteNonQuery();
-                        }
-
-                        // Insérer l'opération dans la table Opperation
-                        string queryInsertOperation = @"
-                            INSERT INTO Opperation (dateOperation, montant, suprimee, compte)
-                            VALUES (@DateOperation, @Montant, false, @Compte)";
-
-                        using (var command = new MySqlCommand(queryInsertOperation, connection, transaction))
-                        {
-                            command.Parameters.AddWithValue("@DateOperation", DateTime.Now);
-                            command.Parameters.AddWithValue("@Montant", montant);
-                            command.Parameters.AddWithValue("@Compte", compte);
-                            command.ExecuteNonQuery();
-                        }
-
-                        // Commit de la transaction
-                        transaction.Commit();
-                    }
                 }
-                catch (Exception ex)
+
+                using (var command = new MySqlCommand("retrait", connection))
                 {
-                    MessageBox.Show($"Erreur lors du dépôt : {ex.Message}", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    throw; // Relever l'exception pour le traitement en amont si nécessaire
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@montantR", montant);
+                    command.Parameters.AddWithValue("@compteSource", Convert.ToInt32(compte));
+                    command.Parameters.AddWithValue("@tauxDeChange", tauxDeChange);
+                    command.Parameters.AddWithValue("@DAB", dabId);
+
+                    command.ExecuteNonQuery();
                 }
-                finally
+
+                MessageBox.Show("Le retrait a été effectué avec succès !", "Succès", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erreur lors du retrait : {ex.Message}", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                // Fermer la connexion sans la disposer
+                if (ConnexionBDD.connexion != null)
                 {
-                    if (connection.State == System.Data.ConnectionState.Open)
-                    {
-                        connection.Close();
-                    }
+                    ConnexionBDD.connexion.MyClose();
                 }
             }
         }
@@ -304,10 +246,10 @@ namespace fulbank
                 txtCompteSource.SelectionStart--;
                 txtCompteSource.Focus();
             }
-            else if (txtCompteDestination.Text.Length > 0 && txtCompteDestination.SelectionStart > 0)
+            else if (txtMontant.Text.Length > 0 && txtMontant.SelectionStart > 0)
             {
-                txtCompteDestination.SelectionStart--;
-                txtCompteDestination.Focus();
+                txtMontant.SelectionStart--;
+                txtMontant.Focus();
             }
             /*else if (txtMontant.Text.Length > 0 && txtMontant.SelectionStart > 0)
             {
@@ -323,10 +265,10 @@ namespace fulbank
                 txtCompteSource.SelectionStart++;
                 txtCompteSource.Focus();
             }
-            else if (txtCompteDestination.Text.Length > 0 && txtCompteDestination.SelectionStart < txtCompteDestination.Text.Length)
+            else if (txtMontant.Text.Length > 0 && txtMontant.SelectionStart < txtMontant.Text.Length)
             {
-                txtCompteDestination.SelectionStart++;
-                txtCompteDestination.Focus();
+                txtMontant.SelectionStart++;
+                txtMontant.Focus();
             }
             /*else if (txtMontant.Text.Length > 0 && txtMontant.SelectionStart < txtMontant.Text.Length)
             {
@@ -337,13 +279,13 @@ namespace fulbank
 
         private void BtnHaut_Click(object sender, EventArgs e)
         {
-            if (txtCompteDestination.Focused)
+            if (txtMontant.Focused)
             {
-                txtCompteSource.Focus();
+                txtMontant.Focus();
             }
             else
             {
-                txtCompteSource.Focus();
+                txtMontant.Focus();
             }
         }
 
@@ -351,11 +293,11 @@ namespace fulbank
         {
             if (txtCompteSource.Focused)
             {
-                txtCompteDestination.Focus();
+                txtMontant.Focus();
             }
             else
             {
-                txtCompteDestination.Focus();
+                txtMontant.Focus();
             }
         }
     }

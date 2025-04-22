@@ -6,7 +6,7 @@ using System.Windows.Forms;
 
 namespace fulbank
 {
-    public partial class MenuFinalTransactionVirement : Form
+    public partial class MenuFinalTransactionChangeMonnaie : Form
     {
         private TextBox txtMontant;  // TextBox pour le montant
         private TextBox txtCompteSource;   // TextBox pour le numéro de compte
@@ -19,9 +19,9 @@ namespace fulbank
         private Panel panelChamps;
         private Button btnValider;
 
-        public MenuFinalTransactionVirement()
+        public MenuFinalTransactionChangeMonnaie()
         {
-            InitializeComponent();
+            //InitializeComponent();
             InitializeLayout();
             Methode.CreateDirectionalButtons(
                 this,
@@ -51,7 +51,7 @@ namespace fulbank
             this.Size = new Size(1580, 1024);
             this.FormBorderStyle = FormBorderStyle.None;
             this.StartPosition = FormStartPosition.CenterScreen;
-            this.Text = "Transaction Virement";
+            this.Text = "Changement de monnaie";
             this.BackColor = Color.FromArgb(128, 194, 236);
 
             panelTransaction = new RoundedPanel
@@ -63,7 +63,7 @@ namespace fulbank
 
             lblTitre = new Label
             {
-                Text = "Transaction Virement",
+                Text = "Changement de monnaie",
                 Font = new Font("Arial", 24, FontStyle.Bold), // Réduction de la taille de la police
                 ForeColor = Color.FromArgb(207, 162, 0),
                 AutoSize = true
@@ -147,7 +147,7 @@ namespace fulbank
             lblTitre.Location = new Point((panelTransaction.Width - lblTitre.Width) / 2, margin);
         }
 
-        private void BtnValider_Click(object sender, EventArgs e)
+        private async void BtnValider_Click(object sender, EventArgs e)
         {
             string compteS = txtCompteSource.Text.Trim();
             string compteD = txtCompteDestination.Text.Trim();
@@ -165,7 +165,7 @@ namespace fulbank
             if (string.IsNullOrWhiteSpace(compteD))
             {
                 MessageBox.Show("Veuillez entrer un numéro de compte de destination valide.", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                txtCompteSource.Focus();
+                txtCompteDestination.Focus();
                 return;
             }
 
@@ -176,64 +176,118 @@ namespace fulbank
                 return;
             }
 
-            // Appel à la méthode EffectuerDepot
             try
             {
-                EffectuerVirement(montant, compteS, compteD, int.Parse(tauxDeChange), int.Parse(dabId));
+                await EffectuerChangementMonaieAsync(montant, int.Parse(compteS), int.Parse(compteD), int.Parse(dabId));
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Une erreur inattendue s'est produite : {ex.Message}", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
-            //MessageBox.Show($"Virement de {montant}€ effectué du compte {compteD}.", "Succès", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            //txtCompteSource.Clear();
-            //txtMontant.Clear();
-            //txtCompteSource.Focus();
         }
 
-        // =============== Fonction Virement =============== \\
-        private void EffectuerVirement(decimal montant, string compteS, string compteD, int tauxDeChange, int dabId)
+        private async Task EffectuerChangementMonaieAsync(decimal montant, int compteS, int compteD, int dabId)
         {
+            bool isCryptoS = InfoDab.IsCrypto(compteS);
+            bool isCryptoD = InfoDab.IsCrypto(compteD);
+
+            string labelS = InfoDab.GetLabelApi(compteS);
+            string labelD = InfoDab.GetLabelApi(compteD);
+
+            decimal tauxDecimal = await InfoDab.GetTauxDeChange(labelS, labelD);
+            int tauxDeChange = (int)Math.Round(tauxDecimal, MidpointRounding.AwayFromZero);
+
+            var connection = ConnexionBDD.Connexion();
+
             try
             {
-                // Réutiliser la connexion singleton existante
-                var connection = ConnexionBDD.Connexion();
-
-                // Vérifier si la connexion est fermée 
                 if (connection.State == ConnectionState.Closed)
-                {
-                    // Rouvrir la connexion si nécessaire
                     connection.Open();
-                }
 
-                using (var command = new MySqlCommand("virement", connection))
+                if (isCryptoS && isCryptoD)
                 {
-                    command.CommandType = CommandType.StoredProcedure;
-                    command.Parameters.AddWithValue("@montant_transaction", montant);
-                    command.Parameters.AddWithValue("@compteSource", Convert.ToInt32(compteS));
-                    command.Parameters.AddWithValue("@compteDest", Convert.ToInt32(compteD));
-                    command.Parameters.AddWithValue("@tauxDeChange", tauxDeChange);
-                    command.Parameters.AddWithValue("@DAB", dabId);
+                    AppelerProcedure("virement", montant, compteS, compteD, tauxDeChange, dabId);
+                }
+                else if (isCryptoS && !isCryptoD)
+                {
+                    // 1. Retrait du compte crypto
+                    AppelerProcedure("retrait", montant, compteS, compteD, tauxDeChange, dabId);
 
-                    command.ExecuteNonQuery();
+                    // 2. Conversion et dépôt dans le compte fiat
+                    decimal montantConverti = montant * tauxDecimal;
+                    AppelerProcedure("depos", montantConverti, compteD, compteS, 1, dabId); // taux = 1 ici
+                }
+                else if (!isCryptoS && isCryptoD)
+                {
+                    // Fiat vers crypto
+                    decimal montantConverti = montant / tauxDecimal;
+
+                    // 1. Retirer du compte fiat
+                    AppelerProcedure("retrait", montant, compteS, compteD, tauxDeChange, dabId);
+
+                    // 2. Dépôt du montant converti en crypto
+                    AppelerProcedure("depos", montantConverti, compteD, compteS, 1, dabId);
+                }
+                else
+                {
+                    // Fiat → fiat classique
+                    AppelerProcedure("virement", montant, compteS, compteD, tauxDeChange, dabId);
                 }
 
-                MessageBox.Show("Le virement a été effectué avec succès !", "Succès", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("L'opération a été effectuée avec succès !", "Succès", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Erreur lors du virement : {ex.Message}", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Erreur lors de l'opération : {ex.Message}", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {
-                // Fermer la connexion sans la disposer
                 if (ConnexionBDD.connexion != null)
                 {
                     ConnexionBDD.connexion.MyClose();
                 }
             }
         }
+
+        private void AppelerProcedure(string nomProc, decimal montant, int source, int dest, int taux, int dab)
+        {
+            var connection = ConnexionBDD.Connexion();
+            if (connection.State == ConnectionState.Closed)
+                connection.Open();
+
+            using (var command = new MySqlCommand(nomProc, connection))
+            {
+                command.CommandType = CommandType.StoredProcedure;
+
+                switch (nomProc)
+                {
+                    case "virement":
+                        command.Parameters.AddWithValue("@montant_transaction", montant);
+                        command.Parameters.AddWithValue("@compteSource", source);
+                        command.Parameters.AddWithValue("@compteDest", dest);
+                        break;
+
+                    case "retrait":
+                        command.Parameters.AddWithValue("@montantR", montant);
+                        command.Parameters.AddWithValue("@compteSource", source);
+                        break;
+
+                    case "depos":
+                        command.Parameters.AddWithValue("@montantEntrant", montant);
+                        command.Parameters.AddWithValue("@compteDest", source); // ici source = le compte destinataire
+                        break;
+                }
+
+                command.Parameters.AddWithValue("@tauxDeChange", taux);
+                command.Parameters.AddWithValue("@DAB", dab);
+                command.ExecuteNonQuery();
+            }
+
+            ConnexionBDD.connexion.MyClose();
+        }
+
+
+
 
         private void BtnRetour_Click(object sender, EventArgs e)
         {
@@ -265,7 +319,7 @@ namespace fulbank
             {
                 txtCompteDestination.SelectionStart--;
                 txtCompteDestination.Focus();
-            } 
+            }
             /*else if (txtMontant.Text.Length > 0 && txtMontant.SelectionStart > 0)
             {
                 txtMontant.SelectionStart--;
