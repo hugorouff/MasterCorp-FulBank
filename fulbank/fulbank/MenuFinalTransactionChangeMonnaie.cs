@@ -190,49 +190,35 @@ namespace fulbank
         {
             bool isCryptoS = InfoDab.IsCrypto(compteS);
             bool isCryptoD = InfoDab.IsCrypto(compteD);
-
             string labelS = InfoDab.GetLabelApi(compteS);
             string labelD = InfoDab.GetLabelApi(compteD);
-
-            decimal tauxDecimal = await InfoDab.GetTauxDeChange(labelS, labelD);
-            int tauxDeChange = (int)Math.Round(tauxDecimal, MidpointRounding.AwayFromZero);
-
             var connection = ConnexionBDD.Connexion();
-
             try
             {
                 if (connection.State == ConnectionState.Closed)
                     connection.Open();
 
+                decimal montantConverti = montant;
+
                 if (isCryptoS && isCryptoD)
                 {
-                    AppelerProcedure("virement", montant, compteS, compteD, tauxDeChange, dabId);
+                    // Crypto vers Crypto
+                    montantConverti = await InfoDab.ConvertCryptoToCrypto(montant, labelS, labelD);
                 }
                 else if (isCryptoS && !isCryptoD)
                 {
-                    // 1. Retrait du compte crypto
-                    AppelerProcedure("retrait", montant, compteS, compteD, tauxDeChange, dabId);
-
-                    // 2. Conversion et dépôt dans le compte fiat
-                    decimal montantConverti = montant * tauxDecimal;
-                    AppelerProcedure("depos", montantConverti, compteD, compteS, 1, dabId); // taux = 1 ici
+                    // Crypto vers Monnaie
+                    montantConverti = await InfoDab.ConvertCryptoToMonaie(montant, labelS, labelD);
                 }
                 else if (!isCryptoS && isCryptoD)
                 {
-                    // Fiat vers crypto
-                    decimal montantConverti = montant / tauxDecimal;
-
-                    // 1. Retirer du compte fiat
-                    AppelerProcedure("retrait", montant, compteS, compteD, tauxDeChange, dabId);
-
-                    // 2. Dépôt du montant converti en crypto
-                    AppelerProcedure("depos", montantConverti, compteD, compteS, 1, dabId);
+                    // Monnaie vers Crypto
+                    montantConverti = await InfoDab.ConvertMonaieToCrypto(montant, labelS, labelD);
                 }
-                else
-                {
-                    // Fiat → fiat classique
-                    AppelerProcedure("virement", montant, compteS, compteD, tauxDeChange, dabId);
-                }
+
+                // Utiliser la nouvelle procédure pour tous les cas
+                int tauxDeChange = isCryptoS && !isCryptoD ? 1 : (!isCryptoS && isCryptoD ? int.Parse(InfoDab.TauxDeChange) : 1);
+                AppelerChangementMonaie(montant, montantConverti, tauxDeChange, dabId, compteS, compteD);
 
                 MessageBox.Show("L'opération a été effectuée avec succès !", "Succès", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
@@ -249,45 +235,27 @@ namespace fulbank
             }
         }
 
-        private void AppelerProcedure(string nomProc, decimal montant, int source, int dest, int taux, int dab)
+
+        private void AppelerChangementMonaie(decimal montantRetrait, decimal montantAjout, int tauxDeChange, int dab, int compteSource, int compteDest)
         {
             var connection = ConnexionBDD.Connexion();
             if (connection.State == ConnectionState.Closed)
                 connection.Open();
 
-            using (var command = new MySqlCommand(nomProc, connection))
+            using (var command = new MySqlCommand("changementMonaie", connection))
             {
                 command.CommandType = CommandType.StoredProcedure;
-
-                switch (nomProc)
-                {
-                    case "virement":
-                        command.Parameters.AddWithValue("@montant_transaction", montant);
-                        command.Parameters.AddWithValue("@compteSource", source);
-                        command.Parameters.AddWithValue("@compteDest", dest);
-                        break;
-
-                    case "retrait":
-                        command.Parameters.AddWithValue("@montantR", montant);
-                        command.Parameters.AddWithValue("@compteSource", source);
-                        break;
-
-                    case "depos":
-                        command.Parameters.AddWithValue("@montantEntrant", montant);
-                        command.Parameters.AddWithValue("@compteDest", source); // ici source = le compte destinataire
-                        break;
-                }
-
-                command.Parameters.AddWithValue("@tauxDeChange", taux);
+                command.Parameters.AddWithValue("@montantR", montantRetrait);
+                command.Parameters.AddWithValue("@montantA", montantAjout);
+                command.Parameters.AddWithValue("@tauxDeChange", tauxDeChange);
                 command.Parameters.AddWithValue("@DAB", dab);
+                command.Parameters.AddWithValue("@compteSource", compteSource);
+                command.Parameters.AddWithValue("@compteDest", compteDest);
                 command.ExecuteNonQuery();
             }
 
             ConnexionBDD.connexion.MyClose();
         }
-
-
-
 
         private void BtnRetour_Click(object sender, EventArgs e)
         {

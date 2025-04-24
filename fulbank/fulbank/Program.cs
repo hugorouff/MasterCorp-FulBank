@@ -396,7 +396,6 @@ namespace fulbank
             return labelApi;
         }
 
-
         // Crypto ? 
         public static bool IsCrypto(int numeroCompte)
         {
@@ -425,8 +424,6 @@ namespace fulbank
             return false;
         }
 
-
-
         // Crypto -> Crypto
         public static async Task<decimal> ConvertCryptoToCrypto(decimal amount, string sourceCrypto, string targetCrypto)
         {
@@ -442,9 +439,9 @@ namespace fulbank
         }
 
         // Crypto -> Monaie
-        public static async Task<decimal> ConvertCryptoToFiat(decimal amount, string crypto, string fiat)
+        public static async Task<decimal> ConvertCryptoToMonaie(decimal amount, string crypto, string monaie)
         {
-            decimal rate = await GetTauxDeChange(crypto, fiat.ToLower());
+            decimal rate = await GetTauxDeChange(crypto, monaie.ToLower());
 
             if (rate == 0)
                 return 0;
@@ -453,15 +450,20 @@ namespace fulbank
         }
 
         // Monaie -> Crypto
-        public static async Task<decimal> ConvertFiatToCrypto(decimal amount, string fiat, string crypto)
+        public static async Task<decimal> ConvertMonaieToCrypto(decimal amount, string monaie, string crypto)
         {
-            decimal rate = await GetTauxDeChange(crypto, fiat.ToLower());
+            decimal rate = await GetTauxDeChange(crypto, monaie.ToLower());
 
             if (rate == 0)
+            {
                 return 0;
-
-            return amount / rate;
+            }
+            else
+            {
+                return amount / rate;
+            }
         }
+
 
 
 
