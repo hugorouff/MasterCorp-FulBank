@@ -1,4 +1,7 @@
-﻿using System.Drawing.Drawing2D;
+﻿using MySqlConnector;
+using Newtonsoft.Json.Linq;
+using System.Data;
+using System.Drawing.Drawing2D;
 using System.Drawing.Printing;
 
 namespace fulbank
@@ -323,8 +326,147 @@ namespace fulbank
     public class Account
     {
         public int Id { get; set; }
-        public string Name { get; set; } // Type de compte (e.g., "Courant", "Épargne")
+        public string Name { get; set; } // Type de compte (ex : "Courant", "Épargne")
         public decimal Balance { get; set; }
         public string Currency { get; set; } // Nom de la monnaie
     }
+
+    // Les info pour le dab
+    public class InfoDab
+    {
+        public static string DabId { get; set; } = "1";
+        public static string TauxDeChange { get; set; } = "1";
+
+
+        // récup taux de change
+        public static async Task<decimal> GetTauxDeChange(string crypto, string currency)
+        {
+            string apiUrl = $"https://api.coingecko.com/api/v3/simple/price?ids={crypto}&vs_currencies={currency}";
+
+            using HttpClient client = new HttpClient();
+
+            try
+            {
+                var response = await client.GetStringAsync(apiUrl);
+                var data = JObject.Parse(response);
+
+                if (data[crypto]?[currency] != null &&
+                    decimal.TryParse(data[crypto]![currency]!.ToString(), out decimal rate))
+                {
+                    return rate;
+                }
+
+                return 0;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Erreur de taux : {ex.Message}");
+                return 0; 
+            }
+        }
+
+        // Label pour l'api
+        public static string GetLabelApi(int numeroDeCompte)
+        {
+            string labelApi = null;
+            var BDD = ConnexionBDD.Connexion();
+
+            if (BDD.State != ConnectionState.Open)
+                BDD.Open();
+
+            string query = @"
+            SELECT M.labelApi
+            FROM CompteBanquaire AS CB
+            INNER JOIN Monnaie AS M ON M.id = CB.monaie
+            WHERE CB.numeroDeCompte = @numero;";
+
+            using (MySqlCommand cmd = new MySqlCommand(query, BDD))
+            {
+                cmd.Parameters.AddWithValue("@numero", numeroDeCompte);
+
+                using (MySqlDataReader reader = cmd.ExecuteReader())
+                {
+                    if (reader.Read())
+                    {
+                        labelApi = reader.GetString(0);
+                    }
+                }
+            }
+
+            return labelApi;
+        }
+
+        // Crypto ? 
+        public static bool IsCrypto(int numeroCompte)
+        {
+            var conn = ConnexionBDD.Connexion();
+
+            if (conn.State != ConnectionState.Open)
+                conn.Open();
+
+            string query = @"
+            SELECT M.isCrypto 
+            FROM CompteBanquaire CB
+            JOIN Monnaie M ON M.id = CB.monaie
+            WHERE CB.numeroDeCompte = @num;";
+
+            using (MySqlCommand cmd = new MySqlCommand(query, conn))
+            {
+                cmd.Parameters.AddWithValue("@num", numeroCompte);
+
+                object result = cmd.ExecuteScalar();
+                if (result != null && bool.TryParse(result.ToString(), out bool isCrypto))
+                {
+                    return isCrypto;
+                }
+            }
+
+            return false;
+        }
+
+        // Crypto -> Crypto
+        public static async Task<decimal> ConvertCryptoToCrypto(decimal amount, string sourceCrypto, string targetCrypto)
+        {
+            decimal sourceToEur = await GetTauxDeChange(sourceCrypto, "eur");
+            decimal targetToEur = await GetTauxDeChange(targetCrypto, "eur");
+
+            if (sourceToEur == 0 || targetToEur == 0)
+                return 0;
+
+            // Convertir en EUR puis en crypto cible
+            decimal eurAmount = amount * sourceToEur;
+            return eurAmount / targetToEur;
+        }
+
+        // Crypto -> Monaie
+        public static async Task<decimal> ConvertCryptoToMonaie(decimal amount, string crypto, string monaie)
+        {
+            decimal rate = await GetTauxDeChange(crypto, monaie.ToLower());
+
+            if (rate == 0)
+                return 0;
+
+            return amount * rate;
+        }
+
+        // Monaie -> Crypto
+        public static async Task<decimal> ConvertMonaieToCrypto(decimal amount, string monaie, string crypto)
+        {
+            decimal rate = await GetTauxDeChange(crypto, monaie.ToLower());
+
+            if (rate == 0)
+            {
+                return 0;
+            }
+            else
+            {
+                return amount / rate;
+            }
+        }
+
+
+
+
+    }
+
 }

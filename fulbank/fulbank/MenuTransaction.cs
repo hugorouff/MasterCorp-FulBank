@@ -62,7 +62,7 @@ namespace fulbank
                     nextForm = new MenuFinalTransactionVirement();
                     break;
                 case 3:
-                    //nextForm = new MenuFinalTransactionChangeMonnaie();
+                    nextForm = new MenuFinalTransactionChangeMonnaie();
                     break;
                 case 4:
                     this.Close();

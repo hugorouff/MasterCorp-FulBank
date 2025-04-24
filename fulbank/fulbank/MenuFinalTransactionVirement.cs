@@ -1,5 +1,6 @@
 ﻿using MySqlConnector;
 using System;
+using System.Data;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -148,12 +149,22 @@ namespace fulbank
 
         private void BtnValider_Click(object sender, EventArgs e)
         {
-            string compte = txtCompteSource.Text.Trim();
+            string compteS = txtCompteSource.Text.Trim();
+            string compteD = txtCompteDestination.Text.Trim();
             string montantText = txtMontant.Text.Trim();
+            string tauxDeChange = InfoDab.TauxDeChange;
+            string dabId = InfoDab.DabId;
 
-            if (string.IsNullOrWhiteSpace(compte))
+            if (string.IsNullOrWhiteSpace(compteS))
             {
-                MessageBox.Show("Veuillez entrer un numéro de compte valide.", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Veuillez entrer un numéro de compte source valide.", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                txtCompteSource.Focus();
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(compteD))
+            {
+                MessageBox.Show("Veuillez entrer un numéro de compte de destination valide.", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 txtCompteSource.Focus();
                 return;
             }
@@ -165,102 +176,61 @@ namespace fulbank
                 return;
             }
 
-            MessageBox.Show($"Virement de {montant}€ effectué du compte {compte}.", "Succès", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            txtCompteSource.Clear();
-            txtMontant.Clear();
-            txtCompteSource.Focus();
+            // Appel à la méthode EffectuerDepot
+            try
+            {
+                EffectuerVirement(montant, compteS, compteD, int.Parse(tauxDeChange), int.Parse(dabId));
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Une erreur inattendue s'est produite : {ex.Message}", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            //MessageBox.Show($"Virement de {montant}€ effectué du compte {compteD}.", "Succès", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //txtCompteSource.Clear();
+            //txtMontant.Clear();
+            //txtCompteSource.Focus();
         }
 
-        private void EffectuerVirement(string compte, decimal montant)
+        // =============== Fonction Virement =============== \\
+        private void EffectuerVirement(decimal montant, string compteS, string compteD, int tauxDeChange, int dabId)
         {
-            using (var connection = ConnexionBDD.Connexion())
+            try
             {
-                try
+                // Réutiliser la connexion singleton existante
+                var connection = ConnexionBDD.Connexion();
+
+                // Vérifier si la connexion est fermée 
+                if (connection.State == ConnectionState.Closed)
                 {
+                    // Rouvrir la connexion si nécessaire
                     connection.Open();
-
-                    using (var transaction = connection.BeginTransaction())
-                    {
-                        // Vérifier si le compte existe
-                        string queryCheckSource = @"
-                            SELECT solde
-                            FROM CompteBanquaire
-                            WHERE numeroDeCompte = @Compte";
-
-                        decimal soldeSource;
-
-                        using (var command = new MySqlCommand(queryCheckSource, connection, transaction))
-                        {
-                            command.Parameters.AddWithValue("@Compte", compte);
-                            var result = command.ExecuteScalar();
-
-                            if (result == null)
-                            {
-                                throw new InvalidOperationException("Le compte n'existe pas.");
-                            }
-
-                            soldeSource = Convert.ToDecimal(result);
-
-                            if (soldeSource < montant)
-                            {
-                                throw new InvalidOperationException("Fonds insuffisants sur le compte.");
-                            }
-                        }
-
-                        // Débiter le montant du compte
-                        string queryDebit = @"
-                            UPDATE CompteBanquaire
-                            SET solde = solde - @Montant
-                            WHERE numeroDeCompte = @Compte";
-
-                        using (var command = new MySqlCommand(queryDebit, connection, transaction))
-                        {
-                            command.Parameters.AddWithValue("@Montant", montant);
-                            command.Parameters.AddWithValue("@Compte", compte);
-                            command.ExecuteNonQuery();
-                        }
-
-                        // Créditer le montant au compte (ce serait le même compte dans ce cas pour un dépôt)
-                        string queryCredit = @"
-                            UPDATE CompteBanquaire
-                            SET solde = solde + @Montant
-                            WHERE numeroDeCompte = @Compte";
-
-                        using (var command = new MySqlCommand(queryCredit, connection, transaction))
-                        {
-                            command.Parameters.AddWithValue("@Montant", montant);
-                            command.Parameters.AddWithValue("@Compte", compte);
-                            command.ExecuteNonQuery();
-                        }
-
-                        // Insérer l'opération dans la table Opperation
-                        string queryInsertOperation = @"
-                            INSERT INTO Opperation (dateOperation, montant, suprimee, compte)
-                            VALUES (@DateOperation, @Montant, false, @Compte)";
-
-                        using (var command = new MySqlCommand(queryInsertOperation, connection, transaction))
-                        {
-                            command.Parameters.AddWithValue("@DateOperation", DateTime.Now);
-                            command.Parameters.AddWithValue("@Montant", montant);
-                            command.Parameters.AddWithValue("@Compte", compte);
-                            command.ExecuteNonQuery();
-                        }
-
-                        // Commit de la transaction
-                        transaction.Commit();
-                    }
                 }
-                catch (Exception ex)
+
+                using (var command = new MySqlCommand("virement", connection))
                 {
-                    MessageBox.Show($"Erreur lors du dépôt : {ex.Message}", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    throw; // Relever l'exception pour le traitement en amont si nécessaire
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("@montant_transaction", montant);
+                    command.Parameters.AddWithValue("@compteSource", Convert.ToInt32(compteS));
+                    command.Parameters.AddWithValue("@compteDest", Convert.ToInt32(compteD));
+                    command.Parameters.AddWithValue("@tauxDeChange", tauxDeChange);
+                    command.Parameters.AddWithValue("@DAB", dabId);
+
+                    command.ExecuteNonQuery();
                 }
-                finally
+
+                MessageBox.Show("Le virement a été effectué avec succès !", "Succès", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Erreur lors du virement : {ex.Message}", "Erreur", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                // Fermer la connexion sans la disposer
+                if (ConnexionBDD.connexion != null)
                 {
-                    if (connection.State == System.Data.ConnectionState.Open)
-                    {
-                        connection.Close();
-                    }
+                    ConnexionBDD.connexion.MyClose();
                 }
             }
         }

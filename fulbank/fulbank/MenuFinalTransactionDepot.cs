@@ -9,11 +9,9 @@ namespace fulbank
     public partial class MenuFinalTransactionDepot : Form
     {
         private TextBox txtMontant;  // TextBox pour le montant
-        private TextBox txtCompte;   // TextBox pour le numéro de compte
-        private TextBox txtCompteDestination;
+        private TextBox txtCompte;   // TextBox pour le numéro de compte+
         private Label lblMontant;
-        private Label lblCompteSource;
-        private Label lblCompteDestination;
+        private Label lblCompte;
         private Label lblTitre;
         private RoundedPanel panelTransaction;
         private Panel panelChamps;
@@ -75,27 +73,16 @@ namespace fulbank
             };
             this.Controls.Add(panelChamps);
 
-            lblCompteSource = new Label
+            lblCompte = new Label
             {
                 Text = "Numéro Compte Source :",
                 ForeColor = Color.FromArgb(128, 194, 236),
                 AutoSize = true
             };
-            panelChamps.Controls.Add(lblCompteSource);
+            panelChamps.Controls.Add(lblCompte);
 
             txtCompte = new TextBox();
             panelChamps.Controls.Add(txtCompte);
-
-            lblCompteDestination = new Label
-            {
-                Text = "Numéro Compte Destination :",
-                ForeColor = Color.FromArgb(128, 194, 236),
-                AutoSize = true
-            };
-            panelChamps.Controls.Add(lblCompteDestination);
-
-            txtCompteDestination = new TextBox();
-            panelChamps.Controls.Add(txtCompteDestination);
 
             lblMontant = new Label
             {
@@ -119,15 +106,15 @@ namespace fulbank
             panelChamps.Size = new Size(this.ClientSize.Width * 59 / 100, this.ClientSize.Height * 2 / 2);
             panelChamps.Location = new Point((((this.ClientSize.Width - panelChamps.Width) / 2) * 4 / 3), panelTransaction.Bottom + margin * 4);
 
-            lblCompteSource.Location = new Point(margin, margin);
+            lblCompte.Location = new Point(margin, margin);
             txtCompte.Size = new Size(panelChamps.Width - 2 * margin, panelChamps.Height / 12);
-            txtCompte.Location = new Point(margin, lblCompteSource.Bottom + margin);
+            txtCompte.Location = new Point(margin, lblCompte.Bottom + margin);
 
-            lblCompteDestination.Location = new Point(margin, txtCompte.Bottom + margin);
-            txtCompteDestination.Size = new Size(panelChamps.Width - 2 * margin, panelChamps.Height / 12);
-            txtCompteDestination.Location = new Point(margin, lblCompteDestination.Bottom + margin);
+            //lblCompteDestination.Location = new Point(margin, txtCompte.Bottom + margin);
+            //txtCompteDestination.Size = new Size(panelChamps.Width - 2 * margin, panelChamps.Height / 12);
+            //txtCompteDestination.Location = new Point(margin, lblCompteDestination.Bottom + margin);
 
-            lblMontant.Location = new Point(margin, txtCompteDestination.Bottom + margin);
+            lblMontant.Location = new Point(margin, txtCompte.Bottom + margin);
             txtMontant.Size = new Size(panelChamps.Width - 2 * margin, panelChamps.Height / 12);
             txtMontant.Location = new Point(margin, lblMontant.Bottom + margin);
 
@@ -136,8 +123,8 @@ namespace fulbank
 
             float baseFontSize = this.ClientSize.Height / 40f;
             lblTitre.Font = new Font("Arial", baseFontSize * 2.2f, FontStyle.Bold);
-            lblMontant.Font = lblCompteSource.Font = lblCompteDestination.Font = new Font("Arial", baseFontSize * 1.5f);
-            txtMontant.Font = txtCompte.Font = txtCompteDestination.Font = new Font("Arial", baseFontSize * 1.5f);
+            lblMontant.Font = lblCompte.Font = new Font("Arial", baseFontSize * 1.5f);
+            txtMontant.Font = txtCompte.Font = new Font("Arial", baseFontSize * 1.5f);
 
             lblTitre.AutoSize = true;
             lblTitre.Location = new Point((panelTransaction.Width - lblTitre.Width) / 2, margin);
@@ -147,8 +134,8 @@ namespace fulbank
         {
             string compte = txtCompte.Text.Trim();
             string montantText = txtMontant.Text.Trim();
-            string tauxDeChange = "1";
-            string dabId = "1";
+            string tauxDeChange = InfoDab.TauxDeChange;
+            string dabId = InfoDab.DabId;
 
             // Vérification des champs obligatoires
             if (string.IsNullOrEmpty(compte) || string.IsNullOrEmpty(montantText) ||
@@ -191,9 +178,7 @@ namespace fulbank
             }
         }
 
-
-
-        // ========== Fonction dépot ========== \\
+        // =============== Fonction dépot =============== \\
         private void EffectuerDepot(string compte, decimal montant, int tauxDeChange, int dabId)
         {
             try
@@ -235,18 +220,20 @@ namespace fulbank
             }
         }
 
+
         private void BtnRetour_Click(object sender, EventArgs e)
         {
             var previousMenu = new MenuTransaction();
             previousMenu.Show();
-            this.Close();
+            //this.Close();
+
         }
 
         private void BtnMaison_Click(object sender, EventArgs e)
         {
             var mainMenu = new MenuBase();
             mainMenu.Show();
-            this.Close();
+            //this.Close();
         }
 
         private void BtnFermer_Click(object sender, EventArgs e)
@@ -261,10 +248,10 @@ namespace fulbank
                 txtCompte.SelectionStart--;
                 txtCompte.Focus();
             }
-            else if (txtCompteDestination.Text.Length > 0 && txtCompteDestination.SelectionStart > 0)
+            else if (txtMontant.Text.Length > 0 && txtMontant.SelectionStart > 0)
             {
-                txtCompteDestination.SelectionStart--;
-                txtCompteDestination.Focus();
+                txtMontant.SelectionStart--;
+                txtMontant.Focus();
             }
             /*else if (txtMontant.Text.Length > 0 && txtMontant.SelectionStart > 0)
             {
@@ -280,10 +267,10 @@ namespace fulbank
                 txtCompte.SelectionStart++;
                 txtCompte.Focus();
             }
-            else if (txtCompteDestination.Text.Length > 0 && txtCompteDestination.SelectionStart < txtCompteDestination.Text.Length)
+            else if (txtMontant.Text.Length > 0 && txtMontant.SelectionStart < txtMontant.Text.Length)
             {
-                txtCompteDestination.SelectionStart++;
-                txtCompteDestination.Focus();
+                txtMontant.SelectionStart++;
+                txtMontant.Focus();
             }
             /*else if (txtMontant.Text.Length > 0 && txtMontant.SelectionStart < txtMontant.Text.Length)
             {
@@ -294,7 +281,7 @@ namespace fulbank
 
         private void BtnHaut_Click(object sender, EventArgs e)
         {
-            if (txtCompteDestination.Focused)
+            if (txtMontant.Focused)
             {
                 txtCompte.Focus();
             }
@@ -308,11 +295,11 @@ namespace fulbank
         {
             if (txtCompte.Focused)
             {
-                txtCompteDestination.Focus();
+                txtMontant.Focus();
             }
             else
             {
-                txtCompteDestination.Focus();
+                txtMontant.Focus();
             }
         }
     }
