@@ -29,6 +29,7 @@ namespace fulbank
 
         public MenuChoixCompte(string choix)
         {
+            this.Icon = new Icon("Resources/logo-fulbank.ico");
             InitializeComponent();
 
             try

@@ -40,6 +40,14 @@ namespace fulbank
                 string userId = configData["DatabaseSettings"]["UserID"];
                 string password = configData["DatabaseSettings"]["Password"];
                 string database = configData["DatabaseSettings"]["Database"];
+                string dabId = configData["InfoDab"]["DabID"];
+
+                // Set id au dab
+                InfoDab.DabId = dabId;
+
+                //MessageBox.Show(InfoDab.DabId);
+                //MessageBox.Show($"le ini {dabId}");
+                //MessageBox.Show($"la static { InfoDab.DabId}");
 
                 // Construire la chaîne de connexion
                 connectionString = $"Server={server};User ID={userId};Password={password};Database={database}";

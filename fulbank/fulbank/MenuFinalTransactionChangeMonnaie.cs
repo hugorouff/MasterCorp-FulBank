@@ -21,6 +21,7 @@ namespace fulbank
 
         public MenuFinalTransactionChangeMonnaie()
         {
+            this.Icon = new Icon("Resources/logo-fulbank.ico");
             //InitializeComponent();
             InitializeLayout();
             Methode.CreateDirectionalButtons(
@@ -179,6 +180,9 @@ namespace fulbank
             try
             {
                 await EffectuerChangementMonaieAsync(montant, int.Parse(compteS), int.Parse(compteD), int.Parse(dabId));
+                txtCompteDestination.Clear();
+                txtCompteSource.Clear();
+                txtMontant.Clear();
             }
             catch (Exception ex)
             {

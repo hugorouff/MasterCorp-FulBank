@@ -22,9 +22,11 @@ namespace fulbank
         private const int delaiBlocageMinutes = 2;  // Durée du blocage en minutes
 
         private MySqlConnection BDD = ConnexionBDD.Connexion();
+        
 
         public Connexion()
         {
+            this.Icon = new Icon("Resources/logo-fulbank.ico");
             InitializeComponent();
             Initializeform1();
             Methode.CreateDirectionalButtons(

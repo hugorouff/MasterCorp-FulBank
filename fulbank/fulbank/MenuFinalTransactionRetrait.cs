@@ -19,6 +19,7 @@ namespace fulbank
 
         public MenuFinalTransactionRetrait()
         {
+            this.Icon = new Icon("Resources/logo-fulbank.ico");
             InitializeComponent();
             InitializeLayout();
             Methode.CreateDirectionalButtons(
@@ -171,6 +172,9 @@ namespace fulbank
             try
             {
                 EffectuerRetrait(montant, compte, int.Parse(tauxDeChange), int.Parse(dabId));
+                txtMontant.Clear();
+                txtCompteSource.Clear();
+
             }
             catch (Exception ex)
             {
