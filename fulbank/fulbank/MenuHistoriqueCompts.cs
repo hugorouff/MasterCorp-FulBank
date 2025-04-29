@@ -34,6 +34,7 @@ namespace fulbank
 
         public MenuHistoriqueCompts()
         {
+            this.Icon = new Icon("Resources/logo-fulbank.ico");
             InitializeComponent();
             Initializeform2();
             UpdatePanelSelection();

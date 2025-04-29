@@ -28,6 +28,7 @@ namespace fulbank
 
         public MenuCompte()
         {
+            this.Icon = new Icon("Resources/logo-fulbank.ico");
             InitializeComponent();
             Initializeform3();
             Methode.CreateDirectionalButtons(

@@ -19,6 +19,7 @@ namespace fulbank
 
         public MenuFinalTransactionDepot()
         {
+            this.Icon = new Icon("Resources/logo-fulbank.ico");
             InitializeComponent();
             InitializeLayout();
             Methode.CreateDirectionalButtons(
@@ -171,6 +172,8 @@ namespace fulbank
             try
             {
                 EffectuerDepot(compte, montant, int.Parse(tauxDeChange), int.Parse(dabId));
+                txtCompte.Clear();
+                txtMontant.Clear();
             }
             catch (Exception ex)
             {

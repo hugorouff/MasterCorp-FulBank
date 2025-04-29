@@ -7,7 +7,21 @@
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
     <PackageIcon></PackageIcon>
+	<ApplicationIcon>Resources\logo-fulbank.ico</ApplicationIcon>
+	<Company>MasterCorp</Company>
+	<Product>Fulbank</Product>
+	<Description>MasterCorp-FulBank est une application de gestion bancaire développée en C#. Elle permet aux utilisateurs de gérer leurs comptes bancaires, d'effectuer des transactions et de consulter leurs historiques de transactions. L'application supporte également la gestion des cryptomonnaies, permettant aux utilisateurs d'acheter, vendre et suivre leurs cryptomonnaies préférées directement depuis l'application.</Description>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\logo-fulbank.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Resources\logo-fulbank.ico">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="ini-parser" Version="2.5.2" />

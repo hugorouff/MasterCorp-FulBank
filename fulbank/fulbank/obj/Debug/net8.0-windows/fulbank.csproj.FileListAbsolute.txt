@@ -271,11 +271,13 @@ D:\document\SIO\Projet\MasterCorp-FulBank\fulbank\fulbank\obj\Debug\net8.0-windo
 D:\document\SIO\Projet\MasterCorp-FulBank\fulbank\fulbank\obj\Debug\net8.0-windows\fulbank.sourcelink.json
 D:\document\SIO\Projet\MasterCorp-FulBank\fulbank\fulbank\bin\Debug\net8.0-windows\Newtonsoft.Json.dll
 D:\document\SIO\Projet\MasterCorp-FulBank\fulbank\fulbank\obj\Debug\net8.0-windows\fulbank.csproj.Up2Date
+C:\Users\momon\Documents\1_Prog\2_FulBank\MasterCorp-FulBank\fulbank\fulbank\bin\Debug\net8.0-windows\Resources\logo-fulbank.ico
 C:\Users\momon\Documents\1_Prog\2_FulBank\MasterCorp-FulBank\fulbank\fulbank\bin\Debug\net8.0-windows\fulbank.exe
 C:\Users\momon\Documents\1_Prog\2_FulBank\MasterCorp-FulBank\fulbank\fulbank\bin\Debug\net8.0-windows\fulbank.deps.json
 C:\Users\momon\Documents\1_Prog\2_FulBank\MasterCorp-FulBank\fulbank\fulbank\bin\Debug\net8.0-windows\fulbank.runtimeconfig.json
 C:\Users\momon\Documents\1_Prog\2_FulBank\MasterCorp-FulBank\fulbank\fulbank\bin\Debug\net8.0-windows\fulbank.dll
 C:\Users\momon\Documents\1_Prog\2_FulBank\MasterCorp-FulBank\fulbank\fulbank\bin\Debug\net8.0-windows\fulbank.pdb
+C:\Users\momon\Documents\1_Prog\2_FulBank\MasterCorp-FulBank\fulbank\fulbank\bin\Debug\net8.0-windows\INIFileParser.dll
 C:\Users\momon\Documents\1_Prog\2_FulBank\MasterCorp-FulBank\fulbank\fulbank\bin\Debug\net8.0-windows\Microsoft.Extensions.Logging.Abstractions.dll
 C:\Users\momon\Documents\1_Prog\2_FulBank\MasterCorp-FulBank\fulbank\fulbank\bin\Debug\net8.0-windows\MySqlConnector.dll
 C:\Users\momon\Documents\1_Prog\2_FulBank\MasterCorp-FulBank\fulbank\fulbank\bin\Debug\net8.0-windows\Newtonsoft.Json.dll
@@ -302,4 +304,3 @@ C:\Users\momon\Documents\1_Prog\2_FulBank\MasterCorp-FulBank\fulbank\fulbank\obj
 C:\Users\momon\Documents\1_Prog\2_FulBank\MasterCorp-FulBank\fulbank\fulbank\obj\Debug\net8.0-windows\fulbank.pdb
 C:\Users\momon\Documents\1_Prog\2_FulBank\MasterCorp-FulBank\fulbank\fulbank\obj\Debug\net8.0-windows\fulbank.genruntimeconfig.cache
 C:\Users\momon\Documents\1_Prog\2_FulBank\MasterCorp-FulBank\fulbank\fulbank\obj\Debug\net8.0-windows\ref\fulbank.dll
-C:\Users\momon\Documents\1_Prog\2_FulBank\MasterCorp-FulBank\fulbank\fulbank\bin\Debug\net8.0-windows\INIFileParser.dll

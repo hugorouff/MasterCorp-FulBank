@@ -21,6 +21,7 @@ namespace fulbank
 
         public MenuFinalTransactionVirement()
         {
+            this.Icon = new Icon("Resources/logo-fulbank.ico");
             InitializeComponent();
             InitializeLayout();
             Methode.CreateDirectionalButtons(
@@ -180,6 +181,10 @@ namespace fulbank
             try
             {
                 EffectuerVirement(montant, compteS, compteD, int.Parse(tauxDeChange), int.Parse(dabId));
+                txtCompteDestination.Clear();
+                txtMontant.Clear();
+                txtCompteSource.Clear();
+
             }
             catch (Exception ex)
             {

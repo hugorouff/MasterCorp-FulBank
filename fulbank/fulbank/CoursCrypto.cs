@@ -27,6 +27,7 @@ namespace fulbank
 
         public CoursCrypto()
         {
+            this.Icon = new Icon("Resources/logo-fulbank.ico");
             InitializeComponent();
             InitializeForm();
             Methode.CreateDirectionalButtons(

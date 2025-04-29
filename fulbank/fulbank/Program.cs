@@ -3,6 +3,7 @@ using Newtonsoft.Json.Linq;
 using System.Data;
 using System.Drawing.Drawing2D;
 using System.Drawing.Printing;
+using System.Runtime.CompilerServices;
 
 namespace fulbank
 {
@@ -18,6 +19,7 @@ namespace fulbank
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
             Application.Run(new Connexion());
+
         }
     }
 
@@ -331,7 +333,7 @@ namespace fulbank
         public string Currency { get; set; } // Nom de la monnaie
     }
 
-    // Les info pour le dab
+    // ==================== Les info pour le dab ==================== \\
     public class InfoDab
     {
         public static string DabId { get; set; } = "1";
@@ -375,10 +377,10 @@ namespace fulbank
                 BDD.Open();
 
             string query = @"
-            SELECT M.labelApi
-            FROM CompteBanquaire AS CB
-            INNER JOIN Monnaie AS M ON M.id = CB.monaie
-            WHERE CB.numeroDeCompte = @numero;";
+            SELECT labelApi
+            FROM label_api
+            WHERE numeroDeCompte = @numero;
+            ";
 
             using (MySqlCommand cmd = new MySqlCommand(query, BDD))
             {
@@ -405,10 +407,10 @@ namespace fulbank
                 conn.Open();
 
             string query = @"
-            SELECT M.isCrypto 
-            FROM CompteBanquaire CB
-            JOIN Monnaie M ON M.id = CB.monaie
-            WHERE CB.numeroDeCompte = @num;";
+            SELECT isCrypto
+            FROM label_api
+            WHERE numeroDeCompte = @num;
+            ";
 
             using (MySqlCommand cmd = new MySqlCommand(query, conn))
             {
