@@ -436,23 +436,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\momon\\.nuget\\packages\\": {},
+    "C:\\Users\\rouff\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\momon\\Documents\\1_Prog\\2_FulBank\\MasterCorp-FulBank\\fulbank\\fulbank\\fulbank.csproj",
+      "projectUniqueName": "D:\\document\\SIO\\Projet\\fulbank\\fulbank\\fulbank\\fulbank.csproj",
       "projectName": "fulbank",
-      "projectPath": "C:\\Users\\momon\\Documents\\1_Prog\\2_FulBank\\MasterCorp-FulBank\\fulbank\\fulbank\\fulbank.csproj",
-      "packagesPath": "C:\\Users\\momon\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\momon\\Documents\\1_Prog\\2_FulBank\\MasterCorp-FulBank\\fulbank\\fulbank\\obj\\",
+      "projectPath": "D:\\document\\SIO\\Projet\\fulbank\\fulbank\\fulbank\\fulbank.csproj",
+      "packagesPath": "C:\\Users\\rouff\\.nuget\\packages\\",
+      "outputPath": "D:\\document\\SIO\\Projet\\fulbank\\fulbank\\fulbank\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\momon\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\rouff\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -522,7 +522,7 @@
             "privateAssets": "none"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.201/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.203/PortableRuntimeIdentifierGraph.json"
       }
     }
   },
