@@ -27,6 +27,7 @@ namespace fulbank
 
         public CoursCrypto()
         {
+            this.Icon = new Icon("Resources/logo-fulbank.ico");
             InitializeComponent();
             InitializeForm();
             Methode.CreateDirectionalButtons(
@@ -44,8 +45,9 @@ namespace fulbank
 
         private async void InitializeForm()
         {
-            this.WindowState = FormWindowState.Maximized;
+            this.Size = new Size(1580, 1024);
             this.FormBorderStyle = FormBorderStyle.None;
+            this.StartPosition = FormStartPosition.CenterScreen;
             this.BackColor = Color.FromArgb(128, 194, 236);
             this.Text = "FulBank";
 
@@ -152,7 +154,7 @@ namespace fulbank
                 Label lblCurrency = new Label
                 {
                     Text = $"{currencyPrice.Key}:",
-                    Font = new Font("Arial", 30, FontStyle.Bold),
+                    Font = new Font("Arial", 17, FontStyle.Bold),
                     ForeColor = Color.White,
                     AutoSize = true,
                     Margin = new Padding(10, 0, 10, 0)
@@ -161,7 +163,7 @@ namespace fulbank
                 Label lblPrice = new Label
                 {
                     Text = $"{currencyPrice.Value}",
-                    Font = new Font("Arial", 30, FontStyle.Regular),
+                    Font = new Font("Arial", 17, FontStyle.Regular),
                     ForeColor = Color.FromArgb(207, 162, 0),
                     AutoSize = true,
                     Margin = new Padding(10, 0, 10, 0)
@@ -176,7 +178,7 @@ namespace fulbank
             Label lblTimestamp = new Label
             {
                 Text = $"Last updated: {timestamp}",
-                Font = new Font("Arial", 12, FontStyle.Italic),
+                Font = new Font("Arial", 10, FontStyle.Italic),
                 ForeColor = Color.White,
                 TextAlign = ContentAlignment.MiddleCenter,
                 Dock = DockStyle.Bottom,

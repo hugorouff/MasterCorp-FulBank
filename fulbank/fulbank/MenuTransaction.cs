@@ -24,6 +24,7 @@ namespace fulbank
         private int currentPanelIndex = 0;
         public MenuTransaction()
         {
+            this.Icon = new Icon("Resources/logo-fulbank.ico");
             InitializeComponent();
             Initializeform3();
             Methode.CreateDirectionalButtons(
@@ -53,10 +54,26 @@ namespace fulbank
             switch (selectedPanelIndex)
             {
                 case 0:
+<<<<<<< HEAD
                     //nextForm = new MenuChoixCompte("Depot");
                     break;
                 case 1:
                     //this.Close();
+=======
+                    nextForm = new MenuFinalTransactionDepot();
+                    break;
+                case 1:
+                    nextForm = new MenuFinalTransactionRetrait();
+                    break;
+                case 2:
+                    nextForm = new MenuFinalTransactionVirement();
+                    break;
+                case 3:
+                    nextForm = new MenuFinalTransactionChangeMonnaie();
+                    break;
+                case 4:
+                    this.Close();
+>>>>>>> main
                     break;
             }
 
@@ -128,8 +145,9 @@ namespace fulbank
 
         private void Initializeform3()
         {
-            this.WindowState = FormWindowState.Maximized;
+            this.Size = new Size(1580, 1024);
             this.FormBorderStyle = FormBorderStyle.None;
+            this.StartPosition = FormStartPosition.CenterScreen;
             this.BackColor = Color.FromArgb(128, 194, 236);
             this.Text = "FulBank";
 
@@ -148,7 +166,7 @@ namespace fulbank
             InitPanelLabel(panelDepot, "Dépôt");
             InitPanelLabel(panelRetrait, "Retrait");
             InitPanelLabel(panelEchange, "Virement");
-            InitPanelLabel(panelAutres, "Autres");
+            InitPanelLabel(panelAutres, "Change Monnaie");
 
             panels = new RoundedPanel[] { panelDepot, panelRetrait, panelEchange, panelAutres };
 
@@ -203,7 +221,7 @@ namespace fulbank
             Label label = new Label
             {
                 Text = text,
-                Font = new Font("Arial", 90, FontStyle.Bold),
+                Font = new Font("Arial", 60, FontStyle.Bold),
                 ForeColor = Color.FromArgb(128, 194, 236),
                 AutoSize = true
             };
