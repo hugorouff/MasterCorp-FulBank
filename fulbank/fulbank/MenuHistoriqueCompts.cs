@@ -10,10 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using fulbank;
 
-<<<<<<< HEAD
 
-=======
->>>>>>> main
 namespace fulbank
 {
     public partial class MenuHistoriqueCompts : Form
@@ -29,26 +26,16 @@ namespace fulbank
         private int totalPages = 0; // Nombre total de pages
 
         //variable de stoquage requete db
-<<<<<<< HEAD
         
-=======
-
->>>>>>> main
         private List<int?> comptesSources = new List<int?>();
         private List<int?> comptesDests = new List<int?>();
         private List<string> dateOperations = new List<string>();
         private List<float> montants = new List<float>();
         private List<string> monaies = new List<string>();
-<<<<<<< HEAD
-        
-        public MenuHistoriqueCompts()
-        {
-=======
 
         public MenuHistoriqueCompts()
         {
             this.Icon = new Icon("Resources/logo-fulbank.ico");
->>>>>>> main
             InitializeComponent();
             Initializeform2();
             UpdatePanelSelection();
@@ -88,21 +75,13 @@ namespace fulbank
             while (data.Read())
             {
                 try { comptesSources.Add(data.GetInt32(0)); }
-<<<<<<< HEAD
-                catch (Exception e) 
-=======
                 catch (Exception e)
->>>>>>> main
                 {
                     comptesSources.Add(null);
                 }
                 try { comptesDests.Add(data.GetInt32(1)); }
                 catch (Exception e) { comptesDests.Add(null); }
-<<<<<<< HEAD
                 dateOperations.Add(data.GetDateTime(2)+"");
-=======
-                dateOperations.Add(data.GetDateTime(2) + "");
->>>>>>> main
                 montants.Add(data.GetFloat(3));
                 monaies.Add(data.GetString(4));
             }
@@ -207,14 +186,8 @@ namespace fulbank
         private void Initializeform2()
         {
             // Configuration générale du formulaire
-<<<<<<< HEAD
             this.WindowState = FormWindowState.Maximized;
             this.FormBorderStyle = FormBorderStyle.None;
-=======
-            this.Size = new Size(1580, 1024);
-            this.FormBorderStyle = FormBorderStyle.None;
-            this.StartPosition = FormStartPosition.CenterScreen;
->>>>>>> main
             this.BackColor = Color.FromArgb(128, 194, 236);
             this.Text = "FulBank";
 
@@ -231,11 +204,7 @@ namespace fulbank
 
             // Initialisation des labels dans chaque panel
 
-<<<<<<< HEAD
             this.Controls.AddRange(new Control[] {panelhisto1, panelhisto2,panelhisto3,panelhisto4});
-=======
-            this.Controls.AddRange(new Control[] { panelhisto1, panelhisto2, panelhisto3, panelhisto4 });
->>>>>>> main
 
             // Assigner les panels à la liste
             panels = new RoundedPanel[] { panelhisto1, panelhisto2, panelhisto3, panelhisto4 };
@@ -274,11 +243,7 @@ namespace fulbank
         }
 
         // Initialisation des labels dans un panel
-<<<<<<< HEAD
         private void InitPanelLabel(RoundedPanel panel, int? compteSource, int? compteDest, string dateOperation, float montant, string monaie )
-=======
-        private void InitPanelLabel(RoundedPanel panel, int? compteSource, int? compteDest, string dateOperation, float montant, string monaie)
->>>>>>> main
         {
             string texte = "";
             if (compteSource is not null && compteDest is not null)
@@ -289,30 +254,17 @@ namespace fulbank
             {
                 texte += "dépos dans le compte" + compteDest;
             }
-<<<<<<< HEAD
-            else 
-            {
-                texte += "retrait depuis le compte " + compteSource;
-            } 
-=======
             else
             {
                 texte += "retrait depuis le compte " + compteSource;
             }
->>>>>>> main
             texte += "\nle " + dateOperation + "de " + montant + " " + monaie;
 
             Label text = new Label
             {
-<<<<<<< HEAD
-                
-                Text = texte,
-                Font = new Font("Arial", 50, FontStyle.Bold),
-=======
 
                 Text = texte,
                 Font = new Font("Arial", 40, FontStyle.Bold),
->>>>>>> main
                 ForeColor = Color.FromArgb(128, 194, 236),
                 AutoSize = true
             };

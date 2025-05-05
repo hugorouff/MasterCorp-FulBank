@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\castagna\\PROJETS\\fullbank\\fulbank\\fulbank\\fulbank.csproj": {}
+    "C:\\Users\\castagna\\Documents\\GitHub\\MasterCorp-FulBank\\fulbank\\fulbank\\fulbank.csproj": {}
   },
   "projects": {
-    "C:\\Users\\castagna\\PROJETS\\fullbank\\fulbank\\fulbank\\fulbank.csproj": {
+    "C:\\Users\\castagna\\Documents\\GitHub\\MasterCorp-FulBank\\fulbank\\fulbank\\fulbank.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\castagna\\PROJETS\\fullbank\\fulbank\\fulbank\\fulbank.csproj",
+        "projectUniqueName": "C:\\Users\\castagna\\Documents\\GitHub\\MasterCorp-FulBank\\fulbank\\fulbank\\fulbank.csproj",
         "projectName": "fulbank",
-        "projectPath": "C:\\Users\\castagna\\PROJETS\\fullbank\\fulbank\\fulbank\\fulbank.csproj",
+        "projectPath": "C:\\Users\\castagna\\Documents\\GitHub\\MasterCorp-FulBank\\fulbank\\fulbank\\fulbank.csproj",
         "packagesPath": "C:\\Users\\castagna\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\castagna\\PROJETS\\fullbank\\fulbank\\fulbank\\obj\\",
+        "outputPath": "C:\\Users\\castagna\\Documents\\GitHub\\MasterCorp-FulBank\\fulbank\\fulbank\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -57,6 +57,10 @@
             "Newtonsoft.Json": {
               "target": "Package",
               "version": "[13.0.3, )"
+            },
+            "ini-parser": {
+              "target": "Package",
+              "version": "[2.5.2, )"
             }
           },
           "imports": [

@@ -22,10 +22,6 @@ namespace fulbank
         {
             try
             {
-<<<<<<< HEAD
-                this.connexionDB = new MySqlConnection(" Server = 172.16.119.51; User ID = APP ; Password = M0tDEp@SS561234ADMlN; Database=FulBank");
-            } // ip = 192.168.56.220, user =cast , psw = C@st database = fulbank
-=======
                 // Chemin du fichier de configuration
                 string configPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DatabaseConfig.ini");
 
@@ -69,7 +65,6 @@ namespace fulbank
             {
                 MessageBox.Show($"Erreur de parsing du fichier INI : {ex.Message}");
             }
->>>>>>> main
             catch (MySqlException ex)
             {
                 MessageBox.Show($"Erreur de connexion MySQL : {ex.Message}");

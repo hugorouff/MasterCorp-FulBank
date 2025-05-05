@@ -54,12 +54,6 @@ namespace fulbank
             switch (selectedPanelIndex)
             {
                 case 0:
-<<<<<<< HEAD
-                    //nextForm = new MenuChoixCompte("Depot");
-                    break;
-                case 1:
-                    //this.Close();
-=======
                     nextForm = new MenuFinalTransactionDepot();
                     break;
                 case 1:
@@ -73,7 +67,6 @@ namespace fulbank
                     break;
                 case 4:
                     this.Close();
->>>>>>> main
                     break;
             }
 
