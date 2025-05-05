@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using MySqlConnector;
 using IniParser;
 using IniParser.Model;
+using System.Resources;
 
 namespace fulbank
 {
@@ -23,7 +24,7 @@ namespace fulbank
             try
             {
                 // Chemin du fichier de configuration
-                string configPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "DatabaseConfig.ini");
+                string configPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Resources", "DatabaseConfig.ini");
 
                 // Vérifier si le fichier existe
                 if (!File.Exists(configPath))

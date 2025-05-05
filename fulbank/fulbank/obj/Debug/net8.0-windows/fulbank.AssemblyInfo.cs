@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyDescriptionAttribute(@"MasterCorp-FulBank est une application de gestion bancaire développée en C#. Elle permet aux utilisateurs de gérer leurs comptes bancaires, d'effectuer des transactions et de consulter leurs historiques de transactions. L'application supporte également la gestion des cryptomonnaies, permettant aux utilisateurs d'acheter, vendre et suivre leurs cryptomonnaies préférées directement depuis l'application.")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+315fe585be0a2030e5d31e75270ad648e2c01495")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+6749a06ef9902cd048ce01dc7f24862e002651ad")]
 [assembly: System.Reflection.AssemblyProductAttribute("Fulbank")]
 [assembly: System.Reflection.AssemblyTitleAttribute("fulbank")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
