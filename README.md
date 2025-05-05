@@ -42,11 +42,14 @@ mysql -u fulbank_user -p FulBank < chemin/vers/fulbank_schema_and_data.sql
 #### Étape 3 : Configurer le fichier de connexion
 Mettez à jour `DatabaseConfig.ini` :
 ```ini
-[Database]
+[DatabaseSettings]
 Server=localhost
 Database=FulBank
 User=fulbank_user
 Password=mot_de_passe_securise
+
+[InfoDab]
+DabID=1
 ```
 
 #### Étape 4 : Installer l'application
