@@ -1,8 +1,5 @@
-<<<<<<< HEAD
 "# MasterCorp-Fulbank" 
 
-actuellement config bdd prod sur APP
-=======
 # MasterCorp FulBank
 ## Description
 MasterCorp FulBank est une application de gestion bancaire développée en C#. Elle permet aux utilisateurs de gérer leurs comptes bancaires, d'effectuer des transactions et de consulter leurs historiques d'opérations. L'application intègre également la gestion des cryptomonnaies, offrant la possibilité d'acheter, vendre et suivre différentes cryptomonnaies directement depuis l'interface.
@@ -33,10 +30,11 @@ cd MasterCorp-FulBank
 2. Créez la base et l'utilisateur :
 ```sql
 CREATE DATABASE FulBank;
-CREATE USER 'fulbank_user'@'localhost' IDENTIFIED BY 'mot_de_passe_securise';
-GRANT ALL PRIVILEGES ON FulBank.* TO 'fulbank_user'@'localhost';
-FLUSH PRIVILEGES;
+CREATE USER 'fulbank_user'@'192.168.56.%' IDENTIFIED BY 'mot_de_passe_securise';
+CREATE ROLE Role_App;
+SET DEFAULT ROLE Role_App FOR AppFuBank@'192.168.56.%';
 ```
+> **Note :** l'utilisateur   
 3. Exécutez le script SQL fourni dans le dossier `sql/` :
 ```bash
 mysql -u fulbank_user -p FulBank < chemin/vers/fulbank_schema_and_data.sql
@@ -48,7 +46,7 @@ mysql -u fulbank_user -p FulBank < chemin/vers/fulbank_schema_and_data.sql
 Mettez à jour `DatabaseConfig.ini` :
 ```ini
 [DatabaseSettings]
-Server=localhost
+Server=192.168.56.220 (adresse du serveur)
 Database=FulBank
 User=fulbank_user
 Password=mot_de_passe_securise
