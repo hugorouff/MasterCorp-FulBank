@@ -49,7 +49,7 @@ namespace fulbank
 
         private void InitializeLayout()
         {
-            this.Size = new Size(1580, 1024);
+            this.Size = new Size(1560, 984);
             this.FormBorderStyle = FormBorderStyle.None;
             this.StartPosition = FormStartPosition.CenterScreen;
             this.Text = "Changement de monnaie";
@@ -64,8 +64,8 @@ namespace fulbank
 
             lblTitre = new Label
             {
-                Text = "Changement de monnaie",
-                Font = new Font("Arial", 24, FontStyle.Bold), // Réduction de la taille de la police
+                Text = "Changement monnaie",
+                Font = new Font("Arial", 17, FontStyle.Bold), // Réduction de la taille de la police
                 ForeColor = Color.FromArgb(207, 162, 0),
                 AutoSize = true
             };

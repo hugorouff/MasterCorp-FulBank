@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "fulbank", "fulbank\fulbank.
 EndProject
 Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "FulbankInstaller", "FulbankInstaller\FulbankInstaller.vdproj", "{8E05FB9F-163A-681E-13CB-7F5CBDB49F19}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FulBank.Tests", "FulBank.Tests\FulBank.Tests.csproj", "{4A858A83-D427-41A2-9DAE-9E623DCBA26F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,8 +19,14 @@ Global
 		{63076290-BCE2-43B9-AB4A-55FC645C6B26}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{63076290-BCE2-43B9-AB4A-55FC645C6B26}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{63076290-BCE2-43B9-AB4A-55FC645C6B26}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8E05FB9F-163A-681E-13CB-7F5CBDB49F19}.Debug|Any CPU.ActiveCfg = Debug
-		{8E05FB9F-163A-681E-13CB-7F5CBDB49F19}.Release|Any CPU.ActiveCfg = Release
+		{8E05FB9F-163A-681E-13CB-7F5CBDB49F19}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E05FB9F-163A-681E-13CB-7F5CBDB49F19}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E05FB9F-163A-681E-13CB-7F5CBDB49F19}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E05FB9F-163A-681E-13CB-7F5CBDB49F19}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A858A83-D427-41A2-9DAE-9E623DCBA26F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A858A83-D427-41A2-9DAE-9E623DCBA26F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A858A83-D427-41A2-9DAE-9E623DCBA26F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A858A83-D427-41A2-9DAE-9E623DCBA26F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

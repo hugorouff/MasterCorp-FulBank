@@ -251,8 +251,8 @@ namespace fulbank
 
             // Créer des boutons de contrôle
             RoundedButton btnValider = CreateButton("✔", btnValiderClick, Color.FromArgb(34, 67, 153), Color.FromArgb(128, 194, 236));
-            RoundedButton btnRetour = CreateButton("↩", btnRetourClick, Color.FromArgb(99, 99, 101), Color.FromArgb(128, 194, 236));
-            RoundedButton btnMaison = CreateButton("🏠", btnMaisonClick, Color.FromArgb(99, 99, 101), Color.FromArgb(128, 194, 236));
+            RoundedButton btnRetour = CreateButton("↩", btnRetourClick, Color.FromArgb(34, 67, 153), Color.FromArgb(128, 194, 236));
+            RoundedButton btnMaison = CreateButton("🏠", btnMaisonClick, Color.FromArgb(34, 67, 153), Color.FromArgb(128, 194, 236));
             RoundedButton btnFermer = CreateButton("X", btnFermerClick, Color.FromArgb(34, 67, 153), Color.FromArgb(128, 194, 236));
 
             // Ajouter les boutons au formulaire
