@@ -55,6 +55,8 @@ namespace fulbank
                 // Créer et tester la connexion
                 this.connexionDB = new MySqlConnection(connectionString);
                 connexionDB.Open();
+                //MySqlCommand cmd = new MySqlCommand("set role Role_App;");
+                //cmd.ExecuteNonQuery();
                 connexionDB.Close();
             }
             catch (FileNotFoundException ex)
