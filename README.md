@@ -91,6 +91,13 @@ Un script complet est disponible dans `sql/fulbank_schema_and_data.sql`. Il cont
 
 > ⚠️ En cas de modification du script, assurez-vous de **ne pas altérer la table `Monnaie`**, essentielle pour le bon fonctionnement de la gestion de portefeuille crypto.
 
+> les données de teste on plusieurs utilisateur et compte. a la suite de cette anotation il y a la liste des utilisateurs, de leur mot de passse et des comptes banquaire passe 
+> le compte d'id 1 et de mot de passe 1 a plusieurs compte le 100,110,120 et est co propriétaire du 111
+
+>le compte d'id 100 a pour mot de passe 1234 possede le compte 101,111,121
+
+>le compte d'id 200 a pour mot de passe 4321 et possede le compte 220,210,220
+
 ## Licence
 Aucune licence spécifiée.
 
