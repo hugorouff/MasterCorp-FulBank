@@ -1,5 +1,3 @@
-"# MasterCorp-Fulbank" 
-
 # MasterCorp FulBank
 ## Description
 MasterCorp FulBank est une application de gestion bancaire développée en C#. Elle permet aux utilisateurs de gérer leurs comptes bancaires, d'effectuer des transactions et de consulter leurs historiques d'opérations. L'application intègre également la gestion des cryptomonnaies, offrant la possibilité d'acheter, vendre et suivre différentes cryptomonnaies directement depuis l'interface.
