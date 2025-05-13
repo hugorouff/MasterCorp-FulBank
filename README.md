@@ -34,9 +34,9 @@ CREATE USER 'fulbank_user'@'192.168.56.%' IDENTIFIED BY 'mot_de_passe_securise';
 CREATE ROLE Role_App;
 SET DEFAULT ROLE Role_App FOR AppFuBank@'192.168.56.%';
 ```
-> **Note :** l'utilisateur executant le script de creation doit avoir toute les permission sur la base et pouvoir donner des permission sur au moins les procedure et fonction ainsi que sur les select <br>
+> **Note :** l'utilisateur executant le script de creation doit avoir toute les permission sur la base et pouvoir donner des permission sur au moins les procedure et fonction ainsi que sur les select.<br>
 pour autoriser un utilisateur a donner des privilége au moment de lui donner des privilège il faut rajouter apres l'utilisateur "WITH GRANT OPTION;" tels que:<br>
-> ``GRANT ALL PRIVILEGES ON DATABASE_NAME.* TO 'USERNAME'@'HOSTNAME' WITH GRANT OPTION;``
+>    ``GRANT ALL PRIVILEGES ON DATABASE_NAME.* TO 'USERNAME'@'HOSTNAME' WITH GRANT OPTION;``
 3. Exécutez le script SQL fourni dans le dossier `sql/` :
 ```bash
 mysql -u fulbank_user -p FulBank < chemin/vers/fulbank_schema_and_data.sql
