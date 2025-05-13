@@ -49,12 +49,13 @@ mysql -u compteAdminPourFullbank -p FulBank < /chemin/vers/StructureEtData.sql
 #### Étape 3 : Configurer le fichier de connexion
 Mettez à jour `DatabaseConfig.ini` :
 > les dabes disponnible dans le jeu de donner de teste son le 1;100;200;300
+> les information entre acolade {} sont a rempalcer 
 ```ini
 [DatabaseSettings]
-Server=192.168.56.220 (adresse du serveur)
+Server={addresse ip du serveur}
 Database=FulBank
-User=fulbank_user
-Password=mot_de_passe_securise
+User={nom utilisateur DAB}
+Password={mot de passe utilisateur DAB}
 
 [InfoDab]
 DabID=1
