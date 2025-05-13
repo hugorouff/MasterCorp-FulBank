@@ -6,27 +6,30 @@ MasterCorp FulBank est une application de gestion bancaire développée en C#. E
 
 ## Prérequis
 - .NET 8 SDK
-- MariaDB (version 10.5 ou supérieure)
+- un serveur MariaDB (version 10.5 ou supérieure)
 - Visual Studio 2022 (recommandé)
 
 ## Installation
-### Option 1 : Utiliser l'installateur
+### Étape 1 : Cloner le dépôt 
+<!-- ### Option 1 : Utiliser l'installateur -->
+#### Option 1 : Utiliser l'installateur
 1. Téléchargez l'installateur depuis la [page des releases](https://github.com/hugorouff/MasterCorp-FulBank/releases)
 2. Exécutez le fichier d'installation et suivez les instructions à l'écran
 3. Après l'installation, vous devrez :
    - Configurer le fichier `DatabaseConfig.ini` avec vos informations de connexion à la base de données
    - Créer la base de données et un utilisateur comme indiqué à l'étape suivante
 4. Installez l'application en exécutant le programme d'installation
-
-### Option 2 : Installation manuelle
-#### Étape 1 : Cloner le dépôt
+#### Option 2 : Installation manuelle
+<!-- ### Option 2 : Installation manuelle
+#### Étape 1 : Cloner le dépôt -->
 ```bash
 git clone https://github.com/hugorouff/MasterCorp-FulBank.git
 cd MasterCorp-FulBank
 ```
 
 #### Étape 2 : Configurer la base de données MariaDB
-1. Connectez-vous à votre serveur MariaDB
+> en cas de modification du nom de la basse de donner ou du nom du role il faudra modifier toute leur ocurence
+1. Connectez-vous à votre serveur MariaDB 
 2. Créez la base et l'utilisateur :
 ```sql
 CREATE DATABASE FulBank;
