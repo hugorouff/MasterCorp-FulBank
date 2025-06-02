@@ -1,15 +1,10 @@
-#drop database FulBank;
-#create database FulBank;
-use FulBank;
-# create database FulBank
-# create database Fulbank_dev;
-# use Fulbank_dev;
-
 CREATE TABLE if not exists DAB(
    id INT auto_increment,
    addresse VARCHAR(50),
    PRIMARY KEY(id)
 );
+insert into DAB(DAB.id,DAB.addresse)
+values (1,"5 rue du test"),(100,"27 rue paul deschanel"),(200,"10 rue des sablier"),(300,"96 rue saint cheron");
 
 CREATE TABLE if not exists Monnaie(
    id INT auto_increment,
@@ -19,7 +14,7 @@ CREATE TABLE if not exists Monnaie(
     isCrypto boolean,
    PRIMARY KEY(id)
 );
-insert into FulBank.Monnaie(Monnaie.nom,Monnaie.sigle, Monnaie.labelApi, Monnaie.isCrypto)
+insert into Monnaie(Monnaie.nom,Monnaie.sigle, Monnaie.labelApi, Monnaie.isCrypto)
 values ("binancecoin","BNB","binancecoin",true),
        ("bitcoin", "BTC", "bitcoin", true),
        ("cardano", "ADA", "cardano",true),
@@ -52,12 +47,16 @@ CREATE TABLE if not exists `Profiles`(
    labelle VARCHAR(50),
    PRIMARY KEY(id)
 );
+insert into Profiles(labelle)
+value ("user");
 
 CREATE TABLE if not exists TypeCompte(
    id INT auto_increment,
    label VARCHAR(50),
    PRIMARY KEY(id)
 );
+insert into TypeCompte(label)
+values ("epargne"),("courant"),("crypto");
 
 CREATE TABLE if not exists  Utilisateur(
    id INT auto_increment,
@@ -70,6 +69,10 @@ CREATE TABLE if not exists  Utilisateur(
    PRIMARY KEY(id),
   CONSTRAINT fk_profiles FOREIGN KEY(typeProfile) REFERENCES `Profiles`(id)
 );
+insert into Utilisateur(id, motDePasse, nom, prenom, courielle, numeroTelephone, typeProfile)
+values	(1,1,"joncar","morgan","joncart@morgan.com","0784411041",1),
+		(100,1234,"castagna","alexandre","castagna@alexandre.com","0784411041",1),
+		(200,4321,"roof","hugo","roof@hugo.com","0784411041",1);
 
 CREATE TABLE if not exists  CompteBanquaire(
    numeroDeCompte INT,
@@ -84,6 +87,16 @@ CREATE TABLE if not exists  CompteBanquaire(
    CONSTRAINT fk_titulaire FOREIGN KEY(titulaire) REFERENCES Utilisateur(id),
    CONSTRAINT fk_monaie FOREIGN KEY(monaie) REFERENCES Monnaie(id)
 );
+insert into CompteBanquaire(numeroDeCompte, solde, coTitulaire, titulaire, type, monaie)
+values (100,1000,null,1,1,25),
+       (110,1100,null,1,3,1),
+       (120,1200,null,1,2,25),
+       (101,1010,null,100,1,25),
+       (111,1110,1,100,3,1),
+       (121,1210,null,100,2,26),
+       (200,2000,null,200,1,25),
+       (210,2100,null,200,3,3),
+       (220,2200,null,200,2,25);
 
 CREATE TABLE if not exists Opperation(
    id INT auto_increment,
